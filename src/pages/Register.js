@@ -1,8 +1,77 @@
-import React from 'react'
+import React, {useState} from 'react';
 import Authfooter from '../components/Authfooter'
 import Authnavigation from '../components/Authnavigation'
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
+import { UserRegisterAuthAction, ShowLoading} from '../redux/actions/authaction';
+import { usePasswordValidation } from "../utils/passwordValidation";
+import {
+    SingleDatePicker
+  } from "react-google-flight-datepicker";
 
-export default function Register() {
+
+const Register = (props) => {
+    const { registeruser, isLoading, setError } = props;
+    const [userdetails, setUserdetails] = useState({});
+    const history = useHistory();
+    const pwderrmsg1 = "Your password must match each other and it must have a special character, a number, Upper & lower case letters and not less than 8 characters"
+    const pwderrmsg2 = "Your password must has a special character, a number, Upper & lower case letters and not less than 8 characters"
+    const [err, setErr] = useState();
+    const [err2, setErr2] = useState();
+    const [showerr, setShowErr] = useState(false);
+    const [errmsg, setErrmsg] = useState();
+    const [errmsg2, setErrmsg2] = useState();
+    const today = new Date();
+
+    const [password, setPassword] = useState({
+        firstPassword: "",
+        secondPassword: "",
+       });
+    
+    const [
+    validLength,
+    hasNumber,
+    upperCase,
+    lowerCase,
+    match,
+    specialChar,
+    ] = usePasswordValidation({
+    firstPassword: password.firstPassword,
+    secondPassword: password.secondPassword,
+    });
+    
+    const setFirst = (event) => {
+        setPassword({ ...password, firstPassword: event.target.value });
+        setShowErr(true);
+        if(validLength && hasNumber && upperCase && lowerCase && specialChar)
+        {
+            if(match)
+            {
+                setErrmsg("");
+                setErr(false);
+            }
+        } else {
+            setErrmsg(pwderrmsg2);
+            setErr(true);
+        }
+    };
+
+    const setSecond = (event) => {
+        setShowErr(true);
+        setPassword({ ...password, secondPassword: event.target.value });
+        if(validLength && hasNumber && upperCase && lowerCase && specialChar && match)
+        {
+            setErrmsg("");
+            setErr(false);
+            const password = event.target.value;
+            setUserdetails({...userdetails, ...{ password } });
+        } else {
+            setErrmsg(pwderrmsg1);
+            setErr(true);
+        }
+    };
+
+
     return (
             <div className="app-container app-theme-white body-tabs-shadow">
                 <div className="app-container">
@@ -59,26 +128,46 @@ export default function Register() {
                                                                                 <div className="col-md-6">
                                                                                     <div className="position-relative form-group">
                                                                                     <label htmlFor="firstName" className>First Name</label>
-                                                                                    <input name="text" id="firstName" placeholder="First Name" type="text" className="form-control" />
+                                                                                    <input name="text" id="firstName" placeholder="First Name" type="text" className="form-control"
+                                                                                        onChange={(event) => {
+                                                                                            const firstName = event.target.value;
+                                                                                            setUserdetails({...userdetails, ...{ firstName } });
+                                                                                        }} 
+                                                                                    />
                                                                                     </div>
                                                                                 </div>
                                                                                 
                                                                                 <div className="col-md-6">
                                                                                     <div className="position-relative form-group">
                                                                                     <label htmlFor="lastName" className>Last Name</label>
-                                                                                    <input name="text" id="lastName" placeholder="Last Name" type="text" className="form-control" />
+                                                                                    <input name="text" id="lastName" placeholder="Last Name" type="text" className="form-control"
+                                                                                        onChange={(event) => {
+                                                                                            const lastName = event.target.value;
+                                                                                            setUserdetails({...userdetails, ...{ lastName } });
+                                                                                        }} 
+                                                                                    />
                                                                                     </div>
                                                                                 </div>
                                                                                 <div className="col-md-6">
                                                                                     <div className="position-relative form-group">
                                                                                     <label htmlFor="exampleEmail" className><span className="text-danger">*</span> Email</label>
-                                                                                    <input name="email" id="exampleEmail" placeholder="Email" type="email" className="form-control" />
+                                                                                    <input name="email" id="exampleEmail" placeholder="Email" type="email" className="form-control" 
+                                                                                         onChange={(event) => {
+                                                                                            const email = event.target.value;
+                                                                                            setUserdetails({...userdetails, ...{ email } });
+                                                                                        }}
+                                                                                    />
                                                                                     </div>
                                                                                 </div>
                                                                                 <div className="col-md-6"> 
                                                                                     <label htmlfor="examplePhone">Phone Number</label>
                                                                                     <div className="position-relative form-group">
-                                                                                        <input name="phone" id="examplePhone" placeholder="Phone Number" type="tel" className="form-control col-md-12" />
+                                                                                        <input name="phone" id="examplePhone" placeholder="Phone Number" type="tel" className="form-control col-md-12"
+                                                                                             onChange={(event) => {
+                                                                                                const phoneNumber = event.target.value;
+                                                                                                setUserdetails({...userdetails, ...{ phoneNumber } });
+                                                                                            }}
+                                                                                        />
                                                                                     </div>
                                                                                 </div>
                                                                                 
@@ -87,16 +176,38 @@ export default function Register() {
                                                                                     <div className="form-row">
                                                                                         <div className="col-md-4"> 
                                                                                             <label htmlFor="exampleGender">Gender</label>
-                                                                                            <select id="exampleGender" className="mb-2 form-control">
-                                                                                                <option>Male</option>
-                                                                                                <option>Female</option>
+                                                                                            <select type="select" 
+                                                                                                id="gender" 
+                                                                                                name="gender"
+                                                                                                className="mb-2 form-control"
+                                                                                                onChange={(event) => {
+                                                                                                    const name = event.target.value;
+                                                                                                    setUserdetails({...userdetails, ...{ name } }); 
+                                                                                                }}>
+                                                                                                <option value="">Select Option</option>
+                                                                                                <option value="Male">Male</option>
+                                                                                                <option value="Female">Female</option>
                                                                                             </select>
                                                                                         </div>
                                                                                         
                                                                                         <div className="col-md-8"> 
                                                                                             <label htmlfor="exampleDate">Date of Birth</label>
                                                                                             <div className="position-relative form-group">
-                                                                                                <input name="date" id="exampleDate" placeholder="date placeholder" type="date" className="form-control" />
+                                                                                            <SingleDatePicker
+                                                                                                //onChange={(startDate) => onDateChange(startDate)}
+                                                                                                onChange={(event) => {
+                                                                                                    const dateOfBirth = event.target.value;
+                                                                                                    setUserdetails({...userdetails, ...{ dateOfBirth } }); 
+                                                                                                }}
+                                                                                                minDate={today}
+                                                                                                maxDate={new Date(2100, 0, 1)}
+                                                                                                monthFormat="MMM YYYY"
+                                                                                                startDatePlaceholder="Date of Birth"
+                                                                                                disabled={false}
+                                                                                                className="form-control"
+                                                                                                startWeekDay="monday"
+                                                                                            />
+                                                                                                {/* <input name="date" id="exampleDate" placeholder="date placeholder" type="date" className="form-control" /> */}
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -267,3 +378,22 @@ export default function Register() {
             </div>
         )
 }
+
+const mapStateToProps = (state) => {
+    return {
+        user: state,
+        isLoading: state.loadingstate.isLoading,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        registeruser: (userdetails, history, setError) => {
+            dispatch(ShowLoading(userdetails));
+            dispatch(UserRegisterAuthAction(userdetails, history, setError));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
+
