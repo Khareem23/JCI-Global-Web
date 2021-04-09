@@ -1,17 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Authfooter from '../components/Authfooter'
 import Authnavigation from '../components/Authnavigation'
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-import { UserRegisterAuthAction, ShowLoading} from '../redux/actions/authaction';
+import { UserRegisterAuthAction, ShowLoading, FetchAllCountry} from '../redux/actions/authaction';
 import { usePasswordValidation } from "../utils/passwordValidation";
-import {
-    SingleDatePicker
-  } from "react-google-flight-datepicker";
+import CountryAutocomplete from '../components/CountryAutocomplete';
 
 
 const Register = (props) => {
-    const { registeruser, isLoading, setError } = props;
+    const { registeruser, isLoading, fetchallcountry, allcountriesstate } = props;
     const [userdetails, setUserdetails] = useState({});
     const history = useHistory();
     const pwderrmsg1 = "Your password must match each other and it must have a special character, a number, Upper & lower case letters and not less than 8 characters"
@@ -22,6 +20,15 @@ const Register = (props) => {
     const [errmsg, setErrmsg] = useState();
     const [errmsg2, setErrmsg2] = useState();
     const today = new Date();
+
+    const [error, setError] = useState({
+        hasError: false,
+        message: "",
+    })
+
+    useEffect(() => {
+        fetchallcountry(setError);
+    }, [])
 
     const [password, setPassword] = useState({
         firstPassword: "",
@@ -193,21 +200,8 @@ const Register = (props) => {
                                                                                         <div className="col-md-8"> 
                                                                                             <label htmlfor="exampleDate">Date of Birth</label>
                                                                                             <div className="position-relative form-group">
-                                                                                            <SingleDatePicker
-                                                                                                //onChange={(startDate) => onDateChange(startDate)}
-                                                                                                onChange={(event) => {
-                                                                                                    const dateOfBirth = event.target.value;
-                                                                                                    setUserdetails({...userdetails, ...{ dateOfBirth } }); 
-                                                                                                }}
-                                                                                                minDate={today}
-                                                                                                maxDate={new Date(2100, 0, 1)}
-                                                                                                monthFormat="MMM YYYY"
-                                                                                                startDatePlaceholder="Date of Birth"
-                                                                                                disabled={false}
-                                                                                                className="form-control"
-                                                                                                startWeekDay="monday"
-                                                                                            />
-                                                                                                {/* <input name="date" id="exampleDate" placeholder="date placeholder" type="date" className="form-control" /> */}
+                                                                                            
+                                                                                                <input name="date" id="exampleDate" placeholder="date placeholder" type="date" className="form-control" />
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -215,6 +209,9 @@ const Register = (props) => {
                                                                                 <div className="col-md-6">
                                                                                     <div className="position-relative form-group">
                                                                                     <label htmlFor="exampleCountry" className><span className="text-danger"></span>Country</label>
+                                                                                            <CountryAutocomplete placeholder="Select a Country"
+                                                                                                suggestions={allcountriesstate}
+                                                                                            />
                                                                                         <select id="exampleCountry" className="mb-2 form-control">
                                                                                             <option>Nigeria</option>
                                                                                             <option>Ghana</option>
@@ -383,6 +380,7 @@ const mapStateToProps = (state) => {
     return {
         user: state,
         isLoading: state.loadingstate.isLoading,
+        allcountriesstate: state.allcountriesstate.allcountriesstate
     }
 }
 
@@ -391,7 +389,11 @@ const mapDispatchToProps = (dispatch) => {
         registeruser: (userdetails, history, setError) => {
             dispatch(ShowLoading(userdetails));
             dispatch(UserRegisterAuthAction(userdetails, history, setError));
-        }
+        },
+        fetchallcountry: (setError) => {
+            console.log("okada men are fighting")
+            dispatch(FetchAllCountry(setError));
+        },
     }
 }
 

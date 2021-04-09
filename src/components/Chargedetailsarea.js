@@ -1,0 +1,144 @@
+import React from 'react'
+
+export default function Chargedetailsarea() {
+    return (
+        <>
+            <div className="app-page-title app-page-title-simple">
+                <div className="page-title-wrapper" style={{marginLeft: 16}}>
+                    <div className="page-title-heading">
+                    <div>
+                        <div className="page-title-head center-elem">
+                        <span className="d-inline-block">Charges Management</span>
+                        </div>
+                        <div className="page-title-subheading opacity-10">
+                        <nav className aria-label="breadcrumb">
+                            <ol className="breadcrumb">
+                            <li className="breadcrumb-item">
+                                <span>Here you can manage charges for both live and offline transactions</span>
+                            </li>
+                            </ol>
+                        </nav>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div className="row">
+                <div className="col-md-6 col-lg-12">
+                    <div className="card-shadow-danger mb-3 widget-chart widget-chart2 text-left card">
+                    <div className="widget-content p-0 w-100">
+                    <div className="widget-content-outer">
+                        <div className="row">
+                            <div className="widget-content-left fsize-1">
+                                <h3 className="text-muted opacity-6" style={{marginLeft: 32}}>Charges ID: XXXXXX</h3><br></br>
+                            </div>
+                        </div>
+                        
+                        <div className="widget-content-wrapper" style={{marginBottom: 50}}>
+                       
+                        <div className="widget-content-right w-100">
+                            <div className="progress-bar-xs progress" style={{marginLeft: 16, marginRight: 16}}>
+                            <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div className="col-md-12 position-relative form-group">
+                            <div className="form-row">
+                                <div className="position-relative form-group col-md-4">
+                                    <label htmlFor="exampleGender">Payment Type</label>
+                                    <select type="select" 
+                                        id="gender" 
+                                        name="gender"
+                                        className="mb-2 form-control"
+                                        >
+                                        <option value="">Select Payment Type</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                                
+                               
+                                <div className="position-relative form-group col-md-4">
+                                    <label htmlFor="exampleEmail" className>Provider Charged Rate (%) </label>
+                                    <input name="rate" id="exampleEmail" placeholder="Charged Rate" type="text" className="form-control" 
+                                    />
+                                </div>
+
+
+                                <div className="position-relative form-group col-md-4">
+                                    <label htmlFor="exampleEmail" className>Provider Flat Charges </label>
+                                    <input name="rate" id="exampleEmail" placeholder="Flat Charges" type="text" className="form-control" 
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-md-12 position-relative form-group">
+                            <div className="form-row">
+                                
+                                <div className="position-relative form-group col-md-4">
+                                    <label htmlFor="exampleName" className>Receiving Country(NGN)</label>
+                                    <select type="select" 
+                                        id="gender" 
+                                        name="gender"
+                                        className="mb-2 form-control"
+                                        >
+                                        <option value="">Receiving Country</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                                
+                               
+                                <div className="ml-auto">
+                                    <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
+                                        <span className="text-success pl-2">
+                                            <button className="btn-wide btn btn-danger" style={{margin: 16, marginTop: 50}}> {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}  
+                                            Update Charges 
+                                            {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}  </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+
+                        
+                       
+                       
+
+                        
+
+                        
+                        <div className="widget-content-left fsize-1" style={{marginLeft: 16}}>
+                        <br></br>
+                        </div>
+                        <div className="widget-content-wrapper" style={{marginBottom: 40}}>
+                       
+                        <div className="widget-content-right w-100">
+                            <div className="progress-bar-xs progress" style={{marginLeft: 16, marginRight: 16}}>
+                            <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+
+                        
+                        
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+           
+        </>
+
+    )
+}

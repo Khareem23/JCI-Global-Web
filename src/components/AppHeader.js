@@ -30,7 +30,7 @@ export default function AppHeader() {
         </div>
         <div className="app-header__menu">
             <span>
-            <button type="button" className="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+            <button type="button" className="btn-icon btn-icon-only btn btn-danger btn-sm mobile-toggle-header-nav">
                 <span className="btn-icon-wrapper">
                 <i className="fa fa-ellipsis-v fa-w-6" />
                 </span>
@@ -46,135 +46,15 @@ export default function AppHeader() {
                     </div>
                     <button className="close" />
                 </div>
-                <ul className="header-megamenu nav">
-                <li className="nav-item">
-                <a href="javascript:void(0);" data-placement="bottom" rel="popover-focus" data-offset={300} data-toggle="popover-custom" className="nav-link">
-                    <i className="nav-link-icon pe-7s-gift"> </i> Mega Menu
-                    <i className="fa fa-angle-down ml-2 opacity-5" />
-                </a>
-                <div className="rm-max-width">
-                    <div className="d-none popover-custom-content">
-                    <div className="dropdown-mega-menu">
-                        <div className="grid-menu grid-menu-3col">
-                        <div className="no-gutters row">
-                            <div className="col-sm-6 col-xl-4">
-                            <ul className="nav flex-column">
-                                <li className="nav-item-header nav-item"> Overview</li>
-                                <li className="nav-item">
-                                <a href="javascript:void(0);" className="nav-link">
-                                    <i className="nav-link-icon lnr-inbox" />
-                                    <span> Contacts</span>
-                                </a>
-                                </li>
-                                <li className="nav-item">
-                                <a href="javascript:void(0);" className="nav-link">
-                                    <i className="nav-link-icon lnr-book" />
-                                    <span> Incidents</span>
-                                    <div className="ml-auto badge badge-pill badge-danger">5</div>
-                                </a>
-                                </li>
-                                <li className="nav-item">
-                                <a href="javascript:void(0);" className="nav-link">
-                                    <i className="nav-link-icon lnr-picture" />
-                                    <span> Companies</span>
-                                </a>
-                                </li>
-                                <li className="nav-item">
-                                <a disabled href="javascript:void(0);" className="nav-link disabled">
-                                    <i className="nav-link-icon lnr-file-empty" />
-                                    <span> Dashboards</span>
-                                </a>
-                                </li>
-                            </ul>
-                            </div>
-                            <div className="col-sm-6 col-xl-4">
-                            <ul className="nav flex-column">
-                                <li className="nav-item-header nav-item"> Favourites</li>
-                                <li className="nav-item">
-                                <a href="javascript:void(0);" className="nav-link"> Reports Conversions </a>
-                                </li>
-                                <li className="nav-item">
-                                <a href="javascript:void(0);" className="nav-link"> Quick Start
-                                    <div className="ml-auto badge badge-success">New</div>
-                                </a>
-                                </li>
-                                <li className="nav-item">
-                                <a href="javascript:void(0);" className="nav-link">Users &amp; Groups</a>
-                                </li>
-                                <li className="nav-item">
-                                <a href="javascript:void(0);" className="nav-link">Proprieties</a>
-                                </li>
-                            </ul>
-                            </div>
-                            <div className="col-sm-6 col-xl-4">
-                            <ul className="nav flex-column">
-                                <li className="nav-item-header nav-item">Sales &amp; Marketing</li>
-                                <li className="nav-item">
-                                <a href="javascript:void(0);" className="nav-link">Queues </a>
-                                </li>
-                                <li className="nav-item">
-                                <a href="javascript:void(0);" className="nav-link">Resource Groups </a>
-                                </li>
-                                <li className="nav-item">
-                                <a href="javascript:void(0);" className="nav-link">Goal Metrics
-                                    <div className="ml-auto badge badge-warning">3</div>
-                                </a>
-                                </li>
-                                <li className="nav-item">
-                                <a href="javascript:void(0);" className="nav-link">Campaigns</a>
-                                </li>
-                            </ul>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </li>
-                <li className="btn-group nav-item">
-                <a className="nav-link" data-toggle="dropdown" aria-expanded="false">
-                    <span className="badge badge-pill badge-danger ml-0 mr-2">4</span> Settings
-                    <i className="fa fa-angle-down ml-2 opacity-5" />
-                </a>
-                <div tabIndex={-1} role="menu" aria-hidden="true" className="rm-pointers dropdown-menu">
-                    <div className="dropdown-menu-header">
-                    <div className="dropdown-menu-header-inner bg-secondary">
-                        <div className="menu-header-image opacity-5" style={{backgroundImage: 'url("assets/images/dropdown-header/abstract2.jpg")'}} />
-                        <div className="menu-header-content">
-                        <h5 className="menu-header-title">Overview</h5>
-                        <h6 className="menu-header-subtitle">Dropdown menus for everyone</h6>
-                        </div>
-                    </div>
-                    </div>
-                    <div className="scroll-area-xs">
-                    <div className="scrollbar-container">
-                        <h6 tabIndex={-1} className="dropdown-header">Key Figures</h6>
-                        <button type="button" tabIndex={0} className="dropdown-item">Service Calendar</button>
-                        <button type="button" tabIndex={0} className="dropdown-item">Knowledge Base</button>
-                        <button type="button" tabIndex={0} className="dropdown-item">Accounts</button>
-                        <div tabIndex={-1} className="dropdown-divider" />
-                        <button type="button" tabIndex={0} className="dropdown-item">Products</button>
-                        <button type="button" tabIndex={0} className="dropdown-item">Rollup Queries</button>
-                    </div>
-                    </div>
-                    <ul className="nav flex-column">
-                    <li className="nav-item-divider nav-item" />
-                    <li className="nav-item-btn nav-item">
-                        <button className="btn-wide btn-shadow btn btn-danger btn-sm">Cancel</button>
-                    </li>
-                    </ul>
-                </div>
-                </li>
                 
-            </ul>
             </div>
             <div className="app-header-right">
                 <div className="header-dots">
                     <div className="dropdown">
                         <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" className="p-0 mr-2 btn btn-link">
                             <span className="icon-wrapper icon-wrapper-alt rounded-circle">
-                            <span className="icon-wrapper-bg bg-primary" />
-                            <i className="icon text-primary ion-android-apps" />
+                            <span className="icon-wrapper-bg bg-danger" />
+                            <i className="icon text-danger ion-android-apps" />
                             </span>
                         </button>
                         <div tabIndex={-1} role="menu" aria-hidden="true" className="dropdown-menu-xl rm-pointers dropdown-menu dropdown-menu-right">
@@ -224,7 +104,7 @@ export default function AppHeader() {
                         <ul className="nav flex-column">
                         <li className="nav-item-divider nav-item" />
                         <li className="nav-item-btn text-center nav-item">
-                            <button className="btn-shadow btn btn-primary btn-sm">Follow-ups</button>
+                            <button className="btn-shadow btn btn-danger btn-sm">Follow-ups</button>
                         </li>
                         </ul>
                     </div>
@@ -278,12 +158,12 @@ export default function AppHeader() {
                                 </li>
                                 <li className="nav-item">
                                     <a href="javascript:void(0);" className="nav-link">Settings
-                                    <div className="ml-auto badge badge-success">New</div>
+                                    <div className="ml-auto badge badge-danger">New</div>
                                     </a>
                                 </li>
                                 <li className="nav-item">
                                     <a href="javascript:void(0);" className="nav-link">Messages
-                                    <div className="ml-auto badge badge-warning">512</div>
+                                    <div className="ml-auto badge badge-danger">512</div>
                                     </a>
                                 </li>
                                 <li className="nav-item">
@@ -298,7 +178,7 @@ export default function AppHeader() {
                             <div className="grid-menu grid-menu-2col">
                             <div className="no-gutters row">
                                 <div className="col-sm-6">
-                                <button className="btn-icon-vertical btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-warning">
+                                <button className="btn-icon-vertical btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-danger">
                                     <i class="pe-7s-chat icon-gradient bg-amy-crisp btn-icon-wrapper mb-2"></i> Message Inbox
                                 </button>
                                 </div>
@@ -314,7 +194,7 @@ export default function AppHeader() {
                             <li className="nav-item-divider nav-item">
                             </li>
                             <li className="nav-item-btn text-center nav-item">
-                                <button className="btn-wide btn btn-primary btn-sm"> Open Messages </button>
+                                <button className="btn-wide btn btn-danger btn-sm"> Open Messages </button>
                             </li>
                             </ul>
                         </div>
@@ -323,11 +203,6 @@ export default function AppHeader() {
                     <div className="widget-content-left  ml-3 header-user-info">
                         <div className="widget-heading"> Alina Mclourd </div>
                         <div className="widget-subheading"> VP People Manager </div>
-                    </div>
-                    <div className="widget-content-right header-user-info ml-3">
-                        <button type="button" className="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
-                        <i className="fa text-white fa-calendar pr-1 pl-1" />
-                        </button>
                     </div>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 import axios from "axios"
-import { mainAxios } from "../../axios"
+import { mainAxios } from "../../utils/axios"
 
     const AuthActionType = {
         USER_REGISTRATION_SUCCESS: "USER_REGISTRATION_SUCCESS",
@@ -12,7 +12,8 @@ import { mainAxios } from "../../axios"
         MAIL_EXIST_FAIL: "MAIL_EXIST_FAIL",
         PHONE_EXIST_SUCCESS: "PHONE_EXIST_SUCCESS",
         PHONE_EXIST_FAIL: "PHONE_EXIST_FAIL",
-
+        FETCH_COUNTRIES_SUCCESS: "FETCH_COUNTRIES_SUCCESS",
+        FETCH_COUNTRIES_FAIL: "FETCH_COUNTRIES_FAIL",
     }
 
 
@@ -245,6 +246,51 @@ import { mainAxios } from "../../axios"
         }
     }
     
+
+    //to fetch all the countries
+    const FetchAllCountry = (setError) => {
+        return async (dispatch) => {
+            try {
+                    dispatch({type: AuthActionType.LOADING_SHOW, payload: ""}); 
+                    try {
+                        const response = await mainAxios.get('/Users/getCountries');
+                        console.log(JSON.stringify(response));
+                        const res = response.data;
+                        console.log(JSON.stringify(res));
+                        if(res.length > 1)
+                        {
+                            dispatch({type: AuthActionType.FETCH_COUNTRIES_SUCCESS, payload: res});
+                            dispatch({type: AuthActionType.LOADING_HIDE, payload: res}); 
+                        } 
+                        else  
+                        {
+                            dispatch({type: AuthActionType.FETCH_COUNTRIES_FAIL, payload: res });
+                            dispatch({type: AuthActionType.LOADING_HIDE, payload: ""}); 
+                            setError({
+                                hasError: true,
+                                message: "Error fetching countries",
+                            })
+                        }
+                    } catch(error) {
+                        dispatch({type: AuthActionType.LOADING_HIDE, payload: ""});
+                        dispatch({type: AuthActionType.FETCH_COUNTRIES_FAIL, payload: "" });
+                        setError({
+                            hasError: true,
+                            message: error.message,
+                        })
+                    }
+                
+            } catch(error) {
+                dispatch({type: AuthActionType.LOADING_HIDE, payload: ""}); 
+                dispatch({type: AuthActionType.FETCH_COUNTRIES_FAIL, payload: "" });
+                const errmsg = "Error fetching countries...";
+                setError({
+                    hasError: true,
+                    message: error.message + " " + errmsg,
+                })
+            }
+        }
+    }
     
 export { 
     ShowLoading,
@@ -254,4 +300,6 @@ export {
     PinLoginAuthAction,
     CheckIfEmailExist,
     CheckIfPhoneExist,
+    AuthActionType,
+    FetchAllCountry,
 }

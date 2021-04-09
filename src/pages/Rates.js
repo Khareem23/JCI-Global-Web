@@ -1,10 +1,10 @@
 import React from 'react'
 import AppHeader from '../components/AppHeader'
 import AppSidebar from '../components/AppSidebar'
-import Dashboardarea from '../components/Dashboardarea'
 import Footer from '../components/Footer'
+import Ratesarea from '../components/Ratesarea'
 
-export default function Dashboard() {
+export default function Rates() {
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
             <AppHeader/>
@@ -13,11 +13,9 @@ export default function Dashboard() {
                 <AppSidebar/>
 
                 <div className="app-main__outer">
-                    <div className="app-main__inner">
-                        
+                    <div className="app-main__inner">                        
 
-                        <Dashboardarea/>
-
+                        <Ratesarea/>
 
                         <Footer/>
                     
@@ -26,5 +24,6 @@ export default function Dashboard() {
             </div>
             <div className="app-drawer-overlay d-none animated fadeIn" />
         </div>
+        
     )
 }

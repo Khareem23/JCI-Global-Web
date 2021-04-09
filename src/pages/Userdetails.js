@@ -1,10 +1,10 @@
 import React from 'react'
 import AppHeader from '../components/AppHeader'
 import AppSidebar from '../components/AppSidebar'
-import Dashboardarea from '../components/Dashboardarea'
+import Userdetailsarea from '../components/Userdetailsarea'
 import Footer from '../components/Footer'
 
-export default function Dashboard() {
+export default function Userdetails() {
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
             <AppHeader/>
@@ -16,7 +16,7 @@ export default function Dashboard() {
                     <div className="app-main__inner">
                         
 
-                        <Dashboardarea/>
+                        <Userdetailsarea/>
 
 
                         <Footer/>
