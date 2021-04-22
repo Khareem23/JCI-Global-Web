@@ -4,7 +4,7 @@ export default function Dashboardarea() {
     return (
         <>
             <div className="app-page-title app-page-title-simple">
-            <div className="page-title-wrapper">
+                <div className="page-title-wrapper">
                 <div className="page-title-heading">
                 <div>
                     <div className="page-title-head center-elem">
@@ -549,73 +549,27 @@ export default function Dashboardarea() {
 
 
             <div className="row">
-            <div className="col-md-6 col-xl-4">
-                <div className="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-danger">
-                <div className="widget-chat-wrapper-outer">
-                    <div className="widget-chart-content pt-3 pl-3 pb-1">
-                    <div className="widget-chart-flex">
-                        <div className="widget-numbers">
-                        <div className="widget-chart-flex">
-                            <div className="fsize-4">
-                            <span>Transaction Min Limit</span>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <h6 className="widget-subheading mb-0 opacity-5" style={{fontSize: 12}}>You can set transaction minimum limit here...</h6>
-                    <label htmlFor="exampleCustomSelect" style={{ marginTop: 30}}>Enter Amount</label>
-                        <div className="input-group">
-                            <div className="input-group-prepend">
-                                <span className="input-group-text">$</span>
-                            </div>
-                            <input placeholder="Amount" step={1} type="number" className="form-control" />
-                        </div>
-                        <div className="ml-auto">
-                            <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
-                                <span className="text-success pl-2">
-                                    <button className="btn-wide btn btn-danger" style={{marginTop: 15}}>Update</button>
-                                    </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            <div className="col-md-6 col-xl-8">
-                <div className="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-danger">
+                <div className="col-md-6 col-xl-4">
+                    <div className="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-danger">
                     <div className="widget-chat-wrapper-outer">
                         <div className="widget-chart-content pt-3 pl-3 pb-1">
+                        <div className="widget-chart-flex">
+                            <div className="widget-numbers">
                             <div className="widget-chart-flex">
-                                <div className="widget-numbers">
-                                <div className="widget-chart-flex">
-                                    <div className="fsize-4">
-                                    <span>Referral Minimum Amount & Bonus</span>
-                                    </div>
-                                </div>
+                                <div className="fsize-4">
+                                <span>Transaction Min Limit</span>
                                 </div>
                             </div>
-                            <h6 className="widget-subheading mb-0 opacity-5" style={{fontSize: 12}}>You can set transaction minimum limit here...</h6>
-                            <div className="form-row">
-                                <div className="col-md-6">
-                                    <label htmlFor="exampleCustomSelect" style={{ marginTop: 30}}>Min Required Amount</label>
-                                    <div className="input-group">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">$</span>
-                                        </div>
-                                        <input placeholder="Amount" step={1} type="number" className="form-control" />
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <label htmlFor="exampleCustomSelect" style={{ marginTop: 30}}>Bonus Value</label>
-                                    <div className="input-group">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">$</span>
-                                        </div>
-                                        <input placeholder="Amount" step={1} type="number" className="form-control" />
-                                    </div>
-                                </div>
                             </div>
-
+                        </div>
+                        <h6 className="widget-subheading mb-0 opacity-5" style={{fontSize: 12}}>You can set transaction minimum limit here...</h6>
+                        <label htmlFor="exampleCustomSelect" style={{ marginTop: 30}}>Enter Amount</label>
+                            <div className="input-group">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text">$</span>
+                                </div>
+                                <input placeholder="Amount" step={1} type="number" className="form-control" />
+                            </div>
                             <div className="ml-auto">
                                 <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
                                     <span className="text-success pl-2">
@@ -625,9 +579,55 @@ export default function Dashboardarea() {
                             </div>
                         </div>
                     </div>
+                    </div>
+                </div>
+                <div className="col-md-6 col-xl-8">
+                    <div className="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-danger">
+                        <div className="widget-chat-wrapper-outer">
+                            <div className="widget-chart-content pt-3 pl-3 pb-1">
+                                <div className="widget-chart-flex">
+                                    <div className="widget-numbers">
+                                    <div className="widget-chart-flex">
+                                        <div className="fsize-4">
+                                        <span>Referral Minimum Amount & Bonus</span>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <h6 className="widget-subheading mb-0 opacity-5" style={{fontSize: 12}}>You can set transaction minimum limit here...</h6>
+                                <div className="form-row">
+                                    <div className="col-md-6">
+                                        <label htmlFor="exampleCustomSelect" style={{ marginTop: 30}}>Min Required Amount</label>
+                                        <div className="input-group">
+                                            <div className="input-group-prepend">
+                                                <span className="input-group-text">$</span>
+                                            </div>
+                                            <input placeholder="Amount" step={1} type="number" className="form-control" />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <label htmlFor="exampleCustomSelect" style={{ marginTop: 30}}>Bonus Value</label>
+                                        <div className="input-group">
+                                            <div className="input-group-prepend">
+                                                <span className="input-group-text">$</span>
+                                            </div>
+                                            <input placeholder="Amount" step={1} type="number" className="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="ml-auto">
+                                    <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
+                                        <span className="text-success pl-2">
+                                            <button className="btn-wide btn btn-danger" style={{marginTop: 15}}>Update</button>
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
         </>
 
     )

@@ -1,4 +1,5 @@
 import React from 'react'
+import CustSidemenu from './CustSidemenu'
 import Sidemenu from './Sidemenu'
 
 export default function AppSidebar() {
@@ -34,7 +35,9 @@ export default function AppSidebar() {
                     </button>
                 </span>
                 </div>    
-                <Sidemenu/>
+                {/* Here i will use the user login typr to determine the side menu to show/display Sidemenu */}
+                {/* <Sidemenu/> */}
+                <CustSidemenu/>
         </div>
     )
 }

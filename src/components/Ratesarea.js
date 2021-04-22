@@ -3,7 +3,6 @@ import React from 'react'
 export default function Ratesarea() {
     return (
         <>
-
             <div className="app-page-title app-page-title-simple">
                 <div className="page-title-wrapper">
                     <div className="page-title-heading" style={{marginLeft: 16}}>
@@ -28,7 +27,7 @@ export default function Ratesarea() {
                 </div>
             </div>
 
-        <div className="col-md-6 col-xl-12">
+            <div className="col-md-6 col-xl-12">
                 <div className="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-danger">
                     
                     <div className="widget-chat-wrapper-outer">

@@ -726,6 +726,55 @@ ul.fancytree-ext-wide span.fancytree-node span.fancytree-title {
   background-color: #cbe8f6;
   border-color: #26a0da;
 }
+
+/* .left_margin {
+  margin-left: 20px;
+  text-align: right;
+} 
+
+
+marginTop: '-12em'
+
+*/
+
+.deeped {
+  font-size: 11;
+  margin-left: 50px;
+}
+.deepeen {
+  font-size: 11;
+  margin-left: 82px;
+}
+
+.left_margin {
+  margin-top: -1em;
+  margin-left: 0px;
+  text-align: right;
+}
+
+.top_margin {
+  margin-top: -11em;
+}
+
+/* Set the background color of body to tan */
+body {
+  background-color: tan;
+}
+
+/* On screens that are 992px or less, set the background color to blue */
+@media screen and (max-width: 992px) {
+  .top_margin {
+    margin-top: -1em;
+  }
+}
+
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 600px) {
+  .top_margin {
+    margin-top: -1em;
+  }
+}
+
 /*******************************************************************************
  * 'table' extension
  */

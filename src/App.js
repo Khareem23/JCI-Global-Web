@@ -13,6 +13,7 @@ import Charges from './pages/Charges';
 import ChargeDetails from './pages/ChargeDetails';
 import Promo from './pages/Promo';
 import AustracReport from './pages/AustracReport';
+import SendMoney from './pages/SendMoney';
 function App() {
   return (
      <Router>
@@ -72,6 +73,10 @@ function App() {
 
           <Route exact path='/ausreport'>
             <AustracReport/>
+          </Route>
+          
+          <Route exact path='/sendmoney'>
+            <SendMoney/>
           </Route>
           
           {/* <Route exact path='/'>
