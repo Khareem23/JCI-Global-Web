@@ -28,37 +28,22 @@ export default function Promoarea() {
             </div>
 
             <div className="col-md-6 col-xl-12">
-                <div className="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-danger">
-                    
+                <div className="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-danger">                
                     <div className="widget-chat-wrapper-outer">
                         <div className="widget-chart-content pt-3 pl-3 pb-1">
-                           
-
                             <div className="form-row">
-                                
-                            
-                            <div className="ml-auto" style={{marginRight: 15}}>
-                                            <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
-                                                <span className="text-success pl-2">
-                                                    <button className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg">Create Promo</button>
-                                                    </span>
-                                            </div>
-                                        </div>
-                                
+                                <div className="ml-auto" style={{marginRight: 15}}>
+                                    <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
+                                        <span className="text-success pl-2">
+                                            <button className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg">Create Promo</button>
+                                            </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                
-                        
-                
-                
                 </div>
-
-
-
-               
-
-                </div>
+            </div>
 
             <div className="main-card mb-3 card" style={{margin: 16}}>
                 <div className="card-body">

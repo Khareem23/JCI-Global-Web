@@ -14,6 +14,11 @@ import ChargeDetails from './pages/ChargeDetails';
 import Promo from './pages/Promo';
 import AustracReport from './pages/AustracReport';
 import SendMoney from './pages/SendMoney';
+import TransactionHistory from './pages/TransactionHistory';
+import Beneficiary from './pages/Beneficiary'
+import NewBeneficiary from './pages/NewBeneficiary';
+import MyAccount from './pages/MyAccount';
+
 function App() {
   return (
      <Router>
@@ -77,6 +82,22 @@ function App() {
           
           <Route exact path='/sendmoney'>
             <SendMoney/>
+          </Route>
+
+          <Route exact path='/transactionhistory'>
+            <TransactionHistory/>
+          </Route>
+
+          <Route exact path='/beneficiary'>
+            <Beneficiary />
+          </Route>
+
+          <Route exact path='/addbeneficiary'>
+            <NewBeneficiary />
+          </Route>
+
+          <Route exact path='/myaccount'>
+            <MyAccount />
           </Route>
           
           {/* <Route exact path='/'>

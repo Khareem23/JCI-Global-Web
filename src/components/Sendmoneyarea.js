@@ -37,7 +37,7 @@ export default function Sendmoneyarea() {
                     </li>
                     <li className="nav-item">
                     <a data-toggle="tab" href="#tab-eg9-2" className="nav-link">
-                        <div className="widget-number text-danger">Choose Payment</div>
+                        <div className="widget-number">Choose Payment</div>
                         <div className="tab-subheading">
                         <span className="pr-2 opactiy-6">
                         </span>
@@ -166,14 +166,531 @@ export default function Sendmoneyarea() {
                 </div>
                 <div className="tab-pane" id="tab-eg9-1" role="tabpanel">
                     <div className="card-body">
-                    <p className="mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
-                        printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
+                    
+                    <div className="row">
+                            <div className="col-md-6 col-lg-12">
+                                <div className="card-shadow-danger mb-3 widget-chart widget-chart2 text-left card">
+                                <div className="widget-content p-0 w-100">
+                                <div className="widget-content-outer">
+                                    <div className="widget-content-wrapper" style={{marginBottom: 55}}>
+                                
+                                    <div className="widget-content-right w-100">
+                                        <div className="progress-bar-xs progress" style={{marginLeft: 16, marginRight: 16}}>
+                                        <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+
+
+                                    
+
+                                    <div className="col-md-12 position-relative form-group ">
+                                        <div className="form-row">                                            
+                                            <div className="col-md-4"> 
+                                                <label htmlFor="exampleGender">Bank</label>
+                                                <select type="select" 
+                                                    id="gender" 
+                                                    name="gender"
+                                                    className="mb-2 form-control"
+                                                    >
+                                                    <option value="">-- Select Bank --</option>
+                                                    <option value="Male">First Bank</option>
+                                                    <option value="Female">Sterling Bank</option>
+                                                </select>
+                                            </div>
+                                            <div className="col-md-8"> 
+                                                <label htmlFor="exampleGender">Corresponding Bank Country</label>
+                                                <select type="select" 
+                                                    id="gender" 
+                                                    name="gender"
+                                                    className="mb-2 form-control"
+                                                    >
+                                                    <option value="">-- Select Country --</option>
+                                                    <option value="Male">First Bank</option>
+                                                    <option value="Female">Sterling Bank</option>
+                                                </select>
+                                            </div>                                           
+                                        </div>
+                                    </div>
+
+
+                                    <div className="col-md-12 position-relative form-group ">
+                                        <div className="form-row">
+                                            <div className="position-relative form-group col-md-4">
+                                                <label htmlFor="exampleAmount">Account Number</label>
+                                                <input name="amount" id="exampleAmount" placeholder="Account Number/IBAN" type="text" className="form-control" 
+                                                />
+                                            </div>
+
+                                            <div className="position-relative form-group col-md-4">
+                                                <label htmlFor="exampleAmount">Bank Name</label>
+                                                <input name="amount" id="exampleAmount" placeholder="Bank Name" type="text" className="form-control" 
+                                                />
+                                            </div>
+
+                                            <div className="position-relative form-group col-md-4">
+                                                <label htmlFor="exampleAmount">Account Number</label>
+                                                <input name="amount" id="exampleAmount" placeholder="Account Number/IBAN" type="text" className="form-control" 
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+
+                                    <div className="col-md-12 position-relative form-group">
+                                        <div className="form-row">                                            
+                                            <div className="position-relative form-group col-md-4">
+                                                <label htmlFor="exampleAmount">Account Name</label>
+                                                <input name="amount" id="exampleAmount" placeholder="Account Name" type="text" className="form-control" 
+                                                />
+                                            </div>  
+                                            <div className="position-relative form-group col-md-8">
+                                                <label htmlFor="exampleAmount">Account Name</label>
+                                                <input name="amount" id="exampleAmount" placeholder="Account Name" type="text" className="form-control" 
+                                                />
+                                            </div>                                           
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-12 position-relative form-group">
+                                        <div className="form-row">
+                                        <div className="position-relative form-group col-md-4">
+                                                <label htmlFor="exampleAmount">Bank Address</label>
+                                                <input name="amount" id="exampleAmount" placeholder="Bank Address" type="text" className="form-control" 
+                                                />
+                                            </div>
+
+                                            <div className="position-relative form-group col-md-4">
+                                                <label htmlFor="exampleAmount">BSB (optional)</label>
+                                                <input name="amount" id="exampleAmount" placeholder="BSB (optional)" type="text" className="form-control" 
+                                                />
+                                            </div>
+
+                                            <div className="position-relative form-group col-md-4">
+                                                <label htmlFor="exampleAmount">SWIFT (optional)</label>
+                                                <input name="amount" id="exampleAmount" placeholder="SWIFT (optional)" type="text" className="form-control" 
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>                                    
+
+                                    <div className="ml-auto">
+                                        <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
+                                                <span className="text-success pl-2">
+                                                    <button className="btn-wide btn btn-danger" style={{marginRight: 16}}>   Next   </button>
+                                                </span>
+                                        </div>
+                                    </div>
+
+                                <div className="" style={{marginTop: -35}}>
+                                    <div className="form-row">
+                                                <span className="text-success pl-2">
+                                                    <button className="btn-wide btn btn-danger" style={{marginLeft: 12}}>   Previous   </button>
+                                                </span>
+                                    </div>
+                                </div>
+
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    
                     </div>
                 </div>
                 <div className="tab-pane" id="tab-eg9-2" role="tabpanel">
                     <div className="card-body">
-                    <p className="mb-0">It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus
-                        PageMaker including versions of Lorem Ipsum.</p>
+
+
+                    {/* Direct Deposit POLI Page start here */}
+
+                    {/* <div className="row">
+                            <div className="col-md-6 col-lg-12">
+                                <div className="card-shadow-danger mb-3 widget-chart widget-chart2 text-left card">
+                                <div className="widget-content p-0 w-100">
+                                <div className="widget-content-outer">
+                                    <div className="widget-content-wrapper" style={{marginBottom: 50}}>
+
+                                    <div className="widget-content-left fsize-1 col-md-12">
+                                        <h5 className="text-muted opacity-10">Direct Deposit - POLI Payment</h5><br></br>
+                                        <div className="progress-bar-xs progress" style={{ marginRight: 16}}>
+                                        <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
+                                        </div>
+                                        </div>
+                                    </div>
+                                
+                                    </div>
+
+                                   <div className="col-md-12 position-relative form-group">
+                                        <div className="form-row">
+                                            <div className="position-relative form-group col-md-6">
+                                                <label htmlFor="exampleAmount"></label>
+                                                
+                                            </div>
+                                            <div className="position-relative form-group col-md-6 left_margin">
+                                                <br></br>
+
+                                                <div className=" no-shadow rm-border bg-transparent text-center">
+                                                    <img src="assets/images/poli.jfif" width={400} height={300} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    
+                                   
+
+                                    <div className="col-md-6 position-relative form-group" style={{marginTop: -195}}>
+                                    <button className="mb-2 mr-2 btn-wide btn-square btn btn-danger btn-block btn-lg" style={{marginRight: 16}}>PAY NOW</button>
+                                    </div>
+                                    <span className="text-center col-md-6">Click Pay now to complete this transaction</span>
+
+                                    <div className="" style={{marginTop: 95}}>
+                                        <div className="form-row">
+                                                    <span className="text-success pl-2">
+                                                        <button className="btn-wide btn btn-danger" style={{marginLeft: 12}}>   Previous   </button>
+                                                    </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div> */}
+
+                    {/* Direct Deposit POLI Page Ends here */}
+
+                    {/* Credit Card Payment start here */}
+
+                    {/*   <div className="row">
+                            <div className="col-md-6 col-lg-12">
+                                <div className="card-shadow-danger mb-3 widget-chart widget-chart2 text-left card">
+                                <div className="widget-content p-0 w-100">
+                                <div className="widget-content-outer">
+                                    <div className="widget-content-wrapper" style={{marginBottom: 50}}>
+
+                                    <div className="widget-content-left fsize-1 col-md-12">
+                                        <h5 className="text-muted opacity-10">Credit Card Payment</h5><br></br>
+                                        <div className="progress-bar-xs progress" style={{ marginRight: 16}}>
+                                        <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
+                                        </div>
+                                        </div>
+                                    </div>
+                                
+                                    //  <div className="widget-content-right w-100">
+                                    //     <div className="progress-bar-xs progress" style={{marginLeft: 16, marginRight: 16}}>
+                                    //     <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
+                                    //     </div>
+                                    //     </div>
+                                    // </div> 
+
+
+                                    </div>
+
+                                   <div className="col-md-12 position-relative form-group">
+                                        <div className="form-row">
+                                            <div className="position-relative form-group col-md-6">
+                                                <label htmlFor="exampleAmount"></label>
+                                                
+                                            </div>
+                                            <div className="position-relative form-group col-md-6 left_margin">
+                                                <br></br>
+
+                                                <div className=" no-shadow rm-border bg-transparent text-center">
+                                                    <img src="assets/images/creditcard.png" width={200} height={160} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-12 position-relative form-group top_margin">
+                                        <div className="form-row">
+                                            <div className="position-relative form-group col-md-6">
+                                                <label htmlFor="exampleAmount">Card Number</label>
+                                                <input name="amount" id="exampleAmount" placeholder="Card Number" type="number" min="0" className="form-control" 
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-12 position-relative form-group">
+                                        <div className="form-row">
+                                            <div className="position-relative form-group col-md-6">
+                                                <label htmlFor="exampleAmount">Card Holder's Name</label>
+                                                <input name="amount" id="exampleAmount" placeholder="Card Holder's Name" type="text"  className="form-control" 
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-12 position-relative form-group ">
+                                        <div className="form-row">
+                                            <div className="position-relative form-group col-md-3">
+                                                <label htmlFor="exampleAmount">Expiry Date</label>
+                                                <input name="amount" id="exampleAmount" placeholder="MM/YY" type="text" className="form-control" 
+                                                />
+                                            </div>
+
+                                            <div className="position-relative form-group col-md-3">
+                                                <label htmlFor="exampleAmount">CVV</label>
+                                                <input name="amount" id="exampleAmount" placeholder="CVV" type="text" className="form-control" 
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+
+                                    <div className="col-md-6 position-relative form-group">
+                                    <button className="mb-2 mr-2 btn-wide btn-square btn btn-danger btn-block btn-lg" style={{marginRight: 16}}>PAY NOW</button>
+                                    </div>
+
+                                    <div className="" style={{marginTop: 35}}>
+                                        <div className="form-row">
+                                                    <span className="text-success pl-2">
+                                                        <button className="btn-wide btn btn-danger" style={{marginLeft: 12}}>   Previous   </button>
+                                                    </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div> */}
+
+
+                {/* Credit Card Payment End here */} 
+
+                    {/* Domestic Wire Transfer Page */}
+                        {/* <div className="row">
+                            <div className="col-md-6 col-lg-12">
+                                <div className="card-shadow-danger mb-3 widget-chart widget-chart2 text-left card">
+                                <div className="widget-content p-0 w-100">
+                                <div className="widget-content-outer">
+                                    <div className="widget-content-wrapper" style={{marginBottom: 55}}>
+                                
+
+                                    <div className="widget-content-left fsize-1 col-md-12">
+                                        <h5 className="text-muted opacity-10" style={{marginLeft: 16}}>Domestic Wire Transfer</h5><br></br>
+                                        <div className="progress-bar-xs progress" style={{marginLeft: 16, marginRight: 16}}>
+                                        <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+
+
+                                    
+
+                                    <div className="col-md-12 position-relative form-group ">
+                                        <div className="form-row">                                            
+                                            <div className="col-md-6"> 
+                                                <label htmlFor="exampleGender">Select Banks</label>
+                                                <select type="select" 
+                                                    id="gender" 
+                                                    name="gender"
+                                                    className="mb-2 form-control"
+                                                    >
+                                                    <option value="">-- All Bank List --</option>
+                                                    <option value="Male">First Bank</option>
+                                                    <option value="Female">Sterling Bank</option>
+                                                </select>
+                                            </div>
+                                            <div className="col-md-6" style={{marginTop: 1}}> 
+                                                <div className="position-relative form-group">
+                                                <label htmlFor="exampleText" className>Transaction Description</label>
+                                                <textarea  name="text" id="exampleText" className="form-control" defaultValue={""} />
+                                                </div>
+                                            </div>                                          
+                                        </div>
+                                    </div>
+
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    
+
+                        <div className="row">
+                            <div className="col-md-6 col-lg-12">
+                                <div className="card-shadow-danger mb-3 widget-chart widget-chart2 text-left card">
+                                <div className="widget-content p-0 w-100">
+                                <div className="widget-content-outer">
+                                    <div className="widget-content-wrapper" style={{marginBottom: 55}}>
+                                        <div className="widget-content-left fsize-1 col-md-6">
+                                            <h5 className="text-muted opacity-10" >Transaction Reference Number</h5>
+                                            <h5 className="text-danger opacity-10">TYPE-2594-4331-8950</h5>
+                                        </div>
+
+                                        <div className="ml-auto">
+                                            <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
+                                                <h5 className="text-muted opacity-10" style={{marginLeft: 8}}>Payment Method</h5>
+                                                <span className="text-danger pl-2">
+                                                    <span className="" style={{marginTop: 15, marginRight: 16}}> Domestic Wire Transfer   </span>
+                                                    </span>
+                                            </div>
+                                        </div>                                    
+                                    </div>
+
+                                    <div className="widget-content-right w-100">
+                                        <h5 className="text-muted opacity-10" style={{marginLeft: 16}}><strong> IJC GLobal Account - Beneficiary Details </strong></h5>
+                                        <div className="progress-bar-xs progress" style={{marginLeft: 16, marginRight: 16}}>
+                                        <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
+                                        </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="col-md-12 position-relative form-group" style={{marginTop: 24}}>
+                                        <div className="form-row">
+                                        <div className="position-relative form-group col-md-3">
+                                                <label htmlFor="exampleAmount">Account Holder's Name</label>
+                                                <h5 className="text-muted opacity-10"><strong> Adeyemi Olaoye </strong></h5>
+                                            </div>
+
+                                            <div className="position-relative form-group col-md-3">
+                                                <label htmlFor="exampleAmount">Location</label>
+                                                <h5 className="text-muted opacity-10"><strong> Canada </strong></h5>
+                                            </div>
+
+                                            <div className="position-relative form-group col-md-3">
+                                                <label htmlFor="exampleAmount">Account Number</label>
+                                                <h5 className="text-muted opacity-10"><strong> 0045338922 </strong></h5>
+                                            </div>
+
+                                            <div className="position-relative form-group col-md-3">
+                                                <label htmlFor="exampleAmount">PAyement Date</label>
+                                                <h5 className="text-muted opacity-10"><strong> 23/04/2021 </strong> </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="ml-auto">
+                                        <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
+                                            <span className="text-success pl-2">
+                                                <button className="btn-wide btn btn-danger" style={{marginTop: 15, marginRight: 16}}>  Download Payment Info  </button>
+                                                </span>
+                                        </div>
+                                    </div>
+
+                               
+
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <button className="mb-2 mr-2 btn-pill btn btn-danger btn-lg btn-block" style={{marginRight: -36}}>Upload Payment Confirmation</button>
+                        <div className="col-md-12 position-relative form-group">
+                            <div className="form-row">                                            
+                                <div className="position-relative form-group col-md-8">
+                                    <span> *** Policy Content Here *** </span>
+                                </div>  
+                                <div className="position-relative form-group col-md-4">
+                                    <button className="mb-2 mr-2 btn-square btn btn-danger btn-block">Finish</button>
+                                </div>                                           
+                            </div>
+                        </div>
+
+                        <div className="" style={{marginTop: 35}}>
+                                    <div className="form-row">
+                                                <span className="text-success pl-2">
+                                                    <button className="btn-wide btn btn-danger" style={{marginLeft: 12}}>   Previous   </button>
+                                                </span>
+                                    </div>
+                        </div> */}
+
+                        {/* Domestic Wire Transfer Page End Here */}
+
+
+
+
+
+
+
+                        {/* Choose Payment Section Start here */}
+
+                        <div className="row">
+                            <div className="col-md-6 col-lg-12">
+                                <div className="card-shadow-danger mb-3 widget-chart widget-chart2 text-left card">
+                                <div className="widget-content p-0 w-100">
+                                <div className="widget-content-outer">
+
+                                    <div className="widget-content-left fsize-1">
+                                        <h3 className="text-muted opacity-10" style={{marginLeft: 16, marginBottom: -20}}>Transaction Completed</h3><br></br>
+                                        <span style={{marginLeft: '16px'}}>Now you can make payment for the transaction</span>
+                                    </div>
+
+                                    <div className="widget-content-wrapper" style={{marginBottom: 95}}>
+                                
+                                    </div>
+                                    
+                                    <div className="widget-content-left fsize-1">
+                                        <h5 className="text-muted opacity-10" style={{marginLeft: 16}}>Choose Payment Option</h5><br></br>
+                                    </div>
+
+                                    <div className="widget-content-right w-100">
+                                        <div className="progress-bar-xs progress" style={{marginLeft: 16, marginRight: 16, marginBottom: 36, marginTop: -16}}>
+                                        <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                    
+
+                                    <div className="col-md-12 position-relative form-group ">
+                                        <div className="form-row">                                            
+                                            <div className="col-md-4"> 
+                                                
+                                                <div className=" no-shadow rm-border bg-transparent text-center">
+                                                <img src="assets/images/creditcard.png" width={100} height={80} />
+                                                <strong htmlFor="exampleGender" style={{marginLeft: 10}}>Credit Card</strong>
+                                                </div>
+
+                                            </div>
+
+                                            <div className="col-md-4"> 
+                                                
+                                                <div className=" no-shadow rm-border bg-transparent text-center">
+                                                <img src="assets/images/transfer.png" width={100} height={80} />
+                                                <strong htmlFor="exampleGender" style={{marginLeft: 10}}>Domestic Wire Transfer ( Manual )</strong>
+                                                </div>
+
+                                            </div>   
+
+                                            <div className="col-md-4"> 
+                                                
+                                                <div className=" no-shadow rm-border bg-transparent text-center">
+                                                <img src="assets/images/poli.jfif" width={100} height={80} />
+                                                <strong htmlFor="exampleGender" style={{marginLeft: 10}}>Direct Debit ( POLI )</strong>
+                                                </div>
+
+                                            </div>                                        
+                                        </div>
+                                    </div>
+
+
+
+                                <div className="" style={{marginTop: 125}}>
+                                    <div className="form-row">
+                                                <span className="text-success pl-2">
+                                                    <button className="btn-wide btn btn-danger" style={{marginLeft: 12}}>   Previous   </button>
+                                                </span>
+                                    </div>
+                                </div>
+
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    
+
+                     {/* Choose Payment Section End here */}
                     </div>
                 </div>
                 </div>
