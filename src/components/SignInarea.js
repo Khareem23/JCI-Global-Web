@@ -1,6 +1,26 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react';
+import { useHistory } from 'react-router';
+import { LoginAuthAction, ShowLoading } from '../redux/actions/authaction';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-export default function SignInarea() {
+const SignInarea = (props) => {
+  const { loginuser, isLoading } = props;
+  const [userdetails, setUserdetails] = useState({});
+  const history = useHistory();
+  const today = new Date();
+
+  const [error, setError] = useState({
+      hasError: false,
+      message: "",
+  })
+
+  const handleSubmit = e => {
+      e.preventDefault();
+      loginuser(userdetails, history, setError);
+  };
+
+// export default function SignInarea() {
     return (
         <div className="mx-auto app-login-box col-sm-12 col-md-10 col-lg-5" style={{marginTop: -60}}>
                   <div className="app-logo" />
@@ -14,19 +34,34 @@ export default function SignInarea() {
                         <div className="col-md-12">
                           <div className="position-relative form-group">
                             <label htmlFor="exampleEmail" className><span className="text-danger">*</span> Email</label>
-                            <input name="email" id="exampleEmail" placeholder="Email here..." type="email" className="form-control" />
+                            <input name="email" id="exampleEmail" placeholder="Email here..." type="email" className="form-control" 
+                             onChange={(event) => {
+                              const username = event.target.value;
+                              setUserdetails({...userdetails, ...{ username } }); 
+                          }}/>
                           </div>
                         </div>
                         
                         <div className="col-md-12">
                           <div className="position-relative form-group">
                             <label htmlFor="examplePassword" className><span className="text-danger">*</span> Password</label>
-                            <input name="password" id="examplePassword" placeholder="Password here..." type="password" className="form-control" />
+                            <input name="password" id="examplePassword" placeholder="Password here..." type="password" className="form-control" 
+                             onChange={(event) => {
+                              const password = event.target.value;
+                              setUserdetails({...userdetails, ...{ password } }); 
+                          }}/>
                           </div>
                         </div>
                         <div className="col-md-12">
                           <div className="position-relative form-group">
-                                <button className="btn-wide btn-pill form-control btn-shadow btn-hover-shine btn btn-primary btn-lg" style={{marginTop: 50}}>Login</button>
+                                <button className="btn-wide btn-pill form-control btn-shadow btn-hover-shine btn btn-primary btn-lg" 
+                                style={{marginTop: 50}}
+
+                                type="submit"
+                                disabled={isLoading}
+                                onClick={handleSubmit}
+
+                                >Login</button>
                           </div>
                         </div>
                         
@@ -39,7 +74,7 @@ export default function SignInarea() {
                       <div className="mt-4 d-flex align-items-center">
                         <h5 className="mb-0">New User?</h5>
                         <h5 className="ml-auto">
-                            <a href="javascript:void(0);" className="text-primary btn-wide">Sign Up</a>
+                            <Link to="/register" className="text-primary btn-wide">Sign Up</Link>
                         </h5>
                       </div>
                     </form>
@@ -47,3 +82,21 @@ export default function SignInarea() {
         </div>
     )
 }
+
+
+const mapStateToProps = (state) => {
+  return {
+      isLoading: state.loadingstate.isLoading,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      loginuser: (userdetails, history, setError) => {
+          dispatch(ShowLoading(userdetails));
+          dispatch(LoginAuthAction(userdetails, history, setError));
+      },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignInarea);

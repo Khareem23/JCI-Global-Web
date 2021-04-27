@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from 'react-redux';
 
-const CountryAutocomplete = (props) => {
+const StatesAutocomplete = (props) => {
     const { placeholder, passChildData } = props
     const [active, setActive] = useState(0);
     const [filtered, setFiltered] = useState([]);
@@ -13,10 +13,7 @@ const CountryAutocomplete = (props) => {
     const input = e.currentTarget.value;
    
     const newFilteredSuggestions = suggestions !== undefined ? suggestions.filter(
-        ({country, callingCode, alpha3Code, flag}) => country !== null ? country.toLowerCase().indexOf(input.toLowerCase()) > -1 : {}
-        || callingCode !== null ? callingCode.toLowerCase().indexOf(input.toLowerCase()) > -1 : {}
-        || alpha3Code !== null ? alpha3Code.toLowerCase().indexOf(input.toLowerCase()) > -1 : {}
-        || flag !== null ? flag.toLowerCase().indexOf(input.toLowerCase()) > -1 : {}
+        (data) => data !== null ? data.toLowerCase().indexOf(input.toLowerCase()) > -1 : {}        
     ) : []
 
     setActive(0);
@@ -30,9 +27,7 @@ const CountryAutocomplete = (props) => {
       setFiltered([]);
       setIsShow(false);
       var bal = e.currentTarget.innerText;
-      // console.log(bal);
-      const item = bal.substring(0, bal.length - 5);
-      setInput(item);
+      setInput(bal);
       passChildData(bal);
      };
 
@@ -62,8 +57,8 @@ const CountryAutocomplete = (props) => {
                           className = "active";
                         }
                         return (
-                          <li className={className} key={suggestion.callingCode} onClick={onClick}>
-                            {suggestion.country}, {suggestion.alpha3Code}
+                          <li className={className} key={suggestion} onClick={onClick}>
+                            {suggestion}
                           </li>
                         );
                       })}
@@ -117,5 +112,5 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CountryAutocomplete);
+export default connect(mapStateToProps, mapDispatchToProps)(StatesAutocomplete);
 

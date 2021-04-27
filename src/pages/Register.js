@@ -3,14 +3,16 @@ import Authfooter from '../components/Authfooter'
 import Authnavigation from '../components/Authnavigation'
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-import { UserRegisterAuthAction, ShowLoading, FetchAllCountry} from '../redux/actions/authaction';
+import { UserRegisterAuthAction, ShowLoading, FetchAllCountry, FetchStatesByCountryCode, CheckIfEmailExist, CheckIfPhoneExist} from '../redux/actions/authaction';
 import { usePasswordValidation } from "../utils/passwordValidation";
 import CountryAutocomplete from '../components/CountryAutocomplete';
+import StatesAutocomplete from '../components/StatesAutocomplete';
 
 
 const Register = (props) => {
-    const { registeruser, isLoading, fetchallcountry, allcountriesstate } = props;
+    const { registeruser, isLoading, fetchallcountry, fetchallcountrystates, checkifemailexist, checkifphoneexist, allcountriesstate, allstatesstate, isEmailValid, isPhoneValid } = props;
     const [userdetails, setUserdetails] = useState({});
+    const [emailValid, setEmailValid] = useState(false);
     const history = useHistory();
     const pwderrmsg1 = "Your password must match each other and it must have a special character, a number, Upper & lower case letters and not less than 8 characters"
     const pwderrmsg2 = "Your password must has a special character, a number, Upper & lower case letters and not less than 8 characters"
@@ -46,6 +48,39 @@ const Register = (props) => {
     firstPassword: password.firstPassword,
     secondPassword: password.secondPassword,
     });
+
+    const handlereturnvalue = (cout) => {
+        const _statecode = cout.substring(cout.length - 3, cout.length);
+        fetchallcountrystates(setError, _statecode)
+        const country = cout.substring(0, cout.length - 5);
+        setUserdetails({...userdetails, ...{ country } });
+    }
+    const handlereturnvalueforstates = (state) => {
+        setUserdetails({...userdetails, ...{ state } });
+    }
+
+    const checkemail = (email) => {
+        let reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if ( reg.test(email) ) {
+            // this is a valid email address
+            setEmailValid(true);
+            checkifemailexist(setError, email);
+        }
+        else {
+            // invalid email, maybe show an error to the user.
+            setEmailValid(false);
+        }
+    }
+
+    const checkphone = (phone) => {
+        checkifphoneexist(setError, phone);
+    }  
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        registeruser(userdetails, history, setError);
+    };
     
     const setFirst = (event) => {
         setPassword({ ...password, firstPassword: event.target.value });
@@ -86,8 +121,8 @@ const Register = (props) => {
                         
                         <div className="h-100 no-gutters row">
                             
-                                <div className="h-100 d-md-flex d-sm-block bg-white justify-content-center align-items-center col-md-12 col-lg-12">
-                                    <div className="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9">
+                                <div className="h-100 d-md-flex d-sm-block bg-white justify-content-center align-items-center col-md-12 col-lg-12" >
+                                    <div className="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9" style={{marginTop: 200}}>
                                         <div className="app-logo" />
                                         <Authnavigation/>
 
@@ -115,11 +150,22 @@ const Register = (props) => {
                                                             </li>
                                                             <li>
                                                             <a href="#step-3">
-                                                                <em>3</em><span>Finish Wizard</span>
+                                                                <em>3</em><span>Business Details</span>
                                                             </a>
                                                             </li>
                                                         </ul>
-                                                        <div className="form-wizard-content">
+                                                        
+
+
+
+
+                                                        {/* <form className="login-form-wrap" 
+                                                        onSubmit={(event) => {
+                                                        event.preventDefault();
+                                                        registeruser(userdetails, history, setError);
+                                                        }}> */}
+
+                                                            <div className="form-wizard-content">
                                                             <div id="step-1">
                                                                 <div id="accordion" className="accordion-wrapper mb-3" >
                                                                     <div className="card">
@@ -158,10 +204,14 @@ const Register = (props) => {
                                                                                 <div className="col-md-6">
                                                                                     <div className="position-relative form-group">
                                                                                     <label htmlFor="exampleEmail" className><span className="text-danger">*</span> Email</label>
-                                                                                    <input name="email" id="exampleEmail" placeholder="Email" type="email" className="form-control" 
+                                                                                    <input name="email" id="exampleEmail" className="form-control" placeholder="Email" type="email" required 
+                                                                                        style={{
+                                                                                            backgroundColor: (isEmailValid && emailValid) ? '' : 'red',
+                                                                                          }}
                                                                                          onChange={(event) => {
                                                                                             const email = event.target.value;
-                                                                                            setUserdetails({...userdetails, ...{ email } });
+                                                                                            setUserdetails({...userdetails, ...{ email }});
+                                                                                            checkemail(email);
                                                                                         }}
                                                                                     />
                                                                                     </div>
@@ -170,9 +220,13 @@ const Register = (props) => {
                                                                                     <label htmlfor="examplePhone">Phone Number</label>
                                                                                     <div className="position-relative form-group">
                                                                                         <input name="phone" id="examplePhone" placeholder="Phone Number" type="tel" className="form-control col-md-12"
+                                                                                            style={{
+                                                                                                backgroundColor: (isPhoneValid ) ? '' : 'red',
+                                                                                            }}
                                                                                              onChange={(event) => {
                                                                                                 const phoneNumber = event.target.value;
                                                                                                 setUserdetails({...userdetails, ...{ phoneNumber } });
+                                                                                                checkphone(phoneNumber);
                                                                                             }}
                                                                                         />
                                                                                     </div>
@@ -188,10 +242,10 @@ const Register = (props) => {
                                                                                                 name="gender"
                                                                                                 className="mb-2 form-control"
                                                                                                 onChange={(event) => {
-                                                                                                    const name = event.target.value;
-                                                                                                    setUserdetails({...userdetails, ...{ name } }); 
+                                                                                                    const gender = event.target.value;
+                                                                                                    setUserdetails({...userdetails, ...{ gender } }); 
                                                                                                 }}>
-                                                                                                <option value="">Select Option</option>
+                                                                                                <option value=""> -- Select Gender -- </option>
                                                                                                 <option value="Male">Male</option>
                                                                                                 <option value="Female">Female</option>
                                                                                             </select>
@@ -201,7 +255,11 @@ const Register = (props) => {
                                                                                             <label htmlfor="exampleDate">Date of Birth</label>
                                                                                             <div className="position-relative form-group">
                                                                                             
-                                                                                                <input name="date" id="exampleDate" placeholder="date placeholder" type="date" className="form-control" />
+                                                                                                <input name="date" id="exampleDate" placeholder="date placeholder" type="date" className="form-control" 
+                                                                                                onChange={(event) => {
+                                                                                                    const dateOfBirth = event.target.value;
+                                                                                                    setUserdetails({...userdetails, ...{ dateOfBirth } }); 
+                                                                                                }}/>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -209,14 +267,11 @@ const Register = (props) => {
                                                                                 <div className="col-md-6">
                                                                                     <div className="position-relative form-group">
                                                                                     <label htmlFor="exampleCountry" className><span className="text-danger"></span>Country</label>
+
                                                                                             <CountryAutocomplete placeholder="Select a Country"
-                                                                                                suggestions={allcountriesstate}
+                                                                                                suggestions={allcountriesstate} passChildData={handlereturnvalue}
                                                                                             />
-                                                                                        <select id="exampleCountry" className="mb-2 form-control">
-                                                                                            <option>Nigeria</option>
-                                                                                            <option>Ghana</option>
-                                                                                            <option>Alageria</option>
-                                                                                        </select>
+                                                                                            
                                                                                     </div>
                                                                                 </div>
                                                                                 </div>
@@ -241,16 +296,31 @@ const Register = (props) => {
                                                                         <div className="col-md-6"> 
                                                                             <div className="position-relative form-group">
                                                                                 <label htmlFor="exampleUserType" className>Account Type</label>
-                                                                                <select  id="exampleUserType" className="mb-2 form-control">
-                                                                                    <option>Individual Account</option>
-                                                                                    <option>Business Account</option>
+                                                                                <select  id="exampleUserType" className="mb-2 form-control"
+                                                                                onClick={(event) => {
+                                                                                    const accountType = event.target.value;
+                                                                                    const userRole = event.target.value;
+                                                                                    setUserdetails({...userdetails, ...{ accountType, userRole } });
+                                                                                }}
+                                                                                onChange={(event) => {
+                                                                                    const accountType = event.target.value;
+                                                                                    const userRole = event.target.value;
+                                                                                    setUserdetails({...userdetails, ...{ accountType, userRole } });
+                                                                                }}>
+                                                                                    <option>-- Select Type --</option>
+                                                                                    <option value="0">Individual Account</option>
+                                                                                    <option value="1">Business Account</option>
                                                                                 </select>
                                                                             </div>
                                                                         </div>
                                                                         <div className="col-md-6">
                                                                             <div className="position-relative form-group">
                                                                             <label htmlFor="accessPin" className>Access PIN</label>
-                                                                            <input name="text" id="accessPin" placeholder="Access Pin" type="text" className="form-control" />
+                                                                            <input name="text" id="accessPin" placeholder="Access Pin" type="text" className="form-control"
+                                                                            onChange={(event) => {
+                                                                                const pin = event.target.value;
+                                                                                setUserdetails({...userdetails, ...{ pin } }); 
+                                                                            }} />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -261,17 +331,24 @@ const Register = (props) => {
                                                                             <div className="col-md-6">
                                                                             <div className="position-relative form-group">
                                                                                     <div className="form-row">
-                                                                                        <div className="col-md-6">
+                                                                                        <div className="col-md-7">
                                                                                         <div className="position-relative form-group">
                                                                                             <label htmlFor="exampleState" className><span className="text-danger"></span>State</label>
-                                                                                                <input name="text" id="exampleState" placeholder="State" type="text" className="form-control" />
+                                                                                               
+                                                                                                <StatesAutocomplete placeholder="Select a State"
+                                                                                                    suggestions={allstatesstate} passChildData={handlereturnvalueforstates}
+                                                                                                />
                                                                                             </div>
                                                                                         </div>
                                                                                         
-                                                                                        <div className="col-md-6">
+                                                                                        <div className="col-md-5">
                                                                                             <div className="position-relative form-group">
                                                                                             <label htmlFor="exampleCity" className><span className="text-danger"></span>City</label>
-                                                                                                <input name="text" id="exampleCity" placeholder="City" type="text" className="form-control" />
+                                                                                                <input name="text" id="exampleCity" placeholder="City" type="text" className="form-control"
+                                                                                                onChange={(event) => {
+                                                                                                    const city = event.target.value;
+                                                                                                    setUserdetails({...userdetails, ...{ city } }); 
+                                                                                                }} />
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -283,17 +360,31 @@ const Register = (props) => {
                                                                                         <div className="col-md-6">
                                                                                             <div className="position-relative form-group">
                                                                                             <label htmlFor="examplePassword" className><span className="text-danger"></span>Password</label>
-                                                                                            <input name="password" id="examplePassword" placeholder="Password" type="password" className="form-control" />
+                                                                                            <input name="password" id="examplePassword" placeholder="Password" type="password" className="form-control"
+                                                                                                onChange={(event) => {
+                                                                                                    setFirst(event)
+                                                                                                }}
+                                                                                                onKeyUp={(event) => {
+                                                                                                    setFirst(event)
+                                                                                                }} />
                                                                                             </div>
                                                                                         </div>
                                                                                         
                                                                                         <div className="col-md-6">
                                                                                             <div className="position-relative form-group">
                                                                                             <label htmlFor="examplePasswordRep" className><span className="text-danger"></span>Re-type Password</label>
-                                                                                            <input name="passwordrep" id="examplePasswordRep" placeholder="Confirm Password" type="password" className="form-control" />
+                                                                                            <input name="passwordrep" id="examplePasswordRep" placeholder="Confirm Password" type="password" className="form-control" 
+                                                                                                onKeyUp={(event) => {
+                                                                                                    setSecond(event)
+                                                                                                }}
+                                                                                                onChange={(event) => {
+                                                                                                    setSecond(event)
+                                                                                                }}/>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
+                                                                                    <p> {showerr ? <span style={{fontsize:  8, color: 'red', width: 20}}>{errmsg}</span> : <span />}</p>
+
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -303,13 +394,21 @@ const Register = (props) => {
                                                                             <div className="col-md-10"> 
                                                                             <label htmlFor="exampleAddress">Address</label>
                                                                                 <div className="position-relative form-group">
-                                                                                    <input name="address" id="exampleAddress" placeholder="1234 Main St" type="text" className="form-control" />
+                                                                                    <input name="address" id="exampleAddress" placeholder="1234 Main St" type="text" className="form-control" 
+                                                                                    onChange={(event) => {
+                                                                                        const address = event.target.value;
+                                                                                        setUserdetails({...userdetails, ...{ address } }); 
+                                                                                    }}/>
                                                                                 </div>
                                                                             </div>
                                                                             <div className="col-md-2">
                                                                                 <div className="position-relative form-group">
                                                                                     <label htmlFor="exampleCountry" className><span className="text-danger"></span>Postal Code</label>
-                                                                                    <input name="text" id="exampleCode" placeholder="Postal Code" type="text" className="form-control" />
+                                                                                    <input name="text" id="exampleCode" placeholder="Postal Code" type="text" className="form-control" 
+                                                                                    onChange={(event) => {
+                                                                                        const postalCode = event.target.value;
+                                                                                        setUserdetails({...userdetails, ...{ postalCode } }); 
+                                                                                    }}/>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -325,13 +424,21 @@ const Register = (props) => {
                                                                         <div className="col-md-6"> 
                                                                             <div className="position-relative form-group">
                                                                                 <label htmlFor="businessName" className>Business Name</label>
-                                                                                <input name="text" id="businessName" placeholder="Business Name" type="text" className="form-control" />
+                                                                                <input name="text" id="businessName" placeholder="Business Name" type="text" className="form-control"
+                                                                                onChange={(event) => {
+                                                                                    const businessName = event.target.value;
+                                                                                    setUserdetails({...userdetails, ...{ businessName } }); 
+                                                                                }} />
                                                                             </div>
                                                                         </div>
                                                                         <div className="col-md-6">
                                                                             <div className="position-relative form-group">
                                                                             <label htmlFor="accessBRN" className>Business Registration Number</label>
-                                                                            <input name="text" id="accessBRN" placeholder="Business Registration Number" type="text" className="form-control" />
+                                                                                <input name="text" id="accessBRN" placeholder="Business Registration Number" type="text" className="form-control"
+                                                                                onChange={(event) => {
+                                                                                    const businessRegNumber = event.target.value;
+                                                                                    setUserdetails({...userdetails, ...{ businessRegNumber } }); 
+                                                                                }} />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -348,11 +455,28 @@ const Register = (props) => {
                                                                 <div className="results-title">You arrived at the last step!</div>
                                                                 <div className="mt-3 mb-3" />
                                                                 <div className="text-center">
-                                                                <button className="btn-shadow btn-wide btn btn-success btn-lg">Finish</button>
+                                                                    <button 
+                                                                        className="btn-shadow btn-wide btn btn-success btn-lg"
+                                                                        type="submit"
+                                                                        disabled={isLoading}
+                                                                        onClick={handleSubmit}
+                                                                    >
+                                                                    Submit
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                             </div>
                                                         </div>
+
+                                                        {/* </form> */}
+
+
+
+
+                                                       
+
+
+
                                                         </div>
                                                         <div className="clearfix">
                                                         <button type="button" id="reset-btn" className="btn-shadow float-left btn btn-link">Reset</button>
@@ -380,7 +504,10 @@ const mapStateToProps = (state) => {
     return {
         user: state,
         isLoading: state.loadingstate.isLoading,
-        allcountriesstate: state.allcountriesstate.allcountriesstate
+        isEmailValid: state.emailcheckstate.isValid,
+        isPhoneValid: state.phonecheckstate.isValid,
+        allcountriesstate: state.allcountriesstate.allcountriesstate,
+        allstatesstate: state.allstatesstate.allstatesstate,
     }
 }
 
@@ -391,8 +518,16 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(UserRegisterAuthAction(userdetails, history, setError));
         },
         fetchallcountry: (setError) => {
-            console.log("okada men are fighting")
             dispatch(FetchAllCountry(setError));
+        },
+        fetchallcountrystates: (setError, statecode) => {
+            dispatch(FetchStatesByCountryCode(setError, statecode));
+        },        
+        checkifemailexist: (setError, email) => {
+            dispatch(CheckIfEmailExist(setError, email));
+        },
+        checkifphoneexist: (setError, phone) => {
+            dispatch(CheckIfPhoneExist(setError, phone));
         },
     }
 }

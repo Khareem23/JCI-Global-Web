@@ -1,7 +1,6 @@
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import Register from './pages/Register';
 import Login from './pages/Login';
-import Login2 from './pages/Login2';
 import Dashboard from './pages/Dashboard';
 import Users from './pages/Users';
 import Userdetails from './pages/Userdetails';
@@ -23,17 +22,12 @@ function App() {
   return (
      <Router>
         <Switch>
-
           <Route exact path='/'>
             <Register/>
           </Route>
 
           <Route exact path='/login'>
             <Login/>
-          </Route>
-
-          <Route exact path='/login2'>
-            <Login2/>
           </Route>
 
           <Route exact path='/dashboard'>

@@ -40,6 +40,4 @@ const authreducer = (state = existingAuth, action) => {
     }
 };
 
-
-
 export default authreducer;

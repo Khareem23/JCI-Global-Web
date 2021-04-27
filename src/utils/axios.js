@@ -15,7 +15,7 @@ import axios from "axios";
 
     const mainAxios = axios.create({
         //timeout: 5000,
-        baseURL: 'http://api.jciremit.com/api'
+        baseURL: 'https://api.jciremit.com/api'
     });
 
     export {

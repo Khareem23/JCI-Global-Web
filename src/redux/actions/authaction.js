@@ -14,6 +14,8 @@ import { mainAxios } from "../../utils/axios"
         PHONE_EXIST_FAIL: "PHONE_EXIST_FAIL",
         FETCH_COUNTRIES_SUCCESS: "FETCH_COUNTRIES_SUCCESS",
         FETCH_COUNTRIES_FAIL: "FETCH_COUNTRIES_FAIL",
+        FETCH_STATES_SUCCESS: "FETCH_STATES_SUCCESS",
+        FETCH_STATES_FAIL: "FETCH_STATES_FAIL",
     }
 
 
@@ -38,29 +40,29 @@ import { mainAxios } from "../../utils/axios"
     const UserRegisterAuthAction = (userstate, history, setError) => {
         return async (dispatch) => {
             try {
+                console.log(JSON.stringify(userstate));
                 if(userstate.email !== undefined && userstate.firstName !== undefined && userstate.phoneNumber !== undefined && userstate.lastName !== undefined 
                     && userstate.password !== undefined && userstate.pin !== undefined && userstate.country !== undefined && userstate.state !== undefined 
                     && userstate.city !== undefined && userstate.postalCode !== undefined && userstate.address !== undefined && userstate.gender !== undefined
                     && userstate.dateOfBirth !== undefined && userstate.businessName !== undefined && userstate.businessRegNumber !== undefined 
                     && userstate.accountType !== undefined && userstate.userRole !== undefined)
                 {
-                    const response = await axios.post('/Users/register', userstate);
-                    const { data } = response;
-                    if(data.response === 201)
+                    const response = await mainAxios.post('/Users/register', userstate);
+                    const { data } = response.data.data;
+                    if(response.data.status === "success")
                     {
                         dispatch({type: AuthActionType.LOADING_HIDE, payload: userstate}); 
-                        dispatch({type: AuthActionType.USER_REGISTRATION_SUCCESS, payload: data});//TODO, does not have a reducer yet
-                        history.push("/profile");
+                        dispatch({type: AuthActionType.USER_REGISTRATION_SUCCESS, payload: data});
+                        history.push("/dashboard");
                     } else {
-                        if(data.response !== 201)
-                        {
+                        
                             dispatch({type: AuthActionType.LOADING_HIDE, payload: userstate}); 
                             dispatch({type: AuthActionType.USER_REGISTRATION_FAIL, payload: data.message });
                             setError({
                                 hasError: true,
                                 message: data.message,
                             })
-                        }
+
                     }
                 } else {
                     dispatch({type: AuthActionType.LOADING_HIDE, payload: userstate}); 
@@ -99,18 +101,18 @@ import { mainAxios } from "../../utils/axios"
                 }
                 else {
                     
-                    const response = await axios.post('/Users/login', loginstate); ///Account/UserLogon?username=' + loginstate.username + '&password=' + loginstate.password, loginstate);
-                    const { data } = response;
-                    if(data.response === 200)
+                    const response = await mainAxios.post('/Users/login', loginstate); ///Account/UserLogon?username=' + loginstate.username + '&password=' + loginstate.password, loginstate);
+                    const { data } = response.data.data;
+                    if(response.data.status === "success")
                     {
                         dispatch({type: AuthActionType.LOADING_HIDE, payload: loginstate}); 
-                        dispatch({type: AuthActionType.LOGIN_SUCCESS, payload: data});
-                        history.push("/profile");
+                        dispatch({type: AuthActionType.USER_LOGIN_SUCCESS, payload: data});
+                        history.push("/dashboard");
                     }
                     else  
                     {
                         dispatch({type: AuthActionType.LOADING_HIDE, payload: loginstate}); 
-                        dispatch({type: AuthActionType.LOGIN_FAIL, payload: data.message });
+                        dispatch({type: AuthActionType.USER_LOGIN_FAIL, payload: data.message });
                         setError({
                             hasError: true,
                             message: data.message,
@@ -120,8 +122,9 @@ import { mainAxios } from "../../utils/axios"
                 }
             } catch(error) {
                 const errmsg = error.message + "  Error occurred while trying to login...";
+                console.log(errmsg);
                 dispatch({type: AuthActionType.LOADING_HIDE, payload: loginstate}); 
-                dispatch({type: AuthActionType.LOGIN_FAIL, payload: errmsg });
+                dispatch({type: AuthActionType.USER_LOGIN_FAIL, payload: errmsg });
                 setError({
                     hasError: true,
                     message: errmsg,
@@ -162,12 +165,12 @@ import { mainAxios } from "../../utils/axios"
         }
     }
 
-    const CheckIfEmailExist = (email, setError) => {
+    const CheckIfEmailExist = (setError, email) => {
         return async (dispatch) => {
             try {
                         dispatch({type: AuthActionType.LOADING_SHOW, payload: ""}); 
                         try {
-                            const response = await axios.get('/Users/checkEmailExist/' + email);
+                            const response = await mainAxios.get('/Users/checkEmailExist/' + email);
                             const res = response.data;
                             if(res)
                             {
@@ -204,12 +207,12 @@ import { mainAxios } from "../../utils/axios"
         }
     }
 
-    const CheckIfPhoneExist = (phone, setError) => {
+    const CheckIfPhoneExist = (setError, phone) => {
         return async (dispatch) => {
-            try {
+            try {                
                 dispatch({type: AuthActionType.LOADING_SHOW, payload: ""}); 
                 try {
-                    const response = await axios.get('/Users/checkPhoneNumberExist/' + phone);
+                    const response = await mainAxios.get('/Users/checkPhoneNumberExist/' + phone);
                     const res = response.data;
                     if(res)
                     {
@@ -254,9 +257,8 @@ import { mainAxios } from "../../utils/axios"
                     dispatch({type: AuthActionType.LOADING_SHOW, payload: ""}); 
                     try {
                         const response = await mainAxios.get('/Users/getCountries');
-                        console.log(JSON.stringify(response));
-                        const res = response.data;
-                        console.log(JSON.stringify(res));
+                        //console.log(JSON.stringify(response));
+                        const res = response.data.data;
                         if(res.length > 1)
                         {
                             dispatch({type: AuthActionType.FETCH_COUNTRIES_SUCCESS, payload: res});
@@ -291,6 +293,49 @@ import { mainAxios } from "../../utils/axios"
             }
         }
     }
+
+    const FetchStatesByCountryCode = (setError, code) => {
+        return async (dispatch) => {
+            try {
+                    dispatch({type: AuthActionType.LOADING_SHOW, payload: ""}); 
+                    try {
+                        const response = await mainAxios.get('/Users/getCountryStates/' + code);
+                        console.log(JSON.stringify(response));
+                        const res = response.data.data;
+                        if(res.length > 1)
+                        {
+                            dispatch({type: AuthActionType.FETCH_STATES_SUCCESS, payload: res});
+                            dispatch({type: AuthActionType.LOADING_HIDE, payload: res}); 
+                        } 
+                        else  
+                        {
+                            dispatch({type: AuthActionType.FETCH_STATES_FAIL, payload: res });
+                            dispatch({type: AuthActionType.LOADING_HIDE, payload: ""}); 
+                            setError({
+                                hasError: true,
+                                message: "Error fetching states",
+                            })
+                        }
+                    } catch(error) {
+                        dispatch({type: AuthActionType.LOADING_HIDE, payload: ""});
+                        dispatch({type: AuthActionType.FETCH_STATES_FAIL, payload: "" });
+                        setError({
+                            hasError: true,
+                            message: error.message,
+                        })
+                    }
+                
+            } catch(error) {
+                dispatch({type: AuthActionType.LOADING_HIDE, payload: ""}); 
+                dispatch({type: AuthActionType.FETCH_STATES_FAIL, payload: "" });
+                const errmsg = "Error fetching states...";
+                setError({
+                    hasError: true,
+                    message: error.message + " " + errmsg,
+                })
+            }
+        }
+    }
     
 export { 
     ShowLoading,
@@ -302,4 +347,5 @@ export {
     CheckIfPhoneExist,
     AuthActionType,
     FetchAllCountry,
+    FetchStatesByCountryCode,
 }

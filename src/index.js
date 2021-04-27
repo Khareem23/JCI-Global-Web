@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import axios from 'axios';
 import store from './redux/store';
 
-axios.defaults.baseURL = "http://api.jciremit.com/api";
+axios.defaults.baseURL = "https://api.jciremit.com/api";
 
 
 ReactDOM.render(
