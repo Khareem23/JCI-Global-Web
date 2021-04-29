@@ -22,11 +22,11 @@ function App() {
   return (
      <Router>
         <Switch>
-          <Route exact path='/'>
+          <Route exact path='/register'>
             <Register/>
           </Route>
 
-          <Route exact path='/login'>
+          <Route exact path='/'>
             <Login/>
           </Route>
 

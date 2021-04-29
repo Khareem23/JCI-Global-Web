@@ -5,10 +5,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const SignInarea = (props) => {
-  const { loginuser, isLoading } = props;
+  const { loginuser, isLoading, authstate } = props;
   const [userdetails, setUserdetails] = useState({});
   const history = useHistory();
-  const today = new Date();
 
   const [error, setError] = useState({
       hasError: false,
@@ -20,7 +19,20 @@ const SignInarea = (props) => {
       loginuser(userdetails, history, setError);
   };
 
-// export default function SignInarea() {
+  //to chaeck the login state of the user on loads
+  useEffect(() => {
+    //return () => {
+      if(authstate.isLoggedIn && authstate.role === "Customer")
+      {
+        //redirect to customer page
+        history.push('/sendmoney');
+      } else if(authstate.isLoggedIn && authstate.role === "Admin") {
+        //redirect to admin page
+        history.push('/dashboard');
+      }
+    //}
+  }, [])
+
     return (
         <div className="mx-auto app-login-box col-sm-12 col-md-10 col-lg-5" style={{marginTop: -60}}>
                   <div className="app-logo" />
@@ -56,12 +68,11 @@ const SignInarea = (props) => {
                           <div className="position-relative form-group">
                                 <button className="btn-wide btn-pill form-control btn-shadow btn-hover-shine btn btn-primary btn-lg" 
                                 style={{marginTop: 50}}
-
                                 type="submit"
                                 disabled={isLoading}
-                                onClick={handleSubmit}
-
-                                >Login</button>
+                                onClick={handleSubmit}>
+                                  Login
+                                </button>
                           </div>
                         </div>
                         
@@ -87,6 +98,7 @@ const SignInarea = (props) => {
 const mapStateToProps = (state) => {
   return {
       isLoading: state.loadingstate.isLoading,
+      authstate: state.authstate.authstate,
   }
 }
 

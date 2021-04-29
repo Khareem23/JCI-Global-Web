@@ -1,8 +1,13 @@
 import React from 'react'
 import CustSidemenu from './CustSidemenu'
 import Sidemenu from './Sidemenu'
+import { connect } from 'react-redux';
 
-export default function AppSidebar() {
+
+const AppSidebar = (props) => {
+    const { authstate } = props;
+
+//export default function AppSidebar() {
     return (
         <div className="app-sidebar sidebar-shadow">
                 <div className="app-header__logo">
@@ -35,9 +40,25 @@ export default function AppSidebar() {
                     </button>
                 </span>
                 </div>    
-                {/* Here i will use the user login typr to determine the side menu to show/display Sidemenu */}
-                {/* <Sidemenu/> */}
-                <CustSidemenu/>
+                {(() => {
+                    if(authstate.role === "Customer")
+                    {
+                        return <CustSidemenu/>
+                    } else if(authstate === "Admin") {
+                        return <Sidemenu/>
+                    }
+                })()}
+                
+                
         </div>
     )
 }
+
+const mapStateToProps = (state) => {
+    return {
+        authstate: state.authstate.authstate,
+    }
+  }
+  
+  export default connect(mapStateToProps)(AppSidebar);
+  

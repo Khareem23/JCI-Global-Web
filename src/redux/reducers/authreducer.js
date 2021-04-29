@@ -3,7 +3,14 @@ import { AuthActionType } from "../actions/authaction";
 const authstate = {
     status: "",
     message: "",
-    data: ""
+    isLoggedIn: false,
+    email: '',
+    exp: '',
+    iat: '',
+    nameid: '',
+    nbf: '',
+    role: '',
+    unique_name: '',
 }
 
 const getAuthState = () => {
@@ -26,15 +33,15 @@ const existingAuth = getAuthState();
 
 const authreducer = (state = existingAuth, action) => {
     switch (action.type) {      
-        case AuthActionType.LOGIN_SUCCESS:
+        case AuthActionType.USER_LOGIN_SUCCESS:
             const newAuthstate = {
                 authstate: action.payload,
             };
             localStorage.setItem("auth", JSON.stringify(newAuthstate)); 
             return newAuthstate;
-        case AuthActionType.LOGOUT_SUCCESS:
-            localStorage.removeItem("auth");
-            return authstate;
+        // case AuthActionType.LOGOUT_SUCCESS:
+        //     localStorage.removeItem("auth");
+        //     return authstate;
         default:
             return state;
     }

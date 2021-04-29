@@ -1,5 +1,6 @@
 import axios from "axios"
 import { mainAxios } from "../../utils/axios"
+import jwt_decode from "jwt-decode";
 
     const AuthActionType = {
         USER_REGISTRATION_SUCCESS: "USER_REGISTRATION_SUCCESS",
@@ -16,6 +17,10 @@ import { mainAxios } from "../../utils/axios"
         FETCH_COUNTRIES_FAIL: "FETCH_COUNTRIES_FAIL",
         FETCH_STATES_SUCCESS: "FETCH_STATES_SUCCESS",
         FETCH_STATES_FAIL: "FETCH_STATES_FAIL",
+        UPDATE_PASSWORD_SUCCESS: "UPDATE_PASSWORD_SUCCESS",
+        UPDATE_PASSWORD_FAIL: "UPDATE_PASSWORD_FAIL",
+        UPDATE_PIN_SUCCESS: "UPDATE_PIN_SUCCESS",
+        UPDATE_PIN_FAIL: "UPDATE_PIN_FAIL",
     }
 
 
@@ -101,13 +106,24 @@ import { mainAxios } from "../../utils/axios"
                 }
                 else {
                     
-                    const response = await mainAxios.post('/Users/login', loginstate); ///Account/UserLogon?username=' + loginstate.username + '&password=' + loginstate.password, loginstate);
-                    const { data } = response.data.data;
+                    const response = await mainAxios.post('/Users/login', loginstate);
+                    const { data } = response.data;
                     if(response.data.status === "success")
                     {
+                        var decoded = jwt_decode(data);
+                        decoded.isLoggedIn = true;
+                        console.log(decoded);
                         dispatch({type: AuthActionType.LOADING_HIDE, payload: loginstate}); 
-                        dispatch({type: AuthActionType.USER_LOGIN_SUCCESS, payload: data});
-                        history.push("/dashboard");
+                        dispatch({type: AuthActionType.USER_LOGIN_SUCCESS, payload: decoded});
+                        if(decoded.role === "Customer")
+                        {
+                            history.push("/sendmoney");
+                        } else if(decoded.role === "Admin")
+                        {
+                            history.push("/dashboard");
+                        } else {
+
+                        }
                     }
                     else  
                     {
@@ -125,6 +141,97 @@ import { mainAxios } from "../../utils/axios"
                 console.log(errmsg);
                 dispatch({type: AuthActionType.LOADING_HIDE, payload: loginstate}); 
                 dispatch({type: AuthActionType.USER_LOGIN_FAIL, payload: errmsg });
+                setError({
+                    hasError: true,
+                    message: errmsg,
+                })
+            }
+        }
+    }
+
+    const UpdatePasswordAuthAction = (updatepwdstate, history, setError) => {
+        return async (dispatch) => {
+            try {
+
+                if(updatepwdstate.newPassword === undefined)
+                {
+                    dispatch({type: AuthActionType.LOADING_HIDE, payload: updatepwdstate}); 
+                    setError({
+                        hasError: true,
+                        message: "Kindly fill all empty spaces",
+                    })
+                }
+                else {
+                    
+                    const response = await mainAxios.put('/Users/changePassword/', updatepwdstate);
+                    const { data } = response.data.data;
+                    if(response.data.status === "success")
+                    {
+                        dispatch({type: AuthActionType.LOADING_HIDE, payload: updatepwdstate}); 
+                        dispatch({type: AuthActionType.UPDATE_PASSWORD_SUCCESS, payload: data});
+                        history.push("/profile");
+                    }
+                    else  
+                    {
+                        dispatch({type: AuthActionType.LOADING_HIDE, payload: updatepwdstate}); 
+                        dispatch({type: AuthActionType.UPDATE_PASSWORD_FAIL, payload: data.message });
+                        setError({
+                            hasError: true,
+                            message: data.message,
+                        })
+                    }
+
+                }
+            } catch(error) {
+                const errmsg = error.message + "  Error occurred while trying to update password...";
+                console.log(errmsg);
+                dispatch({type: AuthActionType.LOADING_HIDE, payload: updatepwdstate}); 
+                dispatch({type: AuthActionType.UPDATE_PASSWORD_FAIL, payload: errmsg });
+                setError({
+                    hasError: true,
+                    message: errmsg,
+                })
+            }
+        }
+    }
+
+    const UpdatePINAuthAction = (updatepinstate, history, setError) => {
+        return async (dispatch) => {
+            try {
+                if(updatepinstate.newPin === undefined)
+                {
+                    dispatch({type: AuthActionType.LOADING_HIDE, payload: updatepinstate}); 
+                    setError({
+                        hasError: true,
+                        message: "Kindly fill all empty spaces",
+                    })
+                }
+                else {
+                    
+                    const response = await mainAxios.put('/Users/changePin/', updatepinstate);
+                    const { data } = response.data.data;
+                    if(response.data.status === "success")
+                    {
+                        dispatch({type: AuthActionType.LOADING_HIDE, payload: updatepinstate}); 
+                        dispatch({type: AuthActionType.UPDATE_PIN_SUCCESS, payload: data});
+                        history.push("/profile");
+                    }
+                    else  
+                    {
+                        dispatch({type: AuthActionType.LOADING_HIDE, payload: updatepinstate}); 
+                        dispatch({type: AuthActionType.UPDATE_PIN_FAIL, payload: data.message });
+                        setError({
+                            hasError: true,
+                            message: data.message,
+                        })
+                    }
+
+                }
+            } catch(error) {
+                const errmsg = error.message + "  Error occurred while trying to update password...";
+                console.log(errmsg);
+                dispatch({type: AuthActionType.LOADING_HIDE, payload: updatepinstate}); 
+                dispatch({type: AuthActionType.UPDATE_PIN_FAIL, payload: errmsg });
                 setError({
                     hasError: true,
                     message: errmsg,
@@ -348,4 +455,6 @@ export {
     AuthActionType,
     FetchAllCountry,
     FetchStatesByCountryCode,
+    UpdatePasswordAuthAction,
+    UpdatePINAuthAction,
 }
