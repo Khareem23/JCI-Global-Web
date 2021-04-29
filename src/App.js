@@ -82,7 +82,7 @@ function App() {
             <TransactionHistory/>
           </Route>
 
-          <Route exact path='/beneficiary'>
+          <Route exact path='/beneficiaries'>
             <Beneficiary />
           </Route>
 

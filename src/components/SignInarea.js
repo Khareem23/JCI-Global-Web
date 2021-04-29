@@ -21,7 +21,6 @@ const SignInarea = (props) => {
 
   //to chaeck the login state of the user on loads
   useEffect(() => {
-    //return () => {
       if(authstate.isLoggedIn && authstate.role === "Customer")
       {
         //redirect to customer page
@@ -30,7 +29,6 @@ const SignInarea = (props) => {
         //redirect to admin page
         history.push('/dashboard');
       }
-    //}
   }, [])
 
     return (

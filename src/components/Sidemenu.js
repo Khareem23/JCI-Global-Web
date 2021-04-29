@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Sidemenu() {
     return (
@@ -11,9 +12,19 @@ export default function Sidemenu() {
 
                     <li className="app-sidebar__heading">Modules</li>
                     <li style={{margin: 16}}>
-                        <a href="#">
+                        <Link to="/dashboard">
+                            <i className="metismenu-icon pe-7s-way" />Dashboard
+                        </Link>
+                    </li>
+
+                    <div className="progress-bar-xs progress" style={{marginLeft: 20}}>
+                        <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
+                        </div>
+                    </div>
+                    <li style={{margin: 16}}>
+                        <Link to="/transactions">
                             <i className="metismenu-icon pe-7s-way" />Transactions
-                        </a>
+                        </Link>
                     </li>
 
                     <div className="progress-bar-xs progress" style={{marginLeft: 20}}>
@@ -22,45 +33,45 @@ export default function Sidemenu() {
                     </div>
                     
                     <li style={{margin: 16}}>
-                        <a href="#">
+                        <Link to="/users">
                             <i className="metismenu-icon pe-7s-way" />User & Verifications
-                        </a>
+                        </Link>
                     </li>
                     <div className="progress-bar-xs progress" style={{marginLeft: 20}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                         </div>
                     </div>
                     <li style={{margin: 16}}>
-                        <a href="#">
+                        <Link to="/charges">
                             <i className="metismenu-icon pe-7s-way" />Charges Management
-                        </a>
+                        </Link>
                     </li>
                     <div className="progress-bar-xs progress" style={{marginLeft: 20}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                         </div>
                     </div>
                     <li style={{margin: 16}}>
-                        <a href="#">
+                        <Link to="/rates">
                             <i className="metismenu-icon pe-7s-way" />Rates Management
-                        </a>
+                        </Link>
                     </li>
                     <div className="progress-bar-xs progress" style={{marginLeft: 20}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                         </div>
                     </div>
                     <li style={{margin: 16}}>
-                        <a href="#">
+                        <Link to="/promo">
                             <i className="metismenu-icon pe-7s-way" />Promo Management
-                        </a>
+                        </Link>
                     </li>
                     <div className="progress-bar-xs progress" style={{marginLeft: 20}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                         </div>
                     </div>
                     <li style={{margin: 16}}>
-                        <a href="#">
+                        <Link to="/ausreport">
                             <i className="metismenu-icon pe-7s-way" />Austrac Report
-                        </a>
+                        </Link>
                     </li>
                     <div className="progress-bar-xs progress" style={{marginLeft: 20}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>

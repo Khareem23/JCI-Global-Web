@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function CustSidemenu() {
     return (
@@ -10,7 +11,6 @@ export default function CustSidemenu() {
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                         </div>
                     </div>
-                    {/* <li className="app-sidebar__heading">Modules</li> */}
                     <li style={{margin: 32, marginLeft: 32}}>
                         <li className="app-sidebar__heading">Modules</li>
                     </li>
@@ -19,45 +19,45 @@ export default function CustSidemenu() {
                         </div>
                     </div>
                     <li style={{margin: 16}}>
-                        <a href="#">
+                        <Link to="/sendmoney">
                             <i className="metismenu-icon pe-7s-way" />Send Money
-                        </a>
+                        </Link>
                     </li>
                     <div className="progress-bar-xs progress" style={{marginLeft: -23, marginRight: -23}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                         </div>
                     </div>
                     <li style={{margin: 16}}>
-                        <a href="#">
+                        <Link to="/transactionhistory">
                             <i className="metismenu-icon pe-7s-way" />Transaction History
-                        </a>
+                        </Link>
                     </li>
                     <div className="progress-bar-xs progress" style={{marginLeft: -23, marginRight: -23}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                         </div>
                     </div>
                     <li style={{margin: 16}}>
-                        <a href="#">
+                        <Link to="/beneficiaries">
                             <i className="metismenu-icon pe-7s-way" />Benficiaries
-                        </a>
+                        </Link>
                     </li>
                     <div className="progress-bar-xs progress" style={{marginLeft: -23, marginRight: -23}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                         </div>
                     </div>
                     <li style={{margin: 16}}>
-                        <a href="#">
+                        <Link to="/myaccount">
                             <i className="metismenu-icon pe-7s-way" />My Accounts
-                        </a>
+                        </Link>
                     </li>
                     <div className="progress-bar-xs progress" style={{marginLeft: -23, marginRight: -23}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                         </div>
                     </div>
                     <li style={{margin: 16}}>
-                        <a href="#">
+                        <Link to="/logout">
                             <i className="metismenu-icon pe-7s-way" />Log Out
-                        </a>
+                        </Link>
                     </li>
                     <div className="progress-bar-xs progress" style={{marginLeft: -23, marginRight: -23}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
