@@ -2,23 +2,24 @@ import { mainAxios } from "../../utils/axios"
 import ActionTypes from "../actiontype/ActionTypes"
 
 
-    const CreateAction = (stateobject, setNotify, successactiontype, failureactiontype, setShow) => {
+    const GetAction = (stateobject, setNotify, successactiontype, failureactiontype, setShow) => {
         return async (dispatch) => {
             try {
-                if(stateobject !== undefined )
+                if(stateobject !== undefined)
                 {
                     var response = "";
-                    if(successactiontype === ActionTypes.ADD_CHARGES_SUCCESS)
+                    if(successactiontype === ActionTypes.GET_CHARGES_SUCCESS)
                     {
-                        response = await mainAxios.post('/Charges/createCharges', stateobject);
+                        response = await mainAxios.get('/Charges/GetAllCharges', stateobject);
                     } else if(successactiontype === ActionTypes.ADD_PROMO_SUCCESS) {
-                        response = await mainAxios.post('/Promo/CreatePromo', stateobject);
+                        response = await mainAxios.get('/Promo/getAllPromos', stateobject);
                     }  else if(successactiontype === ActionTypes.ADD_RATE_SUCCESS) {
-                        response = await mainAxios.post('/Rates/createRate', stateobject);
+                        response = await mainAxios.get('/Rates/getRateList', stateobject);
                     } else if(successactiontype === ActionTypes.ADD_BANK_SUCCESS) {
-                        response = await mainAxios.post('/JCIBank/createBankAccount', stateobject);
+                        response = await mainAxios.get('/JCIBank/GetAllBankAccount', stateobject);
                     }
                     const { data } = response.data;
+                    console.log(JSON.stringify(data));
                     const message = response.data.message;
                     const status = response.data.status;
                     if(status === "success")
@@ -70,5 +71,5 @@ import ActionTypes from "../actiontype/ActionTypes"
     
     
 export { 
-    CreateAction,
+    GetAction,
 }

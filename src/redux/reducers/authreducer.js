@@ -35,9 +35,6 @@ const existingAuth = getAuthState();
 const authreducer = (state = existingAuth, action) => {
     switch (action.type) {      
         case ActionTypes.USER_LOGIN_SUCCESS:
-            // const newAuthstate = {
-            //     authstate: action.payload,
-            // };
             localStorage.setItem("auth", JSON.stringify(action.payload)); 
             return action.payload;
         case ActionTypes.USER_LOGOUT_SUCCESS:

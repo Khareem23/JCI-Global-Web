@@ -16,17 +16,7 @@ import Button from 'react-bootstrap/Button'
 
     useEffect(() => {
         console.log("Valued Changed " + show);
-    }, [show])
-
-
-    
-    
-//     "id": 0,
-//   "title": "string",
-//   "discountCode": "string",
-//   "bonusValue": 0,
-//   "startDate": "2021-05-06T15:36:49.281Z",
-//   "isActive": true
+    }, [show]);
 
     return (
 

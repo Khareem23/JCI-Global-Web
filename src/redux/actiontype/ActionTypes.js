@@ -25,6 +25,10 @@ const ActionTypes = {
         ADD_PROMO_FAIL: "ADD_PROMO_FAIL",
         ADD_RATE_SUCCESS: "ADD_RATE_SUCCESS",
         ADD_RATE_FAIL: "ADD_RATE_FAIL",
+        ADD_BANK_SUCCESS: "ADD_BANK_SUCCESS",
+        ADD_BANK_FAIL: "ADD_BANK_FAIL",
+        GET_CHARGES_SUCCESS: "GET_CHARGES_SUCCESS",
+        GET_CHARGES_FAIL: "GET_CHARGES_FAIL",
 };
 
 export default ActionTypes;

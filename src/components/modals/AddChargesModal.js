@@ -17,7 +17,6 @@ import Button from 'react-bootstrap/Button'
     };
 
     useEffect(() => {
-        console.log("Valued Changed " + show);
     }, [show])
 
     return (
@@ -36,7 +35,7 @@ import Button from 'react-bootstrap/Button'
                     <div className="col-md-12 position-relative form-group">
                         <div className="form-row">
                             <div className="col-md-6"> 
-                                <label htmlFor="exampleGender">Gender</label>
+                                <label htmlFor="exampleGender">Payment Type</label>
                                 <select type="select" 
                                     id="paymentType" 
                                     name="paymentType"

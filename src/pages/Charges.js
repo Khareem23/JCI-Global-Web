@@ -29,7 +29,7 @@ export default function Charges() {
                 <div className="app-main__outer">
                     <div className="app-main__inner">                        
 
-                        <Chargesarea notify={notify} setNotify={setNotify} handleShow={handleShow} />
+                        <Chargesarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow} />
 
                         <Footer/>
                     

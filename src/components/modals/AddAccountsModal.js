@@ -12,11 +12,10 @@ import Button from 'react-bootstrap/Button'
     
     const handleSubmit = e => {
         e.preventDefault();
-        createaccount(accountdetails, setNotify, ActionTypes.ADD_RATE_SUCCESS, ActionTypes.ADD_RATE_FAIL, handleShow, setShow);
+        createaccount(accountdetails, setNotify, ActionTypes.ADD_BANK_SUCCESS, ActionTypes.ADD_BANK_FAIL, handleShow, setShow);
     };
 
     useEffect(() => {
-        console.log("Valued Changed " + show);
     }, [show]);
 
     return (
