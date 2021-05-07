@@ -1,35 +1,35 @@
-import React, { useState } from 'react'
-import AppHeader from '../components/AppHeader'
-import AppSidebar from '../components/AppSidebar'
-import Chargesarea from '../components/Chargesarea'
-import Footer from '../components/Footer'
-import AddChargesModal from '../components/modals/AddChargesModal'
+import React, { useState } from 'react';
+import AppHeader from '../components/AppHeader';
+import AppSidebar from '../components/AppSidebar';
+import Footer from '../components/Footer';
+import AddAccountsModal from '../components/modals/AddAccountsModal';
+import Bankaccountsarea from '../components/Bankaccountsarea';
 
-export default function Charges() {
-
+export default function BankAccount() {
     const [notify, setNotify] = useState({
         isOpen: false,
         message: '',
         type: '',
-    });
+    })
 
     const [show, setShow] = useState(false);
 
     const handleShow = () => {
+        console.log("Clicked!")
         setShow(!show);
     }
 
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
-            <AppHeader notify={notify} setNotify={setNotify}/>
+            <AppHeader notify={notify} setNotify={setNotify} />
             <div className="app-main">
             
                 <AppSidebar/>
-                
+
                 <div className="app-main__outer">
                     <div className="app-main__inner">                        
 
-                        <Chargesarea notify={notify} setNotify={setNotify} handleShow={handleShow} />
+                        <Bankaccountsarea notify={notify} setNotify={setNotify} handleShow={handleShow}/>
 
                         <Footer/>
                     
@@ -37,8 +37,7 @@ export default function Charges() {
                 </div>        
             </div>
             <div className="app-drawer-overlay d-none animated fadeIn" />
-
-            <AddChargesModal notify={notify} setNotify={setNotify} show={show}  handleShow={handleShow} setShow={setShow} />
+            <AddAccountsModal notify={notify} setNotify={setNotify} show={show}  handleShow={handleShow} setShow={setShow} />
         </div>
         
     )

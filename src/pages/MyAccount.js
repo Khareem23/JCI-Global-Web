@@ -1,13 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AppHeader from '../components/AppHeader'
 import AppSidebar from '../components/AppSidebar'
 import Footer from '../components/Footer'
 import Myaccountarea from '../components/Myaccountarea'
 
 export default function MyAccount() {
+    
+    const [notify, setNotify] = useState({
+        isOpen: false,
+        message: '',
+        type: '',
+    })
+
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
-            <AppHeader/>
+            <AppHeader notify={notify} setNotify={setNotify}/>
             <div className="app-main">
             
                 <AppSidebar/>

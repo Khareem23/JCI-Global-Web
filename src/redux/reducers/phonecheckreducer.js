@@ -1,4 +1,4 @@
-const { AuthActionType } = require('../actions/authaction');
+import ActionTypes from "../actiontype/ActionTypes"
 
 const phonecheckstate = {
     isValid: 0,
@@ -6,9 +6,9 @@ const phonecheckstate = {
 
 const phonecheckreducer = (state = phonecheckstate, action) => {
     switch(action.type) {
-        case AuthActionType.PHONE_EXIST_SUCCESS:
+        case ActionTypes.PHONE_EXIST_SUCCESS:
             return { isValid: true }
-        case AuthActionType.PHONE_EXIST_FAIL:
+        case ActionTypes.PHONE_EXIST_FAIL:
             return { isValid: false}
         default:
             return state;

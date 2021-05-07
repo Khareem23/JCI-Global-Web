@@ -137,7 +137,7 @@ export default function Sendmoneyarea() {
                                         <div className="form-row">
                                             <div className="col-md-6" style={{marginTop: 1}}> 
                                                 <div className="position-relative form-group">
-                                                <label htmlFor="exampleText" className>Transaction Description</label>
+                                                <label htmlFor="exampleText" >Transaction Description</label>
                                                 <textarea name="text" id="exampleText" className="form-control" defaultValue={""} />
                                                 </div>
                                             </div>
@@ -500,7 +500,7 @@ export default function Sendmoneyarea() {
                                             </div>
                                             <div className="col-md-6" style={{marginTop: 1}}> 
                                                 <div className="position-relative form-group">
-                                                <label htmlFor="exampleText" className>Transaction Description</label>
+                                                <label htmlFor="exampleText" >Transaction Description</label>
                                                 <textarea  name="text" id="exampleText" className="form-control" defaultValue={""} />
                                                 </div>
                                             </div>                                          
@@ -647,7 +647,7 @@ export default function Sendmoneyarea() {
                                             <div className="col-md-4"> 
                                                 
                                                 <div className=" no-shadow rm-border bg-transparent text-center">
-                                                <img src="assets/images/creditcard.png" width={100} height={80} />
+                                                <img src="assets/images/creditcard.png" alt="" width={100} height={80} />
                                                 <strong htmlFor="exampleGender" style={{marginLeft: 10}}>Credit Card</strong>
                                                 </div>
 
@@ -656,7 +656,7 @@ export default function Sendmoneyarea() {
                                             <div className="col-md-4"> 
                                                 
                                                 <div className=" no-shadow rm-border bg-transparent text-center">
-                                                <img src="assets/images/transfer.png" width={100} height={80} />
+                                                <img src="assets/images/transfer.png" alt="" width={100} height={80} />
                                                 <strong htmlFor="exampleGender" style={{marginLeft: 10}}>Domestic Wire Transfer ( Manual )</strong>
                                                 </div>
 
@@ -665,7 +665,7 @@ export default function Sendmoneyarea() {
                                             <div className="col-md-4"> 
                                                 
                                                 <div className=" no-shadow rm-border bg-transparent text-center">
-                                                <img src="assets/images/poli.jfif" width={100} height={80} />
+                                                <img src="assets/images/poli.jfif" alt="" width={100} height={80} />
                                                 <strong htmlFor="exampleGender" style={{marginLeft: 10}}>Direct Debit ( POLI )</strong>
                                                 </div>
 

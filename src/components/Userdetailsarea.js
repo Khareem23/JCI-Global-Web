@@ -47,14 +47,14 @@ export default function Userdetailsarea() {
                         <div className="col-md-12 position-relative form-group">
                             <div className="form-row">
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleName" className>Name</label>
+                                    <label htmlFor="exampleName" >Name</label>
                                     <input name="name" id="exampleName" placeholder="Name" type="text" className="form-control" 
                                     />
                                 </div>
                                 
                                
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleEmail" className>Email</label>
+                                    <label htmlFor="exampleEmail" >Email</label>
                                     <input name="email" id="exampleEmail" placeholder="Email" type="email" className="form-control" 
                                     />
                                 </div>
@@ -104,7 +104,7 @@ export default function Userdetailsarea() {
                             <div className="form-row">
                                 <div className="col-md-12" style={{marginTop: 1}}> 
                                     <div className="position-relative form-group">
-                                    <label htmlFor="exampleText" className>Status Description</label>
+                                    <label htmlFor="exampleText" >Status Description</label>
                                     <textarea name="text" id="exampleText" className="form-control" defaultValue={""} />
                                     </div>
                                 </div>
@@ -140,7 +140,7 @@ export default function Userdetailsarea() {
                             <div className="form-row">
                                 
                                 <div className="position-relative form-group col-md-3">
-                                    <label htmlFor="exampleName" className>Beneficiary Account Name</label>
+                                    <label htmlFor="exampleName" >Beneficiary Account Name</label>
                                     <input name="name" id="exampleName" placeholder="Account Name" type="text" className="form-control" 
                                     />
                                 </div>
@@ -159,12 +159,12 @@ export default function Userdetailsarea() {
                                     </select>
                                 </div>
                                 <div className="position-relative form-group col-md-3">
-                                    <label htmlFor="exampleName" className>Bank Name</label>
+                                    <label htmlFor="exampleName" >Bank Name</label>
                                     <input name="name" id="exampleName" placeholder="Bank Name" type="text" className="form-control" 
                                     />
                                 </div>
                                 <div className="position-relative form-group col-md-3">
-                                    <label htmlFor="exampleName" className>Account Number</label>
+                                    <label htmlFor="exampleName" >Account Number</label>
                                     <input name="name" id="exampleName" placeholder="Account Number" type="text" className="form-control" 
                                     />
                                 </div> 
@@ -183,8 +183,8 @@ export default function Userdetailsarea() {
                             <div className="form-row">
                                 
                                 <div className="position-relative form-group col-md-3">
-                                    <label htmlFor="exampleName" className>Number of Preferred Transactions: </label><br></br>
-                                    <label htmlFor="exampleName" className>Payout Balance: </label>
+                                    <label htmlFor="exampleName" >Number of Preferred Transactions: </label><br></br>
+                                    <label htmlFor="exampleName" >Payout Balance: </label>
                                     
                                 </div>
                                 
@@ -195,7 +195,7 @@ export default function Userdetailsarea() {
                                     
                                 </div>
                                 <div className="position-relative form-group col-md-3">
-                                    <label htmlFor="exampleName" className></label>
+                                    <label htmlFor="exampleName" ></label>
                                     
                                 </div>
                                 <div className="ml-auto" style={{marginRight: 16}}>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
 import Authfooter from '../components/Authfooter'
 import Authnavigation from '../components/Authnavigation'
 import { connect } from 'react-redux';
@@ -180,7 +180,7 @@ const Register = (props) => {
                                                                                 
                                                                                 <div className="col-md-6">
                                                                                     <div className="position-relative form-group">
-                                                                                    <label htmlFor="firstName" className>First Name</label>
+                                                                                    <label htmlFor="firstName" >First Name</label>
                                                                                     <input name="text" id="firstName" placeholder="First Name" type="text" className="form-control"
                                                                                         onChange={(event) => {
                                                                                             const firstName = event.target.value;
@@ -192,7 +192,7 @@ const Register = (props) => {
                                                                                 
                                                                                 <div className="col-md-6">
                                                                                     <div className="position-relative form-group">
-                                                                                    <label htmlFor="lastName" className>Last Name</label>
+                                                                                    <label htmlFor="lastName" >Last Name</label>
                                                                                     <input name="text" id="lastName" placeholder="Last Name" type="text" className="form-control"
                                                                                         onChange={(event) => {
                                                                                             const lastName = event.target.value;
@@ -203,7 +203,7 @@ const Register = (props) => {
                                                                                 </div>
                                                                                 <div className="col-md-6">
                                                                                     <div className="position-relative form-group">
-                                                                                    <label htmlFor="exampleEmail" className><span className="text-danger">*</span> Email</label>
+                                                                                    <label htmlFor="exampleEmail" ><span className="text-danger">*</span> Email</label>
                                                                                     <input name="email" id="exampleEmail" className="form-control" placeholder="Email" type="email" required 
                                                                                         style={{
                                                                                             backgroundColor: (isEmailValid && emailValid) ? '' : 'red',
@@ -266,7 +266,7 @@ const Register = (props) => {
                                                                                 </div>
                                                                                 <div className="col-md-6">
                                                                                     <div className="position-relative form-group">
-                                                                                    <label htmlFor="exampleCountry" className><span className="text-danger"></span>Country</label>
+                                                                                    <label htmlFor="exampleCountry" ><span className="text-danger"></span>Country</label>
 
                                                                                             <CountryAutocomplete placeholder="Select a Country"
                                                                                                 suggestions={allcountriesstate} passChildData={handlereturnvalue}
@@ -295,7 +295,7 @@ const Register = (props) => {
                                                                     <div className="form-row">
                                                                         <div className="col-md-6"> 
                                                                             <div className="position-relative form-group">
-                                                                                <label htmlFor="exampleUserType" className>Account Type</label>
+                                                                                <label htmlFor="exampleUserType" >Account Type</label>
                                                                                 <select  id="exampleUserType" className="mb-2 form-control"
                                                                                 onClick={(event) => {
                                                                                     const accountType = event.target.value;
@@ -315,7 +315,7 @@ const Register = (props) => {
                                                                         </div>
                                                                         <div className="col-md-6">
                                                                             <div className="position-relative form-group">
-                                                                            <label htmlFor="accessPin" className>Access PIN</label>
+                                                                            <label htmlFor="accessPin" >Access PIN</label>
                                                                             <input name="text" id="accessPin" placeholder="Access Pin" type="text" className="form-control"
                                                                             onChange={(event) => {
                                                                                 const pin = event.target.value;
@@ -333,7 +333,7 @@ const Register = (props) => {
                                                                                     <div className="form-row">
                                                                                         <div className="col-md-7">
                                                                                         <div className="position-relative form-group">
-                                                                                            <label htmlFor="exampleState" className><span className="text-danger"></span>State</label>
+                                                                                            <label htmlFor="exampleState" ><span className="text-danger"></span>State</label>
                                                                                                
                                                                                                 <StatesAutocomplete placeholder="Select a State"
                                                                                                     suggestions={allstatesstate} passChildData={handlereturnvalueforstates}
@@ -343,7 +343,7 @@ const Register = (props) => {
                                                                                         
                                                                                         <div className="col-md-5">
                                                                                             <div className="position-relative form-group">
-                                                                                            <label htmlFor="exampleCity" className><span className="text-danger"></span>City</label>
+                                                                                            <label htmlFor="exampleCity" ><span className="text-danger"></span>City</label>
                                                                                                 <input name="text" id="exampleCity" placeholder="City" type="text" className="form-control"
                                                                                                 onChange={(event) => {
                                                                                                     const city = event.target.value;
@@ -359,7 +359,7 @@ const Register = (props) => {
                                                                                     <div className="form-row">
                                                                                         <div className="col-md-6">
                                                                                             <div className="position-relative form-group">
-                                                                                            <label htmlFor="examplePassword" className><span className="text-danger"></span>Password</label>
+                                                                                            <label htmlFor="examplePassword" ><span className="text-danger"></span>Password</label>
                                                                                             <input name="password" id="examplePassword" placeholder="Password" type="password" className="form-control"
                                                                                                 onChange={(event) => {
                                                                                                     setFirst(event)
@@ -372,7 +372,7 @@ const Register = (props) => {
                                                                                         
                                                                                         <div className="col-md-6">
                                                                                             <div className="position-relative form-group">
-                                                                                            <label htmlFor="examplePasswordRep" className><span className="text-danger"></span>Re-type Password</label>
+                                                                                            <label htmlFor="examplePasswordRep" ><span className="text-danger"></span>Re-type Password</label>
                                                                                             <input name="passwordrep" id="examplePasswordRep" placeholder="Confirm Password" type="password" className="form-control" 
                                                                                                 onKeyUp={(event) => {
                                                                                                     setSecond(event)
@@ -403,7 +403,7 @@ const Register = (props) => {
                                                                             </div>
                                                                             <div className="col-md-2">
                                                                                 <div className="position-relative form-group">
-                                                                                    <label htmlFor="exampleCountry" className><span className="text-danger"></span>Postal Code</label>
+                                                                                    <label htmlFor="exampleCountry" ><span className="text-danger"></span>Postal Code</label>
                                                                                     <input name="text" id="exampleCode" placeholder="Postal Code" type="text" className="form-control" 
                                                                                     onChange={(event) => {
                                                                                         const postalCode = event.target.value;
@@ -423,7 +423,7 @@ const Register = (props) => {
                                                                     <div className="form-row" style={{marginTop: 30}}>
                                                                         <div className="col-md-6"> 
                                                                             <div className="position-relative form-group">
-                                                                                <label htmlFor="businessName" className>Business Name</label>
+                                                                                <label htmlFor="businessName" >Business Name</label>
                                                                                 <input name="text" id="businessName" placeholder="Business Name" type="text" className="form-control"
                                                                                 onChange={(event) => {
                                                                                     const businessName = event.target.value;
@@ -433,7 +433,7 @@ const Register = (props) => {
                                                                         </div>
                                                                         <div className="col-md-6">
                                                                             <div className="position-relative form-group">
-                                                                            <label htmlFor="accessBRN" className>Business Registration Number</label>
+                                                                            <label htmlFor="accessBRN" >Business Registration Number</label>
                                                                                 <input name="text" id="accessBRN" placeholder="Business Registration Number" type="text" className="form-control"
                                                                                 onChange={(event) => {
                                                                                     const businessRegNumber = event.target.value;

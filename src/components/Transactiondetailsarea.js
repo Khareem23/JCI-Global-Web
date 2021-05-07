@@ -47,21 +47,21 @@ export default function Transactiondetailsarea() {
                         <div className="col-md-12 position-relative form-group">
                             <div className="form-row">
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleName" className>Type</label>
+                                    <label htmlFor="exampleName" >Type</label>
                                     <input name="type" id="exampleName" placeholder="Type" type="text" className="form-control" 
                                     />
                                 </div>
                                 
                                
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleEmail" className>Reference Number</label>
+                                    <label htmlFor="exampleEmail" >Reference Number</label>
                                     <input name="email" id="exampleEmail" placeholder="Reference Number" type="text" className="form-control" 
                                     />
                                 </div>
 
 
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleName" className>Payment Method</label>
+                                    <label htmlFor="exampleName" >Payment Method</label>
                                     <input name="type" id="exampleName" placeholder="Payment Method" type="text" className="form-control" 
                                     />
                                 </div>
@@ -78,12 +78,12 @@ export default function Transactiondetailsarea() {
                             <div className="form-row">
                                 
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleName" className>Amount Received(NGN)</label>
+                                    <label htmlFor="exampleName" >Amount Received(NGN)</label>
                                     <input name="type" id="exampleName" placeholder="Amount Received" type="text" className="form-control" 
                                     />
                                 </div>
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleName" className>Amount Received(USD)</label>
+                                    <label htmlFor="exampleName" >Amount Received(USD)</label>
                                     <input name="type" id="exampleName" placeholder="Amount Received" type="text" className="form-control" 
                                     />
                                 </div>
@@ -143,7 +143,7 @@ export default function Transactiondetailsarea() {
                             <div className="form-row">
                                 
                                 <div className="position-relative form-group col-md-3">
-                                    <label htmlFor="exampleName" className>Beneficiary Account Name</label>
+                                    <label htmlFor="exampleName" >Beneficiary Account Name</label>
                                     <input name="name" id="exampleName" placeholder="Account Name" type="text" className="form-control" 
                                     />
                                 </div>
@@ -162,12 +162,12 @@ export default function Transactiondetailsarea() {
                                     </select>
                                 </div>
                                 <div className="position-relative form-group col-md-3">
-                                    <label htmlFor="exampleName" className>Bank Name</label>
+                                    <label htmlFor="exampleName" >Bank Name</label>
                                     <input name="name" id="exampleName" placeholder="Bank Name" type="text" className="form-control" 
                                     />
                                 </div>
                                 <div className="position-relative form-group col-md-3">
-                                    <label htmlFor="exampleName" className>Account Number</label>
+                                    <label htmlFor="exampleName" >Account Number</label>
                                     <input name="name" id="exampleName" placeholder="Account Number" type="text" className="form-control" 
                                     />
                                 </div> 
@@ -179,7 +179,7 @@ export default function Transactiondetailsarea() {
                             <div className="form-row">
                                 
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleName" className>Corresponding Bank</label>
+                                    <label htmlFor="exampleName" >Corresponding Bank</label>
                                     <input name="correspondingbank" id="exampleName" placeholder="Corresponding Bank" type="text" className="form-control" 
                                     />
                                 </div>
@@ -197,7 +197,7 @@ export default function Transactiondetailsarea() {
                                 
                                
                                 <div className="position-relative form-group col-md-3">
-                                    <label htmlFor="exampleName" className></label>
+                                    <label htmlFor="exampleName" ></label>
                                     
                                 </div>
                                 <div className="ml-auto" style={{marginRight: 16}}>
@@ -221,7 +221,7 @@ export default function Transactiondetailsarea() {
                             <div className="form-row">
                                 
                                 <div className="position-relative form-group col-md-3">
-                                    <h3 htmlFor="exampleName" className>Todays Date</h3>
+                                    <h3 htmlFor="exampleName" >Todays Date</h3>
                                    
                                 </div>
                                 

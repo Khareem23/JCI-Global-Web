@@ -64,14 +64,14 @@ export default function Chargedetailsarea() {
                                 
                                
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleEmail" className>Provider Charged Rate (%) </label>
+                                    <label htmlFor="exampleEmail" >Provider Charged Rate (%) </label>
                                     <input name="rate" id="exampleEmail" placeholder="Charged Rate" type="text" className="form-control" 
                                     />
                                 </div>
 
 
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleEmail" className>Provider Flat Charges </label>
+                                    <label htmlFor="exampleEmail" >Provider Flat Charges </label>
                                     <input name="rate" id="exampleEmail" placeholder="Flat Charges" type="text" className="form-control" 
                                     />
                                 </div>
@@ -82,7 +82,7 @@ export default function Chargedetailsarea() {
                             <div className="form-row">
                                 
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleName" className>Receiving Country(NGN)</label>
+                                    <label htmlFor="exampleName" >Receiving Country(NGN)</label>
                                     <select type="select" 
                                         id="gender" 
                                         name="gender"

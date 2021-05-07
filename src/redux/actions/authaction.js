@@ -1,36 +1,15 @@
 import axios from "axios"
 import { mainAxios } from "../../utils/axios"
 import jwt_decode from "jwt-decode";
-
-    const AuthActionType = {
-        USER_REGISTRATION_SUCCESS: "USER_REGISTRATION_SUCCESS",
-        USER_REGISTRATION_FAIL: "USER_REGISTRATION_FAIL",
-        LOADING_SHOW: "LOADING_SHOW",
-        LOADING_HIDE: "LOADING_HIDE",
-        USER_LOGIN_SUCCESS: "USER_LOGIN_SUCCESS",
-        USER_LOGIN_FAIL: "USER_LOGIN_FAIL",
-        MAIL_EXIST_SUCCESS: "MAIL_EXIST_SUCCESS",
-        MAIL_EXIST_FAIL: "MAIL_EXIST_FAIL",
-        PHONE_EXIST_SUCCESS: "PHONE_EXIST_SUCCESS",
-        PHONE_EXIST_FAIL: "PHONE_EXIST_FAIL",
-        FETCH_COUNTRIES_SUCCESS: "FETCH_COUNTRIES_SUCCESS",
-        FETCH_COUNTRIES_FAIL: "FETCH_COUNTRIES_FAIL",
-        FETCH_STATES_SUCCESS: "FETCH_STATES_SUCCESS",
-        FETCH_STATES_FAIL: "FETCH_STATES_FAIL",
-        UPDATE_PASSWORD_SUCCESS: "UPDATE_PASSWORD_SUCCESS",
-        UPDATE_PASSWORD_FAIL: "UPDATE_PASSWORD_FAIL",
-        UPDATE_PIN_SUCCESS: "UPDATE_PIN_SUCCESS",
-        UPDATE_PIN_FAIL: "UPDATE_PIN_FAIL",
-    }
-
+import ActionTypes from "../actiontype/ActionTypes"
 
     const ShowLoading = (state) => {
         return async (dispatch) => {
             try {
-                dispatch({type: AuthActionType.LOADING_SHOW, payload: state}); 
+                dispatch({type: ActionTypes.LOADING_SHOW, payload: state}); 
             
             } catch(error) {
-                dispatch({type: AuthActionType.LOADING_HIDE, payload: state}); 
+                dispatch({type: ActionTypes.LOADING_HIDE, payload: state}); 
             }
         }
     }
@@ -38,7 +17,7 @@ import jwt_decode from "jwt-decode";
 
     const HideLoading = () => {
         return async(dispatch) => {
-            dispatch({type: AuthActionType.LOADING_HIDE, payload: ""});
+            dispatch({type: ActionTypes.LOADING_HIDE, payload: ""});
         }
     }
 
@@ -56,13 +35,13 @@ import jwt_decode from "jwt-decode";
                     const { data } = response.data.data;
                     if(response.data.status === "success")
                     {
-                        dispatch({type: AuthActionType.LOADING_HIDE, payload: userstate}); 
-                        dispatch({type: AuthActionType.USER_REGISTRATION_SUCCESS, payload: data});
+                        dispatch({type: ActionTypes.LOADING_HIDE, payload: userstate}); 
+                        dispatch({type: ActionTypes.USER_REGISTRATION_SUCCESS, payload: data});
                         history.push("/dashboard");
                     } else {
                         
-                            dispatch({type: AuthActionType.LOADING_HIDE, payload: userstate}); 
-                            dispatch({type: AuthActionType.USER_REGISTRATION_FAIL, payload: data.message });
+                            dispatch({type: ActionTypes.LOADING_HIDE, payload: userstate}); 
+                            dispatch({type: ActionTypes.USER_REGISTRATION_FAIL, payload: data.message });
                             setError({
                                 hasError: true,
                                 message: data.message,
@@ -70,7 +49,7 @@ import jwt_decode from "jwt-decode";
 
                     }
                 } else {
-                    dispatch({type: AuthActionType.LOADING_HIDE, payload: userstate}); 
+                    dispatch({type: ActionTypes.LOADING_HIDE, payload: userstate}); 
                     setError({
                         hasError: true,
                         message: "Kindly fill all empty spaces",
@@ -78,10 +57,10 @@ import jwt_decode from "jwt-decode";
                 }
                 
             } catch(error) {
-                dispatch({type: AuthActionType.LOADING_HIDE, payload: userstate}); 
+                dispatch({type: ActionTypes.LOADING_HIDE, payload: userstate}); 
                 const errmsg = error.message +  "  Error occurred while registering..."
                 dispatch({
-                    type: AuthActionType.USER_REGISTRATION_FAIL, 
+                    type: ActionTypes.USER_REGISTRATION_FAIL, 
                     payload: errmsg,
                 });
                 setError({
@@ -92,17 +71,18 @@ import jwt_decode from "jwt-decode";
         }
     }
     
-    const LoginAuthAction = (loginstate, history, setError) => {
+    const LoginAuthAction = (loginstate, history, setNotify) => {
         return async (dispatch) => {
             try {
-
-                if(loginstate.username === undefined || loginstate.password === undefined)
+                    console.log(JSON.stringify(loginstate))
+                if(loginstate.username === undefined || loginstate.username === "" || loginstate.password === undefined || loginstate.password === "")
                 {
-                    dispatch({type: AuthActionType.LOADING_HIDE, payload: loginstate}); 
-                    setError({
-                        hasError: true,
-                        message: "Kindly fill all empty spaces",
-                    })
+                    dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
+                    setNotify({
+                        isOpen: true,
+                        message: "Kindly supply all required fields!",
+                        type: 'error',
+                    });
                 }
                 else {
                     
@@ -112,39 +92,61 @@ import jwt_decode from "jwt-decode";
                     {
                         var decoded = jwt_decode(data);
                         decoded.isLoggedIn = true;
+                        decoded.token = data;
+                        decoded.status = response.data.status;
+                        decoded.message = response.data.message;
                         console.log(decoded);
-                        dispatch({type: AuthActionType.LOADING_HIDE, payload: loginstate}); 
-                        dispatch({type: AuthActionType.USER_LOGIN_SUCCESS, payload: decoded});
+                        dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
+                        dispatch({type: ActionTypes.USER_LOGIN_SUCCESS, payload: decoded});                        
+                        setNotify({
+                            isOpen: true,
+                            message: response.data.message,
+                            type: 'success',
+                        });
                         if(decoded.role === "Customer")
                         {
-                            history.push("/sendmoney");
+                            history.push("/sendmoney");                            
                         } else if(decoded.role === "Admin")
                         {
-                            history.push("/dashboard");
-                        } else {
-
+                            history.push("/dashboard"); 
                         }
                     }
                     else  
                     {
-                        dispatch({type: AuthActionType.LOADING_HIDE, payload: loginstate}); 
-                        dispatch({type: AuthActionType.USER_LOGIN_FAIL, payload: data.message });
-                        setError({
-                            hasError: true,
+                        dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
+                        dispatch({type: ActionTypes.USER_LOGIN_FAIL, payload: data.message });
+                        setNotify({
+                            isOpen: true,
                             message: data.message,
-                        })
+                            type: 'error',
+                        });
                     }
 
                 }
             } catch(error) {
-                const errmsg = error.message + "  Error occurred while trying to login...";
-                console.log(errmsg);
-                dispatch({type: AuthActionType.LOADING_HIDE, payload: loginstate}); 
-                dispatch({type: AuthActionType.USER_LOGIN_FAIL, payload: errmsg });
-                setError({
-                    hasError: true,
+                const errmsg = error.message;
+                dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
+                dispatch({type: ActionTypes.USER_LOGIN_FAIL, payload: errmsg });
+                setNotify({
+                    isOpen: true,
                     message: errmsg,
-                })
+                    type: 'error',
+                });
+            }
+        }
+    }
+
+    const LogOutAuthAction = (history) => {
+        return async (dispatch) => {
+            try {    
+                        dispatch({type: ActionTypes.LOADING_HIDE, payload: ''}); 
+                        dispatch({type: ActionTypes.USER_LOGOUT_SUCCESS, payload: ''});
+                        history.push("/");
+                   
+            } catch(error) {
+                const errmsg = error.message + "  Error occurred while trying to log out...";
+                dispatch({type: ActionTypes.LOADING_HIDE, payload: ''}); 
+                dispatch({type: ActionTypes.USER_LOGOUT_FAIL, payload: errmsg });
             }
         }
     }
@@ -155,7 +157,7 @@ import jwt_decode from "jwt-decode";
 
                 if(updatepwdstate.newPassword === undefined)
                 {
-                    dispatch({type: AuthActionType.LOADING_HIDE, payload: updatepwdstate}); 
+                    dispatch({type: ActionTypes.LOADING_HIDE, payload: updatepwdstate}); 
                     setError({
                         hasError: true,
                         message: "Kindly fill all empty spaces",
@@ -167,14 +169,14 @@ import jwt_decode from "jwt-decode";
                     const { data } = response.data.data;
                     if(response.data.status === "success")
                     {
-                        dispatch({type: AuthActionType.LOADING_HIDE, payload: updatepwdstate}); 
-                        dispatch({type: AuthActionType.UPDATE_PASSWORD_SUCCESS, payload: data});
+                        dispatch({type: ActionTypes.LOADING_HIDE, payload: updatepwdstate}); 
+                        dispatch({type: ActionTypes.UPDATE_PASSWORD_SUCCESS, payload: data});
                         history.push("/profile");
                     }
                     else  
                     {
-                        dispatch({type: AuthActionType.LOADING_HIDE, payload: updatepwdstate}); 
-                        dispatch({type: AuthActionType.UPDATE_PASSWORD_FAIL, payload: data.message });
+                        dispatch({type: ActionTypes.LOADING_HIDE, payload: updatepwdstate}); 
+                        dispatch({type: ActionTypes.UPDATE_PASSWORD_FAIL, payload: data.message });
                         setError({
                             hasError: true,
                             message: data.message,
@@ -185,8 +187,8 @@ import jwt_decode from "jwt-decode";
             } catch(error) {
                 const errmsg = error.message + "  Error occurred while trying to update password...";
                 console.log(errmsg);
-                dispatch({type: AuthActionType.LOADING_HIDE, payload: updatepwdstate}); 
-                dispatch({type: AuthActionType.UPDATE_PASSWORD_FAIL, payload: errmsg });
+                dispatch({type: ActionTypes.LOADING_HIDE, payload: updatepwdstate}); 
+                dispatch({type: ActionTypes.UPDATE_PASSWORD_FAIL, payload: errmsg });
                 setError({
                     hasError: true,
                     message: errmsg,
@@ -200,7 +202,7 @@ import jwt_decode from "jwt-decode";
             try {
                 if(updatepinstate.newPin === undefined)
                 {
-                    dispatch({type: AuthActionType.LOADING_HIDE, payload: updatepinstate}); 
+                    dispatch({type: ActionTypes.LOADING_HIDE, payload: updatepinstate}); 
                     setError({
                         hasError: true,
                         message: "Kindly fill all empty spaces",
@@ -212,14 +214,14 @@ import jwt_decode from "jwt-decode";
                     const { data } = response.data.data;
                     if(response.data.status === "success")
                     {
-                        dispatch({type: AuthActionType.LOADING_HIDE, payload: updatepinstate}); 
-                        dispatch({type: AuthActionType.UPDATE_PIN_SUCCESS, payload: data});
+                        dispatch({type: ActionTypes.LOADING_HIDE, payload: updatepinstate}); 
+                        dispatch({type: ActionTypes.UPDATE_PIN_SUCCESS, payload: data});
                         history.push("/profile");
                     }
                     else  
                     {
-                        dispatch({type: AuthActionType.LOADING_HIDE, payload: updatepinstate}); 
-                        dispatch({type: AuthActionType.UPDATE_PIN_FAIL, payload: data.message });
+                        dispatch({type: ActionTypes.LOADING_HIDE, payload: updatepinstate}); 
+                        dispatch({type: ActionTypes.UPDATE_PIN_FAIL, payload: data.message });
                         setError({
                             hasError: true,
                             message: data.message,
@@ -230,8 +232,8 @@ import jwt_decode from "jwt-decode";
             } catch(error) {
                 const errmsg = error.message + "  Error occurred while trying to update password...";
                 console.log(errmsg);
-                dispatch({type: AuthActionType.LOADING_HIDE, payload: updatepinstate}); 
-                dispatch({type: AuthActionType.UPDATE_PIN_FAIL, payload: errmsg });
+                dispatch({type: ActionTypes.LOADING_HIDE, payload: updatepinstate}); 
+                dispatch({type: ActionTypes.UPDATE_PIN_FAIL, payload: errmsg });
                 setError({
                     hasError: true,
                     message: errmsg,
@@ -247,14 +249,14 @@ import jwt_decode from "jwt-decode";
                 const { data } = response;
                 if(data.response === 200)
                 {
-                    dispatch({type: AuthActionType.LOADING_HIDE, payload: loginstate});
-                    dispatch({type: AuthActionType.LOGIN_SUCCESS, payload: data});
+                    dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate});
+                    dispatch({type: ActionTypes.LOGIN_SUCCESS, payload: data});
                     history.push("/profile");
                 }
                 else  
                 {
-                    dispatch({type: AuthActionType.LOADING_HIDE, payload: loginstate}); 
-                    dispatch({type: AuthActionType.LOGIN_FAIL, payload: data.errors});
+                    dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
+                    dispatch({type: ActionTypes.LOGIN_FAIL, payload: data.errors});
                     setError({
                         hasError: true,
                         message: data.errors,
@@ -262,8 +264,8 @@ import jwt_decode from "jwt-decode";
                 }
             } catch(error) {
                 const errmsg = error.message + "  Error occurred while trying to login...";
-                dispatch({type: AuthActionType.LOADING_HIDE, payload: loginstate}); 
-                dispatch({type: AuthActionType.LOGIN_FAIL, payload: errmsg });
+                dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
+                dispatch({type: ActionTypes.LOGIN_FAIL, payload: errmsg });
                 setError({
                     hasError: true,
                     message: errmsg,
@@ -275,27 +277,27 @@ import jwt_decode from "jwt-decode";
     const CheckIfEmailExist = (setError, email) => {
         return async (dispatch) => {
             try {
-                        dispatch({type: AuthActionType.LOADING_SHOW, payload: ""}); 
+                        dispatch({type: ActionTypes.LOADING_SHOW, payload: ""}); 
                         try {
                             const response = await mainAxios.get('/Users/checkEmailExist/' + email);
                             const res = response.data;
                             if(res)
                             {
-                                dispatch({type: AuthActionType.MAIL_EXIST_SUCCESS, payload: res});
-                                dispatch({type: AuthActionType.LOADING_HIDE, payload: res.data}); 
+                                dispatch({type: ActionTypes.MAIL_EXIST_SUCCESS, payload: res});
+                                dispatch({type: ActionTypes.LOADING_HIDE, payload: res.data}); 
                             } 
                             else  
                             {
-                                dispatch({type: AuthActionType.MAIL_EXIST_FAIL, payload: res});
-                                dispatch({type: AuthActionType.LOADING_HIDE, payload: ""}); 
+                                dispatch({type: ActionTypes.MAIL_EXIST_FAIL, payload: res});
+                                dispatch({type: ActionTypes.LOADING_HIDE, payload: ""}); 
                                 setError({
                                     hasError: true,
                                     message: response.message,
                                 })
                             }
                         } catch(error) {
-                            dispatch({type: AuthActionType.LOADING_HIDE, payload: ""});
-                            dispatch({type: AuthActionType.MAIL_EXIST_FAIL, payload: false});
+                            dispatch({type: ActionTypes.LOADING_HIDE, payload: ""});
+                            dispatch({type: ActionTypes.MAIL_EXIST_FAIL, payload: false});
                             setError({
                                 hasError: true,
                                 message: error.message,
@@ -303,8 +305,8 @@ import jwt_decode from "jwt-decode";
                         }
                 
             } catch(error) {
-                dispatch({type: AuthActionType.LOADING_HIDE, payload: ""}); 
-                dispatch({type: AuthActionType.MAIL_EXIST_FAIL, payload: false});
+                dispatch({type: ActionTypes.LOADING_HIDE, payload: ""}); 
+                dispatch({type: ActionTypes.MAIL_EXIST_FAIL, payload: false});
                 const errmsg = "Error checking mail...";
                 setError({
                     hasError: true,
@@ -317,27 +319,27 @@ import jwt_decode from "jwt-decode";
     const CheckIfPhoneExist = (setError, phone) => {
         return async (dispatch) => {
             try {                
-                dispatch({type: AuthActionType.LOADING_SHOW, payload: ""}); 
+                dispatch({type: ActionTypes.LOADING_SHOW, payload: ""}); 
                 try {
                     const response = await mainAxios.get('/Users/checkPhoneNumberExist/' + phone);
                     const res = response.data;
                     if(res)
                     {
-                        dispatch({type: AuthActionType.PHONE_EXIST_SUCCESS, payload: res});
-                        dispatch({type: AuthActionType.LOADING_HIDE, payload: res.data}); 
+                        dispatch({type: ActionTypes.PHONE_EXIST_SUCCESS, payload: res});
+                        dispatch({type: ActionTypes.LOADING_HIDE, payload: res.data}); 
                     } 
                     else  
                     {
-                        dispatch({type: AuthActionType.PHONE_EXIST_FAIL, payload: res});
-                        dispatch({type: AuthActionType.LOADING_HIDE, payload: ""}); 
+                        dispatch({type: ActionTypes.PHONE_EXIST_FAIL, payload: res});
+                        dispatch({type: ActionTypes.LOADING_HIDE, payload: ""}); 
                         setError({
                             hasError: true,
                             message: response.message,
                         })
                     }
                 } catch(error) {
-                    dispatch({type: AuthActionType.LOADING_HIDE, payload: ""});
-                    dispatch({type: AuthActionType.PHONE_EXIST_FAIL, payload: false});
+                    dispatch({type: ActionTypes.LOADING_HIDE, payload: ""});
+                    dispatch({type: ActionTypes.PHONE_EXIST_FAIL, payload: false});
                     setError({
                         hasError: true,
                         message: error.message,
@@ -345,8 +347,8 @@ import jwt_decode from "jwt-decode";
                 }
                 
             } catch(error) {
-                dispatch({type: AuthActionType.LOADING_HIDE, payload: ""}); 
-                dispatch({type: AuthActionType.PHONE_EXIST_FAIL, payload: false});
+                dispatch({type: ActionTypes.LOADING_HIDE, payload: ""}); 
+                dispatch({type: ActionTypes.PHONE_EXIST_FAIL, payload: false});
                 const errmsg = "Error checking mail...";
                 setError({
                     hasError: true,
@@ -355,34 +357,33 @@ import jwt_decode from "jwt-decode";
             }
         }
     }
-    
 
     //to fetch all the countries
     const FetchAllCountry = (setError) => {
         return async (dispatch) => {
             try {
-                    dispatch({type: AuthActionType.LOADING_SHOW, payload: ""}); 
+                    dispatch({type: ActionTypes.LOADING_SHOW, payload: ""}); 
                     try {
                         const response = await mainAxios.get('/Users/getCountries');
                         //console.log(JSON.stringify(response));
                         const res = response.data.data;
                         if(res.length > 1)
                         {
-                            dispatch({type: AuthActionType.FETCH_COUNTRIES_SUCCESS, payload: res});
-                            dispatch({type: AuthActionType.LOADING_HIDE, payload: res}); 
+                            dispatch({type: ActionTypes.FETCH_COUNTRIES_SUCCESS, payload: res});
+                            dispatch({type: ActionTypes.LOADING_HIDE, payload: res}); 
                         } 
                         else  
                         {
-                            dispatch({type: AuthActionType.FETCH_COUNTRIES_FAIL, payload: res });
-                            dispatch({type: AuthActionType.LOADING_HIDE, payload: ""}); 
+                            dispatch({type: ActionTypes.FETCH_COUNTRIES_FAIL, payload: res });
+                            dispatch({type: ActionTypes.LOADING_HIDE, payload: ""}); 
                             setError({
                                 hasError: true,
                                 message: "Error fetching countries",
                             })
                         }
                     } catch(error) {
-                        dispatch({type: AuthActionType.LOADING_HIDE, payload: ""});
-                        dispatch({type: AuthActionType.FETCH_COUNTRIES_FAIL, payload: "" });
+                        dispatch({type: ActionTypes.LOADING_HIDE, payload: ""});
+                        dispatch({type: ActionTypes.FETCH_COUNTRIES_FAIL, payload: "" });
                         setError({
                             hasError: true,
                             message: error.message,
@@ -390,8 +391,8 @@ import jwt_decode from "jwt-decode";
                     }
                 
             } catch(error) {
-                dispatch({type: AuthActionType.LOADING_HIDE, payload: ""}); 
-                dispatch({type: AuthActionType.FETCH_COUNTRIES_FAIL, payload: "" });
+                dispatch({type: ActionTypes.LOADING_HIDE, payload: ""}); 
+                dispatch({type: ActionTypes.FETCH_COUNTRIES_FAIL, payload: "" });
                 const errmsg = "Error fetching countries...";
                 setError({
                     hasError: true,
@@ -404,28 +405,28 @@ import jwt_decode from "jwt-decode";
     const FetchStatesByCountryCode = (setError, code) => {
         return async (dispatch) => {
             try {
-                    dispatch({type: AuthActionType.LOADING_SHOW, payload: ""}); 
+                    dispatch({type: ActionTypes.LOADING_SHOW, payload: ""}); 
                     try {
                         const response = await mainAxios.get('/Users/getCountryStates/' + code);
                         console.log(JSON.stringify(response));
                         const res = response.data.data;
                         if(res.length > 1)
                         {
-                            dispatch({type: AuthActionType.FETCH_STATES_SUCCESS, payload: res});
-                            dispatch({type: AuthActionType.LOADING_HIDE, payload: res}); 
+                            dispatch({type: ActionTypes.FETCH_STATES_SUCCESS, payload: res});
+                            dispatch({type: ActionTypes.LOADING_HIDE, payload: res}); 
                         } 
                         else  
                         {
-                            dispatch({type: AuthActionType.FETCH_STATES_FAIL, payload: res });
-                            dispatch({type: AuthActionType.LOADING_HIDE, payload: ""}); 
+                            dispatch({type: ActionTypes.FETCH_STATES_FAIL, payload: res });
+                            dispatch({type: ActionTypes.LOADING_HIDE, payload: ""}); 
                             setError({
                                 hasError: true,
                                 message: "Error fetching states",
                             })
                         }
                     } catch(error) {
-                        dispatch({type: AuthActionType.LOADING_HIDE, payload: ""});
-                        dispatch({type: AuthActionType.FETCH_STATES_FAIL, payload: "" });
+                        dispatch({type: ActionTypes.LOADING_HIDE, payload: ""});
+                        dispatch({type: ActionTypes.FETCH_STATES_FAIL, payload: "" });
                         setError({
                             hasError: true,
                             message: error.message,
@@ -433,8 +434,8 @@ import jwt_decode from "jwt-decode";
                     }
                 
             } catch(error) {
-                dispatch({type: AuthActionType.LOADING_HIDE, payload: ""}); 
-                dispatch({type: AuthActionType.FETCH_STATES_FAIL, payload: "" });
+                dispatch({type: ActionTypes.LOADING_HIDE, payload: ""}); 
+                dispatch({type: ActionTypes.FETCH_STATES_FAIL, payload: "" });
                 const errmsg = "Error fetching states...";
                 setError({
                     hasError: true,
@@ -452,9 +453,13 @@ export {
     PinLoginAuthAction,
     CheckIfEmailExist,
     CheckIfPhoneExist,
-    AuthActionType,
+    // ActionTypes,
     FetchAllCountry,
     FetchStatesByCountryCode,
     UpdatePasswordAuthAction,
     UpdatePINAuthAction,
+    LogOutAuthAction,
 }
+
+// git remote add origin https://sterlingappsdevops.visualstudio.com/TravelDesk/_git/TravelDesk
+// git push -u origin --all

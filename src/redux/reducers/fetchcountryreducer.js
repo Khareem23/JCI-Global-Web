@@ -1,4 +1,4 @@
-import { AuthActionType } from "../actions/authaction";
+import ActionTypes from "../actiontype/ActionTypes"
 
 const allcountriesstate = [
 ]
@@ -6,7 +6,7 @@ const allcountriesstate = [
 
 const autosearchreducer = (state = [], action) => {
     switch (action.type) {
-        case AuthActionType.FETCH_COUNTRIES_SUCCESS:
+        case ActionTypes.FETCH_COUNTRIES_SUCCESS:
             const fetchCountry = {
                 allcountriesstate: action.payload,
             };

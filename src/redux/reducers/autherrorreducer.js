@@ -1,4 +1,4 @@
-const { AuthActionType } = require('../actions/authaction');
+import ActionTypes from "../actiontype/ActionTypes"
 
 const autherror = {
     message: "",
@@ -6,17 +6,17 @@ const autherror = {
 
 const authErrorReducer = (state = autherror, action) => {
     switch(action.type) {
-        case AuthActionType.USER_REGISTRATION_FAIL:
+        case ActionTypes.USER_REGISTRATION_FAIL:
             return { message: action.payload }
-        case AuthActionType.FETCH_COUNTRIES_FAIL:
+        case ActionTypes.FETCH_COUNTRIES_FAIL:
                 return { message: action.payload }
-        case AuthActionType.FETCH_STATES_FAIL:
+        case ActionTypes.FETCH_STATES_FAIL:
             return { message: action.payload }
-        case AuthActionType.MAIL_EXIST_FAIL:
+        case ActionTypes.MAIL_EXIST_FAIL:
             return { message: action.payload }
-        case AuthActionType.USER_LOGIN_FAIL:
+        case ActionTypes.USER_LOGIN_FAIL:
             return { message: action.payload }
-        case AuthActionType.PHONE_EXIST_FAIL:
+        case ActionTypes.PHONE_EXIST_FAIL:
             return { message: action.payload }
         default:
             return state;

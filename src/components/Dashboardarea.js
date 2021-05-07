@@ -505,7 +505,7 @@ export default function Dashboardarea() {
                 <div className="row">
                 <div className="col-md-5">
                     <div className="position-relative form-group">
-                    <label htmlFor="exampleCustomSelect" className>View Total Users In a Country</label>
+                    <label htmlFor="exampleCustomSelect" >View Total Users In a Country</label>
                     <select type="select" id="exampleCustomSelect" name="customSelect" className="custom-select">
                         <option value>Select Country</option>
                         <option>Nigeria</option>
@@ -517,7 +517,7 @@ export default function Dashboardarea() {
                     </div>
                 </div>
                 <div className="col-md-1">
-                <label htmlFor="exampleCustomSelect" className></label>
+                <label htmlFor="exampleCustomSelect" ></label>
                     <div className="fsize-4">
                         <small className="opacity-5">$</small>
                         5,456
@@ -525,7 +525,7 @@ export default function Dashboardarea() {
                 </div>
                 <div className="col-md-5">
                     <div className="position-relative form-group">
-                    <label htmlFor="exampleCustomSelect" className>View Total Transactions in a Country</label>
+                    <label htmlFor="exampleCustomSelect" >View Total Transactions in a Country</label>
                     <select type="select" id="exampleCustomSelect" name="customSelect" className="custom-select">
                         <option value>Select Country</option>
                         <option>Nigeria</option>
@@ -537,7 +537,7 @@ export default function Dashboardarea() {
                     </div>
                 </div>
                 <div className="col-md-1">
-                <label htmlFor="exampleCustomSelect" className></label>
+                <label htmlFor="exampleCustomSelect" ></label>
                     <div className="fsize-4">
                         <small className="opacity-5">$</small>
                         5,456

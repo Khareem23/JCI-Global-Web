@@ -1,4 +1,4 @@
-const { AuthActionType } = require('../actions/authaction');
+import ActionTypes from "../actiontype/ActionTypes"
 
 const emailcheckstate = {
     isValid: 0,
@@ -6,9 +6,9 @@ const emailcheckstate = {
 
 const emailcheckreducer = (state = emailcheckstate, action) => {
     switch(action.type) {
-        case AuthActionType.MAIL_EXIST_SUCCESS:
+        case ActionTypes.MAIL_EXIST_SUCCESS:
             return { isValid: true }
-        case AuthActionType.MAIL_EXIST_FAIL:
+        case ActionTypes.MAIL_EXIST_FAIL:
             return { isValid: false}
         default:
             return state;

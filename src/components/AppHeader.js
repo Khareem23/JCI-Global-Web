@@ -1,12 +1,12 @@
 import React from 'react'
+import Notification from './Notification'
 
-export default function AppHeader() {
+export default function AppHeader(props) {
+    const { notify, setNotify } = props;
     return (
-        
-
-
-
         <div className="app-header header-shadow">
+            <Notification notify={notify} setNotify={setNotify} />
+
         <div className="app-header__logo">
             <div className="logo-src" />
             <div className="header__pane ml-auto">
@@ -46,7 +46,6 @@ export default function AppHeader() {
                     </div>
                     <button className="close" />
                 </div>
-                
             </div>
             <div className="app-header-right">
                 <div className="header-dots">

@@ -78,7 +78,7 @@ export default function NewBeneficiaryarea() {
                         <div className="col-md-12 position-relative form-group">
                             <div className="form-row">
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleName" className>Account Country</label>
+                                    <label htmlFor="exampleName" >Account Country</label>
                                     <select type="select" 
                                         id="gender" 
                                         name="gender"
@@ -91,7 +91,7 @@ export default function NewBeneficiaryarea() {
                                 </div>
 
                                 <div className="position-relative form-group col-md-8">
-                                    <label htmlFor="exampleName" className>Corresponding Bank Country</label>
+                                    <label htmlFor="exampleName" >Corresponding Bank Country</label>
                                     <select type="select" 
                                         id="gender" 
                                         name="gender"
@@ -104,7 +104,7 @@ export default function NewBeneficiaryarea() {
                                 </div>
                                
                                 {/* <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleEmail" className>Email</label>
+                                    <label htmlFor="exampleEmail" >Email</label>
                                     <input name="email" id="exampleEmail" placeholder="Email" type="email" className="form-control" 
                                     />
                                 </div>

@@ -104,7 +104,7 @@ export default function Myaccountarea() {
                                     <div className="col-md-12"> 
                                         
                                         <div className=" no-shadow rm-border bg-transparent text-center">
-                                        <img src="assets/images/user.jpg" width={350} height={350} />
+                                        <img src="assets/images/user.jpg" alt="" width={350} height={350} />
                                         <br></br>
                                         <h2 htmlFor="exampleGender" style={{marginLeft: 10}}>Upload Profile Picture</h2>
                                         </div>

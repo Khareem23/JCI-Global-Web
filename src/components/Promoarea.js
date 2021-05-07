@@ -1,6 +1,7 @@
 import React from 'react'
 
-export default function Promoarea() {
+export default function Promoarea(props) {
+    const { handleShow } = props
     return (
         <>
             <div className="app-page-title app-page-title-simple">
@@ -35,7 +36,7 @@ export default function Promoarea() {
                                 <div className="ml-auto" style={{marginRight: 15}}>
                                     <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
                                         <span className="text-success pl-2">
-                                            <button className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg">Create Promo</button>
+                                            <button className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg" onClick={handleShow}>Create Promo</button>
                                             </span>
                                     </div>
                                 </div>

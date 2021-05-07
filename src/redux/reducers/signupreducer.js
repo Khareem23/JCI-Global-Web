@@ -1,4 +1,4 @@
-import { AuthActionType } from "../actions/authaction";
+import ActionTypes from "../actiontype/ActionTypes"
 
 const userregstate = {
     isLoggedIn: false,
@@ -36,7 +36,7 @@ const existingAuth = getAuthState();
 const signupreducer = (state = existingAuth, action) => {
 
     switch (action.type) {
-        case AuthActionType.USER_REGISTRATION_SUCCESS:
+        case ActionTypes.USER_REGISTRATION_SUCCESS:
             const newAuthstate = {
                 isLoggedIn: true,
                 isLoading: false,

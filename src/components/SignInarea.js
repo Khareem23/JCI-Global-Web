@@ -5,30 +5,26 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const SignInarea = (props) => {
-  const { loginuser, isLoading, authstate } = props;
+  const { loginuser, isLoading, authstate, notify, setNotify } = props;
   const [userdetails, setUserdetails] = useState({});
   const history = useHistory();
 
-  const [error, setError] = useState({
-      hasError: false,
-      message: "",
-  })
-
   const handleSubmit = e => {
       e.preventDefault();
-      loginuser(userdetails, history, setError);
+      loginuser(userdetails, history, setNotify);
   };
 
   //to chaeck the login state of the user on loads
   useEffect(() => {
-      if(authstate.isLoggedIn && authstate.role === "Customer")
-      {
-        //redirect to customer page
-        history.push('/sendmoney');
-      } else if(authstate.isLoggedIn && authstate.role === "Admin") {
-        //redirect to admin page
-        history.push('/dashboard');
-      }
+      console.log(authstate);
+      // if(authstate.isLoggedIn && authstate.role === "Customer")
+      // {
+      //   //redirect to customer page
+      //   history.push('/sendmoney');
+      // } else if(authstate.isLoggedIn && authstate.role === "Admin") {
+      //   //redirect to admin page
+      //   history.push('/dashboard');
+      // }
   }, [])
 
     return (
@@ -39,11 +35,11 @@ const SignInarea = (props) => {
                     <span>Sign in <span className="text-success">to access</span> your account</span>
                   </h4>
                   <div>
-                    <form className>
+                    <form >
                       <div className="form-row">
                         <div className="col-md-12">
                           <div className="position-relative form-group">
-                            <label htmlFor="exampleEmail" className><span className="text-danger">*</span> Email</label>
+                            <label htmlFor="exampleEmail" ><span className="text-danger">*</span> Email</label>
                             <input name="email" id="exampleEmail" placeholder="Email here..." type="email" className="form-control" 
                              onChange={(event) => {
                               const username = event.target.value;
@@ -54,7 +50,7 @@ const SignInarea = (props) => {
                         
                         <div className="col-md-12">
                           <div className="position-relative form-group">
-                            <label htmlFor="examplePassword" className><span className="text-danger">*</span> Password</label>
+                            <label htmlFor="examplePassword" ><span className="text-danger">*</span> Password</label>
                             <input name="password" id="examplePassword" placeholder="Password here..." type="password" className="form-control" 
                              onChange={(event) => {
                               const password = event.target.value;
@@ -83,7 +79,7 @@ const SignInarea = (props) => {
                       <div className="mt-4 d-flex align-items-center">
                         <h5 className="mb-0">New User?</h5>
                         <h5 className="ml-auto">
-                            <Link to="/register" className="text-primary btn-wide">Sign Up</Link>
+                            <Link to="/register#step-1" className="text-primary btn-wide">Sign Up</Link>
                         </h5>
                       </div>
                     </form>
@@ -96,15 +92,16 @@ const SignInarea = (props) => {
 const mapStateToProps = (state) => {
   return {
       isLoading: state.loadingstate.isLoading,
-      authstate: state.authstate.authstate,
+      authstate: state.authstate,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      loginuser: (userdetails, history, setError) => {
+      loginuser: (userdetails, history, setNotify) => {
           dispatch(ShowLoading(userdetails));
-          dispatch(LoginAuthAction(userdetails, history, setError));
+          dispatch(LoginAuthAction(userdetails, history, setNotify)
+          );
       },
   }
 }

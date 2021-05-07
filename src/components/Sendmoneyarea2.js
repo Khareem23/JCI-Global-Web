@@ -136,7 +136,7 @@ export default function Sendmoneyarea2() {
                                         <div className="form-row">
                                             <div className="col-md-6" style={{marginTop: 1}}> 
                                                 <div className="position-relative form-group">
-                                                <label htmlFor="exampleText" className>Transaction Description</label>
+                                                <label htmlFor="exampleText" >Transaction Description</label>
                                                 <textarea name="text" id="exampleText" className="form-control" defaultValue={""} />
                                                 </div>
                                             </div>

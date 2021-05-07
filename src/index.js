@@ -6,6 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import axios from 'axios';
 import store from './redux/store';
+// import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+
+
 
 axios.defaults.baseURL = "https://api.jciremit.com/api";
 

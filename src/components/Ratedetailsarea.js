@@ -53,14 +53,14 @@ export default function Ratedetailsarea() {
                         <div className="col-md-12 position-relative form-group">
                             <div className="form-row">
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleName" className>Currency Description</label>
+                                    <label htmlFor="exampleName" >Currency Description</label>
                                     <input name="type" id="exampleName" placeholder="Currency Description" type="text" className="form-control" 
                                     />
                                 </div>
                                 
                                
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleEmail" className>Rate Type</label>
+                                    <label htmlFor="exampleEmail" >Rate Type</label>
                                     <input name="email" id="exampleEmail" placeholder="Rate Type" type="text" className="form-control" 
                                     />
                                 </div>
@@ -85,7 +85,7 @@ export default function Ratedetailsarea() {
                             <div className="form-row">
                                 
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleName" className>Receiving Country(NGN)</label>
+                                    <label htmlFor="exampleName" >Receiving Country(NGN)</label>
                                     <select type="select" 
                                         id="gender" 
                                         name="gender"
@@ -97,12 +97,12 @@ export default function Ratedetailsarea() {
                                     </select>
                                 </div>
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleName" className>Amount Received(NGN)</label>
+                                    <label htmlFor="exampleName" >Amount Received(NGN)</label>
                                     <input name="type" id="exampleName" placeholder="Amount Received (NGN)" type="text" className="form-control" 
                                     />
                                 </div>
                                 <div className="position-relative form-group col-md-4">
-                                    <label htmlFor="exampleName" className>Amount Received(USD)</label>
+                                    <label htmlFor="exampleName" >Amount Received(USD)</label>
                                     <input name="type" id="exampleName" placeholder="Amount Received (USD)" type="text" className="form-control" 
                                     />
                                 </div>

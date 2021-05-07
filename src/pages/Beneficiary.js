@@ -1,13 +1,20 @@
-import React from 'react'
+import React, {useState} from 'react'
 import AppHeader from '../components/AppHeader'
 import AppSidebar from '../components/AppSidebar'
 import Beneficiaryarea from '../components/Beneficiaryarea'
 import Footer from '../components/Footer'
 
 export default function Beneficiary() {
+
+    const [notify, setNotify] = useState({
+        isOpen: false,
+        message: '',
+        type: '',
+    })
+
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
-            <AppHeader/>
+            <AppHeader notify={notify} setNotify={setNotify}/>
             <div className="app-main">
                 <AppSidebar/>
                 <div className="app-main__outer">

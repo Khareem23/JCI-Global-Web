@@ -44,7 +44,7 @@ const AppSidebar = (props) => {
                     if(authstate.role === "Customer")
                     {
                         return <CustSidemenu/>
-                    } else if(authstate === "Admin") {
+                    } else if(authstate.role === "Admin") {
                         return <Sidemenu/>
                     }
                 })()}
@@ -56,7 +56,7 @@ const AppSidebar = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        authstate: state.authstate.authstate,
+        authstate: state.authstate,
     }
   }
   

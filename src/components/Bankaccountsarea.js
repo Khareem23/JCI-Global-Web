@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Ratesarea(props) {
+export default function Bankaccountsarea(props) {
     const { handleShow } = props
     return (
         <>
@@ -9,16 +9,13 @@ export default function Ratesarea(props) {
                     <div className="page-title-heading" style={{marginLeft: 16}}>
                     <div>
                         <div className="page-title-head center-elem">
-                        {/* <span className="d-inline-block pr-2">
-                            <i className="lnr-apartment icon-gradient bg-mean-fruit" />
-                        </span> */}
-                        <span className="d-inline-block">Rates Management</span>
+                        <span className="d-inline-block">Bank Accounts Management</span>
                         </div>
                         <div className="page-title-subheading opacity-10">
                         <nav className aria-label="breadcrumb">
                             <ol className="breadcrumb">
                             <li className="breadcrumb-item">
-                                <span>Here you can manage all your rates</span>
+                                <span>Here you can manage all Bank Accounts</span>
                             </li>
                             </ol>
                         </nav>
@@ -41,7 +38,7 @@ export default function Ratesarea(props) {
                                             <div className="ml-auto" style={{marginRight: 0, marginTop: -2}}>
                                                 <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
                                                         <span className="text-success pl-2">
-                                                        <button className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg" onClick={handleShow}>Create Rate</button>
+                                                        <button className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg" onClick={handleShow}>Create An Account</button>
                                                         </span>
                                                 </div>
                                             </div>

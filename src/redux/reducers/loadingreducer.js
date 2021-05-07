@@ -1,4 +1,4 @@
-const { AuthActionType } = require('../actions/authaction');
+import ActionTypes from "../actiontype/ActionTypes"
 
 const loadingstate = {
     isLoading: false,
@@ -6,9 +6,9 @@ const loadingstate = {
 
 const loadingreducer = (state = loadingstate, action) => {
     switch(action.type) {
-        case AuthActionType.LOADING_SHOW:
+        case ActionTypes.LOADING_SHOW:
             return { isLoading: true}
-        case AuthActionType.LOADING_HIDE:
+        case ActionTypes.LOADING_HIDE:
             return { isLoading: false}
         default:
             return state;

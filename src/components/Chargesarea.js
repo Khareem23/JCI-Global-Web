@@ -1,6 +1,7 @@
 import React from 'react'
 
-export default function Chargesarea() {
+export default function Chargesarea(props) {
+    const { handleShow } = props
     return (
         <>
 
@@ -40,8 +41,10 @@ export default function Chargesarea() {
                                     <div className="ml-auto" style={{marginRight: 0, marginTop: -2}}>
                                         <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
                                             <span className="text-success pl-2">
-                                                <button className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg">Create Charges</button>
+                                                <button type="button" className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg" 
+                                                    data-toggle="modal" onClick={handleShow} >Create Charges</button>
                                                 </span>
+                                                {/* data-target="#exampleModal" */}
                                         </div>
                                     </div>
                                 </div>
@@ -536,6 +539,10 @@ export default function Chargesarea() {
                     </table>
                 </div>
             </div>
+
+
+            
+
         </>
 
     )

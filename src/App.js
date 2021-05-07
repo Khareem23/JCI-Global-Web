@@ -17,6 +17,7 @@ import TransactionHistory from './pages/TransactionHistory';
 import Beneficiary from './pages/Beneficiary'
 import NewBeneficiary from './pages/NewBeneficiary';
 import MyAccount from './pages/MyAccount';
+import BankAccount from './pages/BankAccount';
 
 function App() {
   return (
@@ -93,6 +94,10 @@ function App() {
           <Route exact path='/myaccount'>
             <MyAccount />
           </Route>
+
+          <Route exact path='/accounts'>
+            <BankAccount />
+          </Route>
           
           {/* <Route exact path='/'>
             <Home/>
@@ -107,8 +112,6 @@ function App() {
           
       </Switch>
     </Router>
-
- 
   );
 }
 
