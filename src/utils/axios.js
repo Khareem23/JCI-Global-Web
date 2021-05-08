@@ -21,24 +21,8 @@ import axios from "axios";
     axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
     axios.defaults.headers.common = {'Authorization': `Bearer ${auth.token}`}
       
-      // try {
-      //     if(auth != null)
-      //     {
-      //         const authobj = JSON.parse(auth)
-      //         return authobj;
-      //     } else {
-      //         return authstate;
-      //     }
-      // } catch (error) {
-      //     return authstate;
-      // }
-  
-    
-
-    
-
-    const mainAxios = axios.create({
-        //timeout: 5000,
+     const mainAxios = axios.create({
+        timeout: 30000,
         baseURL: 'https://api.jciremit.com/api'
     });
 

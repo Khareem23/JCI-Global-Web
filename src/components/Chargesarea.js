@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { ShowLoading } from '../redux/actions/authaction';
 import { GetAction } from '../redux/actions/getaction';
 import ActionTypes from "../redux/actiontype/ActionTypes"
+import DeleteChargeModal from './modals/DeleteChargeModal';
+import EditChargesModal from './modals/EditChargesModal';
 
 const Chargesarea = (props) => {
     const { createpromo, isLoading, setNotify, show, handleShow, setShow, fetchcharges, allcharges } = props;
-
     const [charges, setCharges] = useState({});
     useEffect(() => {
       fetchcharges(show, setNotify, ActionTypes.GET_CHARGES_SUCCESS, ActionTypes.GET_CHARGES_FAIL, setShow);
-
     }, []);
 
     useEffect(() => {
@@ -19,6 +19,18 @@ const Chargesarea = (props) => {
             setCharges(allcharges);
         }
     }, [allcharges]);
+
+    const [showEdit, setShowEdit] = useState(false);
+    const [showDelete, setShowDelete] = useState(false);
+
+    const handleShowEdit = () => {
+        setShowEdit(!showEdit);
+    }
+    const handleShowDelete = () => {
+        setShowDelete(!showDelete);
+    }
+
+    const [item, setItem] = useState({});
 
     const processPaymentType = (type) => {
         if(type === 1)
@@ -29,6 +41,16 @@ const Chargesarea = (props) => {
             return 'Deposit';
         else 
         return 'Others';
+    }
+
+    function handleEdit (item) {
+        setShowEdit(true);
+        setItem(item);
+    }
+
+    function handleDelete (item) {
+        setShowDelete(true);
+        setItem(item);
     }
 
 
@@ -42,6 +64,8 @@ const Chargesarea = (props) => {
                         <td>{item.providerFlatCharges}</td>
                         <td>{item.providerRateCharges}</td>
                         <td>{item.transactionCharges}</td>
+                        <td><button className="mb-2 mr-2 btn btn-warning" onClick={() => handleEdit(item)}>Edit</button></td>
+                        <td><button className="mb-2 mr-2 btn btn-danger" onClick={() => handleDelete(item)}>Delete</button></td>
                     </tr>
                 </>
                 )
@@ -136,6 +160,9 @@ const Chargesarea = (props) => {
                     </table>
                 </div>
             </div>
+        
+            <EditChargesModal item={item} setNotify={setNotify} show={showEdit} handleEdit={handleEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} />
+            <DeleteChargeModal item={item} setNotify={setNotify} show={showDelete} handleDelete={handleDelete} setShow={setShowDelete} handleShowDelete={handleShowDelete} />
         </>
 
     )
