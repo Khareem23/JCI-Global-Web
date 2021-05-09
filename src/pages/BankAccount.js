@@ -28,7 +28,7 @@ export default function BankAccount() {
                 <div className="app-main__outer">
                     <div className="app-main__inner">                        
 
-                        <Bankaccountsarea notify={notify} setNotify={setNotify} handleShow={handleShow}/>
+                        <Bankaccountsarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow}/>
 
                         <Footer/>
                     
