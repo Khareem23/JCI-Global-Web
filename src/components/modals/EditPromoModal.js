@@ -11,25 +11,24 @@ import { EditAction } from '../../redux/actions/editaction';
     const [promodetails, setPromodetails] = useState({});
     const handleSubmit = e => {
         e.preventDefault();        
+        console.log(JSON.stringify(promodetails))
         editpromo(promodetails, setNotify, ActionTypes.EDIT_PROMO_SUCCESS, ActionTypes.EDIT_PROMO_FAIL, handleShowEdit, setShow);
     };
 
-    const processPaymentType = (type) => {
-        if(type === 1)
-            return 'Bank Transfer';
-        else if(type === 2)
-            return 'Cash';
-        else if(type === 3)
-            return 'Deposit';
+    const processStatus = (type) => {
+        if(type)
+            return 'Active';
         else 
-        return 'Others';
+            return 'In-Active';
+        
     }
+    
 
     useEffect(() => {
+        console.log(JSON.stringify(item))
     }, [show])
 
     return (
-
             <Modal
             show={show}
             onHide={handleShowEdit}
@@ -43,30 +42,23 @@ import { EditAction } from '../../redux/actions/editaction';
             <form>
                     <div className="col-md-12 position-relative form-group">
                         <div className="form-row">
+                                                        
+                            
                             <div className="col-md-6"> 
-                                <label htmlFor="exampleGender">Payment Type</label>
-                                <select type="select" 
-                                    id="paymentType"
-                                    name="paymentType"
-                                    className="mb-2 form-control"
+                                <label htmlFor="title">Title</label>
+                                <input name="title" id="title" placeholder={item.title} type="text" className="form-control" 
                                     onChange={(event) => {
-                                        const paymentType = event.target.value;
-                                        setPromodetails({...promodetails, ...{ paymentType } }); 
-                                    }}>
-                                    <option> Choose Payment Type </option>
-                                    <option selected="selected" value={item.paymentType}>{processPaymentType(item.paymentType)}</option>
-                                    <option value="0">Bank Transfer</option>
-                                    <option value="1">Deposit</option>
-                                    <option value="2">Cash</option>
-                                </select>
+                                    const title = event.target.value;
+                                    setPromodetails({...promodetails, ...{ title } }); 
+                                }}/>
                             </div>
                             
                             <div className="col-md-6"> 
-                                <label htmlFor="providerRateCharges">Provider Rate Charge</label>
-                                <input name="providerRateCharges" id="providerRateCharges" placeholder={item.providerRateCharges} type="text" className="form-control" 
+                                <label htmlFor="discountCode">Discount Code</label>
+                                <input name="discountCode" id="discountCode" placeholder={item.discountCode} type="text" className="form-control" 
                                     onChange={(event) => {
-                                    const providerRateCharges = event.target.value;
-                                    setPromodetails({...promodetails, ...{ providerRateCharges } }); 
+                                    const discountCode = event.target.value;
+                                    setPromodetails({...promodetails, ...{ discountCode } }); 
                                 }}/>
                             </div>
                         </div>
@@ -74,17 +66,45 @@ import { EditAction } from '../../redux/actions/editaction';
                     
                     <div className="col-md-12 position-relative form-group">
                         <div className="form-row">
-                            <div className="col-md-6"> 
-                                <label htmlFor="providerFlatCharges">Flat Charges</label>
-                                
-                                <input name="providerFlatCharges" id="providerFlatCharges" placeholder={item.providerFlatCharges} type="text" className="form-control" 
+                            <div className="col-md-4"> 
+                                <label htmlfor="startDate">Start Date</label>
+                                <div className="position-relative form-group">
+                                    <input name="date" id="startDate" placeholder={item.startDate} type="date" className="form-control" 
+                                        onChange={(event) => {
+                                            const startDate = event.target.value;
+                                            setPromodetails({...promodetails, ...{ startDate } }); 
+                                        }}/>
+                                </div>
+                            </div>
+
+                            <div className="col-md-4"> 
+                                <label htmlFor="exampleGender">Status</label>
+                                <select type="select" 
+                                    id="isActive" 
+                                    name="isActive"
+                                    className="mb-2 form-control"
                                     onChange={(event) => {
-                                    const providerFlatCharges = event.target.value;
-                                    setPromodetails({...promodetails, ...{ providerFlatCharges } }); 
+                                        const isActive = event.target.value;
+                                        setPromodetails({...promodetails, ...{ isActive } }); 
+                                    }}>
+                                    <option> -- Select Status -- </option>
+                                     <option selected="selected" value={item.isActive}>{processStatus(item.isActive)}</option>
+                                    <option value="true">Active</option>
+                                    <option value="false">In-Active</option>
+                                </select>
+                            </div>
+                            <div className="col-md-4"> 
+                                <label htmlFor="bonusValue">Bonus Value</label>
+                                <input name="bonusValue" id="bonusValue" placeholder={item.bonusValue} type="number" min="1" className="form-control" 
+                                    onChange={(event) => {
+                                    const bonusValue = event.target.value;
+                                    const id = item.id;
+                                    setPromodetails({...promodetails, ...{ bonusValue, id  } }); 
+                                    
                                 }}/>
                             </div>
                             
-                            <div className="col-md-6"> 
+                            {/* <div className="col-md-6"> 
                                 <label htmlFor="transactionCharges">Transaction Charges</label>
                                 <input name="transactionCharges" id="transactionCharges" placeholder={item.transactionCharges} type="text" className="form-control" 
                                     onChange={(event) => {
@@ -93,7 +113,7 @@ import { EditAction } from '../../redux/actions/editaction';
                                       const id = item.id;
                                       setPromodetails({...promodetails, ...{ id } });
                                 }}/>
-                            </div>
+                            </div> */}
 
                              
                         </div>

@@ -37,7 +37,6 @@ export default function Charges() {
                 </div>        
             </div>
             <div className="app-drawer-overlay d-none animated fadeIn" />
-
             <AddChargesModal notify={notify} setNotify={setNotify} show={show}  handleShow={handleShow} setShow={setShow} />
         </div>
         

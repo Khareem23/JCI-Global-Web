@@ -6,7 +6,7 @@ import AddPromoModal from '../components/modals/AddPromoModal'
 import Promoarea from '../components/Promoarea'
 
 
-export default function Promo() {
+export default function Promos() {
     
     const [notify, setNotify] = useState({
         isOpen: false,
@@ -30,8 +30,8 @@ export default function Promo() {
 
                 <div className="app-main__outer">
                     <div className="app-main__inner">                        
-
-                        <Promoarea notify={notify} setNotify={setNotify} handleShow={handleShow}/>
+                    
+                        <Promoarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow}/>
 
                         <Footer/>
                     

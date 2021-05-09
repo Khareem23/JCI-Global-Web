@@ -3,48 +3,51 @@ import { connect } from 'react-redux';
 import { ShowLoading } from '../redux/actions/authaction';
 import { GetAction } from '../redux/actions/getaction';
 import ActionTypes from "../redux/actiontype/ActionTypes"
-import EditChargesModal from './modals/EditChargesModal';
+import DeletePromoModal from './modals/DeletePromoModal';
 import EditPromoModal from './modals/EditPromoModal';
 
 const Promoarea = (props) => {
-    const { createpromo, isLoading, setNotify, show, handleShow, setShow, fetchcharges, allcharges } = props;
-    const [charges, setCharges] = useState({});
+    const { createpromo, isLoading, setNotify, show, handleShow, setShow, fetchpromos, allpromos } = props;
+    const [promos, setPromos] = useState({});
     useEffect(() => {
-      fetchcharges(show, setNotify, ActionTypes.GET_CHARGES_SUCCESS, ActionTypes.GET_CHARGES_FAIL, setShow);
+      fetchpromos(show, setNotify, ActionTypes.GET_PROMOS_SUCCESS, ActionTypes.GET_PROMOS_FAIL, setShow);
     }, []);
 
     useEffect(() => {
-        if(allcharges !== undefined)
+        if(allpromos !== undefined)
         {
-            setCharges(allcharges);
+            setPromos(allpromos);
         }
-    }, [allcharges]);
+    }, [allpromos]);
 
     const [showEdit, setShowEdit] = useState(false);
+    const [showDelete, setShowDelete] = useState(false);
+
     const handleShowEdit = () => {
         setShowEdit(!showEdit);
     }
+    const handleShowDelete = () => {
+        setShowDelete(!showDelete);
+    }
 
     const [item, setItem] = useState({});
-
-    const processPaymentType = (type) => {
-        if(type === 1)
-            return 'Bank Transfer';
-        else if(type === 2)
-            return 'Cash';
-        else if(type === 3)
-            return 'Deposit';
-        else 
-        return 'Others';
-    }
 
     function handleEdit (item) {
         setShowEdit(true);
         setItem(item);
     }
 
-    const handleDelete = () => {
-        console.log(JSON.stringify(item));
+    function handleDelete (item) {
+        setShowDelete(true);
+        setItem(item);
+    }
+
+    const processStatus = (type) => {
+        if(type === true)
+            return 'Active';
+        else if(type === false)
+            return 'In-Active';
+        else return 'Others';
     }
 
     const renderrow = (items) => {
@@ -53,12 +56,12 @@ const Promoarea = (props) => {
                 return (
                 <>
                     <tr>
-                        <td>{processPaymentType(item.paymentType)}</td>
-                        <td>{item.providerFlatCharges}</td>
-                        <td>{item.providerRateCharges}</td>
-                        <td>{item.transactionCharges}</td>
-                        <td><button className="mb-2 mr-2 btn btn-warning" onClick={() => handleEdit(item)}>Edit me</button></td>
-                        <td><button className="mb-2 mr-2 btn btn-danger" onClick={handleDelete}>Delete</button></td>
+                        <td>{item.discountCode}</td>
+                        <td>{item.title}</td>
+                        <td>{item.bonusValue}</td>
+                        <td>{processStatus(item.isActive)}</td>
+                        <td><button className="mb-2 mr-2 btn btn-warning" onClick={() => handleEdit(item)}>Edit</button></td>
+                        <td><button className="mb-2 mr-2 btn btn-danger" onClick={() => handleDelete(item)}>Delete</button></td>
                     </tr>
                 </>
                 )
@@ -76,9 +79,6 @@ const Promoarea = (props) => {
                     <div className="page-title-heading" style={{marginLeft: 16}}>
                     <div>
                         <div className="page-title-head center-elem">
-                        {/* <span className="d-inline-block pr-2">
-                            <i className="lnr-apartment icon-gradient bg-mean-fruit" />
-                        </span> */}
                         <span className="d-inline-block">Promo Management</span>
                         </div>
                         <div className="page-title-subheading opacity-10">
@@ -118,26 +118,26 @@ const Promoarea = (props) => {
                     <table style={{width: '100%'}} id="example" className="table table-hover table-striped table-bordered">
                         <thead style={{textAlign: 'center'}}>
                             <tr>
-                            <th>Payment Type</th>
-                            <th>Provider Flat Charges</th>
-                            <th>Provider Rate Charges</th>
-                            <th>Transaction Charges</th>
+                            <th>Discount Code</th>
+                            <th>Title</th>
+                            <th>Bonus Value</th>
+                            <th>Status</th>
                             <th>Edit</th>
                             <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody style={{textAlign: 'center'}}>
                             {
-                                renderrow(charges)
+                                renderrow(promos)
                             }
                             
                         </tbody>
                         <tfoot style={{textAlign: 'center'}}>
                             <tr>
-                            <th>Payment Type</th>
-                            <th>Provider Flat Charges</th>
-                            <th>Provider Rate Charges</th>
-                            <th>Transaction Charges</th>
+                            <th>Discount Code</th>
+                            <th>Title</th>
+                            <th>Bonus Value</th>
+                            <th>Status</th>
                             <th>Edit</th>
                             <th>Delete</th>
                             </tr>
@@ -147,6 +147,7 @@ const Promoarea = (props) => {
             </div>
         
             <EditPromoModal item={item} setNotify={setNotify} show={showEdit} handleEdit={handleEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} />
+            <DeletePromoModal item={item} setNotify={setNotify} show={showDelete} handleDelete={handleDelete} setShow={setShowDelete} handleShowDelete={handleShowDelete} />
         </>
 
     )
@@ -154,13 +155,13 @@ const Promoarea = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        allcharges: state.allcharges.allcharges,
+        allpromos: state.allpromos.allpromos,
     }
   }
   
   const mapDispatchToProps = (dispatch) => {
     return {
-            fetchcharges: (show, setNotify, successactiontype, failureactiontype, setShow) => {
+            fetchpromos: (show, setNotify, successactiontype, failureactiontype, setShow) => {
                 dispatch(ShowLoading(setNotify));
                 dispatch(GetAction(show, setNotify, successactiontype, failureactiontype, setShow)
             );
@@ -169,4 +170,6 @@ const mapStateToProps = (state) => {
   }
   
   export default connect(mapStateToProps, mapDispatchToProps)(Promoarea);
+  
+
   

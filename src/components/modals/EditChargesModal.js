@@ -13,7 +13,7 @@ import { EditAction } from '../../redux/actions/editaction';
 
     const handleSubmit = e => {
         e.preventDefault();
-        
+        console.log(JSON.stringify(chargedetails))
         editcharge(chargedetails, setNotify, ActionTypes.EDIT_CHARGES_SUCCESS, ActionTypes.EDIT_CHARGES_FAIL, handleShowEdit, setShow);
     };
 
@@ -91,10 +91,9 @@ import { EditAction } from '../../redux/actions/editaction';
                                 <label htmlFor="transactionCharges">Transaction Charges</label>
                                 <input name="transactionCharges" id="transactionCharges" placeholder={item.transactionCharges} type="text" className="form-control" 
                                     onChange={(event) => {
-                                    const transactionCharges = event.target.value;
-                                      setChargedetails({...chargedetails, ...{ transactionCharges } }); 
+                                      const transactionCharges = event.target.value;
                                       const id = item.id;
-                                      setChargedetails({...chargedetails, ...{ id } });
+                                      setChargedetails({...chargedetails, ...{ transactionCharges, id } });
                                 }}/>
                             </div>
 

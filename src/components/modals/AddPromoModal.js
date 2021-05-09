@@ -33,7 +33,7 @@ import Button from 'react-bootstrap/Button'
             <form>
                     <div className="col-md-12 position-relative form-group">
                         <div className="form-row">
-                            <div className="col-md-6"> 
+                            {/* <div className="col-md-6"> 
                                 <label htmlFor="exampleGender">Title</label>
                                 <select type="select" 
                                     id="title" 
@@ -49,6 +49,22 @@ import Button from 'react-bootstrap/Button'
                                     <option value="Miss">Miss</option>
                                     <option value="Chief">Chief</option>
                                 </select>
+
+                                // "id": 0,
+                                // "title": "Sallah Promo",
+                                // "discountCode": "DIS234098666",
+                                // "bonusValue": 6.2,
+                                // "startDate": "2021-05-02T14:59:20.062Z",
+                                // "isActive": false
+
+                            </div> */}
+                            <div className="col-md-6"> 
+                                <label htmlFor="title">Title</label>
+                                <input name="title" id="title" placeholder="Title" type="text" className="form-control" 
+                                    onChange={(event) => {
+                                    const title = event.target.value;
+                                    setPromodetails({...promodetails, ...{ title } }); 
+                                }}/>
                             </div>
                             
                             <div className="col-md-6"> 
@@ -62,33 +78,12 @@ import Button from 'react-bootstrap/Button'
                         </div>
                     </div>
                     
-                    <div className="col-md-12 position-relative form-group">
-                        <div className="form-row">
-                            <div className="col-md-6"> 
-                                <label htmlFor="bonusValue">Bonus Value</label>
-                                
-                                <input name="bonusValue" id="bonusValue" placeholder="Bonus Value" type="number" min="1" className="form-control" 
-                                    onChange={(event) => {
-                                    const bonusValue = event.target.value;
-                                    setPromodetails({...promodetails, ...{ bonusValue } }); 
-                                }}/>
-                            </div>
-                            
-                            <div className="col-md-6"> 
-                                <label htmlFor="transactionCharges">Transaction Charges</label>
-                                <input name="transactionCharges" id="transactionCharges" placeholder="Transaction Charges" type="text" className="form-control" 
-                                    onChange={(event) => {
-                                    const transactionCharges = event.target.value;
-                                    setPromodetails({...promodetails, ...{ transactionCharges } }); 
-                                }}/>
-                            </div>
-                        </div>
-                    </div>
+                    
                     
                     <div className="col-md-12 position-relative form-group">
                         <div className="form-row">
 
-                            <div className="col-md-6"> 
+                            <div className="col-md-4"> 
                                 <label htmlfor="startDate">Start Date</label>
                                 <div className="position-relative form-group">
                                 
@@ -100,8 +95,8 @@ import Button from 'react-bootstrap/Button'
                                 </div>
                             </div>
 
-                            <div className="col-md-6"> 
-                                <label htmlFor="exampleGender">Active Status</label>
+                            <div className="col-md-4"> 
+                                <label htmlFor="exampleGender">Status</label>
                                 <select type="select" 
                                     id="isActive" 
                                     name="isActive"
@@ -115,6 +110,15 @@ import Button from 'react-bootstrap/Button'
                                     <option value="false">False</option>
                                 </select>
                             </div>
+                            <div className="col-md-4"> 
+                                <label htmlFor="bonusValue">Bonus Value</label>
+                                <input name="bonusValue" id="bonusValue" placeholder="Bonus Value" type="number" min="1" className="form-control" 
+                                    onChange={(event) => {
+                                    const bonusValue = event.target.value;
+                                    setPromodetails({...promodetails, ...{ bonusValue } }); 
+                                }}/>
+                            </div>
+
                         </div>
                     </div>
                       

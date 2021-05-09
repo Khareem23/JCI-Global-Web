@@ -10,16 +10,16 @@ import ActionTypes from "../actiontype/ActionTypes"
                     var response = "";
                     if(successactiontype === ActionTypes.EDIT_CHARGES_SUCCESS)
                     {
-                        console.log("Odebi" + JSON.stringify(stateobject));
                         response = await mainAxios.put('/Charges/updateCharges/', stateobject);
-                    } else if(successactiontype === ActionTypes.ADD_PROMO_SUCCESS) {
-                        response = await mainAxios.put('/Promo/getAllPromos', stateobject);
-                    }  else if(successactiontype === ActionTypes.ADD_RATE_SUCCESS) {
-                        response = await mainAxios.put('/Rates/getRateList', stateobject);
-                    } else if(successactiontype === ActionTypes.ADD_BANK_SUCCESS) {
-                        response = await mainAxios.put('/JCIBank/GetAllBankAccount', stateobject);
+                    } else if(successactiontype === ActionTypes.EDIT_PROMO_SUCCESS) {
+                        response = await mainAxios.put('/Promo/UpdatePromo', stateobject);
+                    }  else if(successactiontype === ActionTypes.EDIT_RATE_SUCCESS) {
+                        response = await mainAxios.put('/Rates/updateRate', stateobject);
+                    } else if(successactiontype === ActionTypes.EDIT_BANK_SUCCESS) {
+                        response = await mainAxios.put('/JCIBank/UpdateBankAccount', stateobject);
                     }
                     const { data } = response.data;
+                    console.log(JSON.stringify(response));
                     console.log(JSON.stringify(data));
                     const message = response.data.message;
                     const status = response.data.status;

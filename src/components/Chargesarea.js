@@ -53,7 +53,6 @@ const Chargesarea = (props) => {
         setItem(item);
     }
 
-
     const renderrow = (items) => {
         if(Object.keys(items).length !== 0) {
             return items.map((item, i) => {

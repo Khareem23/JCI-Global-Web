@@ -9,6 +9,7 @@ import emailcheckreducer from "./reducers/emailcheckreducer";
 import phonecheckreducer from "./reducers/phonecheckreducer";
 import signupreducer from "./reducers/signupreducer";
 import fetchchargesreducer from "./reducers/fetchchargesreducer";
+import fetchpromosreducer from "./reducers/fetchpromosreducer"
 
 
 
@@ -24,6 +25,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
         allstatesstate: fetchstatesreducer,
         userregstate: signupreducer,
         allcharges: fetchchargesreducer,
+        allpromos: fetchpromosreducer,
     })
 
     const store = createStore(

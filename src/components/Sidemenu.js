@@ -60,7 +60,7 @@ export default function Sidemenu() {
                         </div>
                     </div>
                     <li style={{margin: 16}}>
-                        <Link to="/promo">
+                        <Link to="/promos">
                             <i className="metismenu-icon pe-7s-way" />Promo Management
                         </Link>
                     </li>

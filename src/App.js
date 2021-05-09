@@ -10,7 +10,7 @@ import Rates from './pages/Rates';
 import RateDetails from './pages/RateDetails';
 import Charges from './pages/Charges';
 import ChargeDetails from './pages/ChargeDetails';
-import Promo from './pages/Promo';
+import Promos from './pages/Promos';
 import AustracReport from './pages/AustracReport';
 import SendMoney from './pages/SendMoney';
 import TransactionHistory from './pages/TransactionHistory';
@@ -67,8 +67,8 @@ function App() {
             <ChargeDetails/>
           </Route>
 
-          <Route exact path='/promo'>
-            <Promo/>
+          <Route exact path='/promos'>
+            <Promos/>
           </Route>
 
           <Route exact path='/ausreport'>

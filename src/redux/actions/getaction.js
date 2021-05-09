@@ -11,11 +11,11 @@ import ActionTypes from "../actiontype/ActionTypes"
                     if(successactiontype === ActionTypes.GET_CHARGES_SUCCESS)
                     {
                         response = await mainAxios.get('/Charges/GetAllCharges', stateobject);
-                    } else if(successactiontype === ActionTypes.ADD_PROMO_SUCCESS) {
+                    } else if(successactiontype === ActionTypes.GET_PROMOS_SUCCESS) {
                         response = await mainAxios.get('/Promo/getAllPromos', stateobject);
-                    }  else if(successactiontype === ActionTypes.ADD_RATE_SUCCESS) {
+                    }  else if(successactiontype === ActionTypes.GET_RATE_SUCCESS) {
                         response = await mainAxios.get('/Rates/getRateList', stateobject);
-                    } else if(successactiontype === ActionTypes.ADD_BANK_SUCCESS) {
+                    } else if(successactiontype === ActionTypes.GET_BANK_SUCCESS) {
                         response = await mainAxios.get('/JCIBank/GetAllBankAccount', stateobject);
                     }
                     const { data } = response.data;
