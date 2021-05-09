@@ -11,7 +11,6 @@ import { EditAction } from '../../redux/actions/editaction';
     const [promodetails, setPromodetails] = useState({});
     const handleSubmit = e => {
         e.preventDefault();        
-        console.log(JSON.stringify(promodetails))
         editpromo(promodetails, setNotify, ActionTypes.EDIT_PROMO_SUCCESS, ActionTypes.EDIT_PROMO_FAIL, handleShowEdit, setShow);
     };
 
@@ -25,7 +24,6 @@ import { EditAction } from '../../redux/actions/editaction';
     
 
     useEffect(() => {
-        console.log(JSON.stringify(item))
     }, [show])
 
     return (
@@ -104,16 +102,6 @@ import { EditAction } from '../../redux/actions/editaction';
                                 }}/>
                             </div>
                             
-                            {/* <div className="col-md-6"> 
-                                <label htmlFor="transactionCharges">Transaction Charges</label>
-                                <input name="transactionCharges" id="transactionCharges" placeholder={item.transactionCharges} type="text" className="form-control" 
-                                    onChange={(event) => {
-                                    const transactionCharges = event.target.value;
-                                    setPromodetails({...promodetails, ...{ transactionCharges } }); 
-                                      const id = item.id;
-                                      setPromodetails({...promodetails, ...{ id } });
-                                }}/>
-                            </div> */}
 
                              
                         </div>

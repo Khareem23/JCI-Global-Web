@@ -15,7 +15,6 @@ export default function Rates() {
     const [show, setShow] = useState(false);
 
     const handleShow = () => {
-        console.log("Clicked!")
         setShow(!show);
     }
 
@@ -29,7 +28,7 @@ export default function Rates() {
                 <div className="app-main__outer">
                     <div className="app-main__inner">                        
 
-                        <Ratesarea notify={notify} setNotify={setNotify} handleShow={handleShow}/>
+                        <Ratesarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow}/>
 
                         <Footer/>
                     

@@ -24,7 +24,6 @@ import ActionTypes from "../actiontype/ActionTypes"
     const UserRegisterAuthAction = (userstate, history, setError) => {
         return async (dispatch) => {
             try {
-                console.log(JSON.stringify(userstate));
                 if(userstate.email !== undefined && userstate.firstName !== undefined && userstate.phoneNumber !== undefined && userstate.lastName !== undefined 
                     && userstate.password !== undefined && userstate.pin !== undefined && userstate.country !== undefined && userstate.state !== undefined 
                     && userstate.city !== undefined && userstate.postalCode !== undefined && userstate.address !== undefined && userstate.gender !== undefined
@@ -74,7 +73,6 @@ import ActionTypes from "../actiontype/ActionTypes"
     const LoginAuthAction = (loginstate, history, setNotify) => {
         return async (dispatch) => {
             try {
-                    console.log(JSON.stringify(loginstate))
                 if(loginstate.username === undefined || loginstate.username === "" || loginstate.password === undefined || loginstate.password === "")
                 {
                     dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
@@ -95,7 +93,6 @@ import ActionTypes from "../actiontype/ActionTypes"
                         decoded.token = data;
                         decoded.status = response.data.status;
                         decoded.message = response.data.message;
-                        console.log(decoded);
                         dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
                         dispatch({type: ActionTypes.USER_LOGIN_SUCCESS, payload: decoded});                        
                         setNotify({
@@ -186,7 +183,6 @@ import ActionTypes from "../actiontype/ActionTypes"
                 }
             } catch(error) {
                 const errmsg = error.message + "  Error occurred while trying to update password...";
-                console.log(errmsg);
                 dispatch({type: ActionTypes.LOADING_HIDE, payload: updatepwdstate}); 
                 dispatch({type: ActionTypes.UPDATE_PASSWORD_FAIL, payload: errmsg });
                 setError({
@@ -231,7 +227,6 @@ import ActionTypes from "../actiontype/ActionTypes"
                 }
             } catch(error) {
                 const errmsg = error.message + "  Error occurred while trying to update password...";
-                console.log(errmsg);
                 dispatch({type: ActionTypes.LOADING_HIDE, payload: updatepinstate}); 
                 dispatch({type: ActionTypes.UPDATE_PIN_FAIL, payload: errmsg });
                 setError({
@@ -365,7 +360,6 @@ import ActionTypes from "../actiontype/ActionTypes"
                     dispatch({type: ActionTypes.LOADING_SHOW, payload: ""}); 
                     try {
                         const response = await mainAxios.get('/Users/getCountries');
-                        //console.log(JSON.stringify(response));
                         const res = response.data.data;
                         if(res.length > 1)
                         {
@@ -408,7 +402,6 @@ import ActionTypes from "../actiontype/ActionTypes"
                     dispatch({type: ActionTypes.LOADING_SHOW, payload: ""}); 
                     try {
                         const response = await mainAxios.get('/Users/getCountryStates/' + code);
-                        console.log(JSON.stringify(response));
                         const res = response.data.data;
                         if(res.length > 1)
                         {

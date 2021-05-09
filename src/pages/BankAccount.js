@@ -15,7 +15,6 @@ export default function BankAccount() {
     const [show, setShow] = useState(false);
 
     const handleShow = () => {
-        console.log("Clicked!")
         setShow(!show);
     }
 

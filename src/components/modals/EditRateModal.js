@@ -1,38 +1,55 @@
 import React, {useState, useEffect} from 'react';
 import { ShowLoading } from '../../redux/actions/authaction';
-import { CreateAction } from '../../redux/actions/createaction';
 import { connect } from 'react-redux';
 import ActionTypes from "../../redux/actiontype/ActionTypes"
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import { EditAction } from '../../redux/actions/editaction';
 
-    const AddRatesModal = (props) => {
-    const {createrate, isLoading, setNotify, show, handleShow, setShow } = props;
+    const EditRateModal = (props) => {
+    const { editrate, isLoading, setNotify, show, setShow, item, handleShowEdit } = props;
     const [ratedetails, setRatedetails] = useState({});
-    
-
     const handleSubmit = e => {
-        e.preventDefault();
-        createrate(ratedetails, setNotify, ActionTypes.ADD_RATE_SUCCESS, ActionTypes.ADD_RATE_FAIL, handleShow, setShow);
+        e.preventDefault();        
+        editrate(ratedetails, setNotify, ActionTypes.EDIT_RATE_SUCCESS, ActionTypes.EDIT_RATE_FAIL, handleShowEdit, setShow);
     };
 
+    const processStatus = (type) => {
+        if(type)
+            return 'Active';
+        else 
+            return 'In-Active';
+        
+    }
+    
+
+    const processRateType = (type) => {
+        if(type === 0)
+            return 'Solo Rate';
+        else if(type === 1)
+            return 'Mega Rate';
+        else if(type === 2)
+            return 'Deposit';
+    }
+
     useEffect(() => {
-    }, [show]);
+    }, [show])
 
     return (
             <Modal
             show={show}
-            onHide={handleShow}
+            onHide={handleShowEdit}
             backdrop="static"
             keyboard={false}
             >
             <Modal.Header closeButton>
-            <Modal.Title>Add New Rate</Modal.Title>
+            <Modal.Title>Edit Rate</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <form>
                     <div className="col-md-12 position-relative form-group">
                         <div className="form-row">
+                                    
                             <div className="col-md-6"> 
                                 <label htmlFor="exampleGender">Rate Type</label>
                                 <select type="select" 
@@ -44,6 +61,7 @@ import Button from 'react-bootstrap/Button'
                                         setRatedetails({...ratedetails, ...{ rateType } }); 
                                     }}>
                                     <option> Select Rate Type </option>
+                                    <option selected="selected" value={item.rateType}>{processRateType(item.rateType)}</option>
                                     <option value="0">Solo Rate</option>
                                     <option value="1">Mega Rate</option>
                                 </select>
@@ -51,12 +69,13 @@ import Button from 'react-bootstrap/Button'
                             
                             <div className="col-md-6"> 
                                 <label htmlFor="currencyDesc">Currency Description</label>
-                                <input name="currencyDesc" id="currencyDesc" placeholder="Currency Description" type="text" className="form-control" 
+                                <input name="currencyDesc" id="currencyDesc" placeholder={item.currencyDesc} type="text" className="form-control" 
                                     onChange={(event) => {
                                     const currencyDesc = event.target.value;
                                     setRatedetails({...ratedetails, ...{ currencyDesc } }); 
                                 }}/>
                             </div>
+
                         </div>
                     </div>
                     
@@ -65,21 +84,33 @@ import Button from 'react-bootstrap/Button'
                             <div className="col-md-6"> 
                                 <label htmlFor="sendCurrencyCode">Send Currency Code</label>
                                 
-                                <input name="sendCurrencyCode" id="sendCurrencyCode" placeholder="Send Currency Code" type="text" className="form-control" 
+                                <input name="sendCurrencyCode" id="sendCurrencyCode" placeholder={item.sendCurrencyCode} type="text" className="form-control" 
                                     onChange={(event) => {
                                     const sendCurrencyCode = event.target.value;
-                                    setRatedetails({...ratedetails, ...{ sendCurrencyCode } }); 
+                                    const id = item.id;
+                                    setRatedetails({...ratedetails, ...{ sendCurrencyCode , id} }); 
                                 }}/>
                             </div>
                             
                             <div className="col-md-6"> 
                                 <label htmlFor="receiveCurrencyCode">Receive Currency Code</label>
-                                <input name="receiveCurrencyCode" id="receiveCurrencyCode" placeholder="Receive Currency Code" type="text" className="form-control" 
+                                <input name="receiveCurrencyCode" id="receiveCurrencyCode" placeholder={item.receiveCurrencyCode} type="text" className="form-control" 
                                     onChange={(event) => {
                                     const receiveCurrencyCode = event.target.value;
                                     setRatedetails({...ratedetails, ...{ receiveCurrencyCode } }); 
                                 }}/>
                             </div>
+
+                            {/* <div className="col-md-4"> 
+                                <label htmlFor="bonusValue">Bonus Value</label>
+                                <input name="bonusValue" id="bonusValue" placeholder={item.bonusValue} type="number" min="1" className="form-control" 
+                                    onChange={(event) => {
+                                    const bonusValue = event.target.value;
+                                    const id = item.id;
+                                    setRatedetails({...ratedetails, ...{ bonusValue, id  } }); 
+                                    
+                                }}/>
+                            </div> */}                             
                         </div>
                     </div>
 
@@ -87,7 +118,7 @@ import Button from 'react-bootstrap/Button'
                         <div className="form-row">
                             <div className="col-md-6"> 
                                 <label htmlFor="amount">Amount</label>
-                                <input name="amount" id="amount" placeholder="Amount" type="number" className="form-control" 
+                                <input name="amount" id="amount" placeholder={item.amount} type="number" className="form-control" 
                                     onChange={(event) => {
                                     const amount = event.target.value;
                                     setRatedetails({...ratedetails, ...{ amount } }); 
@@ -96,15 +127,14 @@ import Button from 'react-bootstrap/Button'
                             
                             <div className="col-md-6"> 
                                 <label htmlFor="amount_NgaUSD">Amount NGA USD</label>
-                                <input name="amount_NgaUSD" id="amount_NgaUSD" placeholder="Amount NGA USD" type="number" className="form-control" 
+                                <input name="amount_NgaUSD" id="amount_NgaUSD" placeholder={item.amount_NgaUSD} type="number" className="form-control" 
                                     onChange={(event) => {
                                     const amount_NgaUSD = event.target.value;
                                     setRatedetails({...ratedetails, ...{ amount_NgaUSD } }); 
                                 }}/>
-                            </div>
+                            </div>                    
                         </div>
                     </div>
-
 
                     <div className="col-md-12 position-relative form-group">
                         <div className="form-row">
@@ -118,11 +148,10 @@ import Button from 'react-bootstrap/Button'
                                         const isActive = event.target.value;
                                         setRatedetails({...ratedetails, ...{ isActive } }); 
                                     }}>
-                                    <option> -- Select Status -- </option>                                    
+                                    <option> -- Select Status -- </option>
+                                    <option selected="selected" value={item.isActive}>{processStatus(item.isActive)}</option>
                                     <option value="true">Active</option>
                                     <option value="false">In-Active</option>
-                                   
-
                                 </select>
                             </div>
 
@@ -137,6 +166,7 @@ import Button from 'react-bootstrap/Button'
                                         setRatedetails({...ratedetails, ...{ isUSDDisplay } }); 
                                     }}>
                                     <option> -- Select Display -- </option>
+                                    <option selected="selected" value={item.isUSDDisplay}>{item.isUSDDisplay}</option>
                                     <option value="true">True</option>
                                     <option value="false">False</option>
                                 </select>
@@ -144,15 +174,15 @@ import Button from 'react-bootstrap/Button'
                         </div>
                     </div>
 
-                    
+                   
                       
                     </form>
             </Modal.Body>
             <Modal.Footer>
-            <Button variant="secondary" onClick={handleShow}>
+            <Button variant="secondary" onClick={handleShowEdit}>
                 Close
             </Button>
-            <Button variant="danger" onClick={handleSubmit} disabled={isLoading} >Add Charges</Button>
+            <Button variant="danger" disabled={isLoading} onClick={handleSubmit} >Update Rate</Button>
             </Modal.Footer>
             </Modal>
             
@@ -167,13 +197,13 @@ const mapStateToProps = (state) => {
   
   const mapDispatchToProps = (dispatch) => {
     return {
-            createrate: (ratedetails, setNotify, successactiontype, failureactiontype, setShow) => {
+            editrate: (ratedetails, setNotify, successactiontype, failureactiontype, setShow) => {
                 dispatch(ShowLoading(ratedetails));
-                dispatch(CreateAction(ratedetails, setNotify, successactiontype, failureactiontype, setShow)
+                dispatch(EditAction(ratedetails, setNotify, successactiontype, failureactiontype, setShow)
             );
         },
     }
   }
   
-  export default connect(mapStateToProps, mapDispatchToProps)(AddRatesModal);
+  export default connect(mapStateToProps, mapDispatchToProps)(EditRateModal);
   

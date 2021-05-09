@@ -3,7 +3,6 @@ import AppHeader from '../components/AppHeader'
 import AppSidebar from '../components/AppSidebar'
 import Dashboardarea from '../components/Dashboardarea'
 import Footer from '../components/Footer'
-// import Notification from '../components/Notification'
 import { connect } from 'react-redux';
 
 
@@ -18,8 +17,6 @@ function Dashboard(props) {
     })
 
     useEffect(() => {
-        console.log(authstate);
-
         setNotify({
             isOpen: true,
             message: authstate.message,
@@ -31,7 +28,6 @@ function Dashboard(props) {
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
             <AppHeader notify={notify} setNotify={setNotify}/>
-            {/* <Notification notify={notify} setNotify={setNotify} /> */}
             <div className="app-main">
             
                 <AppSidebar/>
@@ -59,9 +55,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        // logout: (history) => {
-        //     dispatch(LogoutAuthAction(history));
-        // },
+        
     }
 }
 

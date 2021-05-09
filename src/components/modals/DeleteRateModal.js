@@ -6,12 +6,13 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import { DeleteAction } from '../../redux/actions/deleteaction';
 
-    const DeleteChargeModal = (props) => {
-    const { deletecharge, isLoading, setNotify, show, setShow, item, handleShowDelete } = props;
+    const DeleteRateModal = (props) => {
+    const { deleterate, isLoading, setNotify, show, setShow, item, handleShowDelete } = props;
     
     const handleSubmit = e => {
         e.preventDefault();
-        deletecharge(item.id, setNotify, ActionTypes.DELETE_CHARGES_SUCCESS, ActionTypes.DELETE_CHARGES_FAIL, setShow);
+        console.log(item.id)
+        deleterate(item.id, setNotify, ActionTypes.DELETE_RATE_SUCCESS, ActionTypes.DELETE_RATE_FAIL, setShow);
     };
 
     useEffect(() => {
@@ -25,19 +26,17 @@ import { DeleteAction } from '../../redux/actions/deleteaction';
             keyboard={false}
             >
             <Modal.Header closeButton>
-            <Modal.Title>Delete Charge</Modal.Title>
+            <Modal.Title>Delete Rate</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <form>
                     <div className="col-md-12 position-relative form-group">
                         <div className="form-row">
                             <div className="col-md-12"> 
-                                <label htmlFor="exampleGender">Are you sure you want to Delete this Charge?</label>
+                                <label htmlFor="exampleGender">Are you sure you want to Delete this Rate?</label>
                             </div>
                         </div>
                     </div>
-                    
-                   
                       
                     </form>
             </Modal.Body>
@@ -60,13 +59,13 @@ const mapStateToProps = (state) => {
   
   const mapDispatchToProps = (dispatch) => {
     return {
-            deletecharge: (chargeid, setNotify, successactiontype, failureactiontype, setShow) => {
-                dispatch(ShowLoading(chargeid));
-                dispatch(DeleteAction(chargeid, setNotify, successactiontype, failureactiontype, setShow)
+            deleterate: (rateid, setNotify, successactiontype, failureactiontype, setShow) => {
+                dispatch(ShowLoading(rateid));
+                dispatch(DeleteAction(rateid, setNotify, successactiontype, failureactiontype, setShow)
             );
         },
     }
   }
   
-  export default connect(mapStateToProps, mapDispatchToProps)(DeleteChargeModal);
+  export default connect(mapStateToProps, mapDispatchToProps)(DeleteRateModal);
   

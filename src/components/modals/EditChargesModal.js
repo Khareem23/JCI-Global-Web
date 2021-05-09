@@ -13,7 +13,6 @@ import { EditAction } from '../../redux/actions/editaction';
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(JSON.stringify(chargedetails))
         editcharge(chargedetails, setNotify, ActionTypes.EDIT_CHARGES_SUCCESS, ActionTypes.EDIT_CHARGES_FAIL, handleShowEdit, setShow);
     };
 

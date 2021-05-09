@@ -19,8 +19,6 @@ import ActionTypes from "../actiontype/ActionTypes"
                         response = await mainAxios.put('/JCIBank/UpdateBankAccount', stateobject);
                     }
                     const { data } = response.data;
-                    console.log(JSON.stringify(response));
-                    console.log(JSON.stringify(data));
                     const message = response.data.message;
                     const status = response.data.status;
                     if(status === "success")

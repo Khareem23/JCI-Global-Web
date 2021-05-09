@@ -16,7 +16,6 @@ const SignInarea = (props) => {
 
   //to chaeck the login state of the user on loads
   useEffect(() => {
-      console.log(authstate);
       // if(authstate.isLoggedIn && authstate.role === "Customer")
       // {
       //   //redirect to customer page

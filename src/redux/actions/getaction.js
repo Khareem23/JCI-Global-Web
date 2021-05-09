@@ -19,7 +19,7 @@ import ActionTypes from "../actiontype/ActionTypes"
                         response = await mainAxios.get('/JCIBank/GetAllBankAccount', stateobject);
                     }
                     const { data } = response.data;
-                    console.log(JSON.stringify(data));
+                    console.log(data);
                     const message = response.data.message;
                     const status = response.data.status;
                     if(status === "success")

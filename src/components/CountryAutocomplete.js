@@ -30,7 +30,6 @@ const CountryAutocomplete = (props) => {
       setFiltered([]);
       setIsShow(false);
       var bal = e.currentTarget.innerText;
-      // console.log(bal);
       const item = bal.substring(0, bal.length - 5);
       setInput(item);
       passChildData(bal);
@@ -40,7 +39,6 @@ const CountryAutocomplete = (props) => {
         if (e.keyCode === 13) { // enter key
         // setActive(0);
         // setIsShow(false);
-        // console.log(filtered[active].StateCode);
         // setInput(filtered[active].StateCode);
         }
         else if (e.keyCode === 38) { // up arrow

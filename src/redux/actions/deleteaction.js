@@ -10,17 +10,15 @@ import ActionTypes from "../actiontype/ActionTypes"
                     var response = "";
                     if(successactiontype === ActionTypes.DELETE_CHARGES_SUCCESS)
                     {
-                        console.log("Odebi" + JSON.stringify(stateobject));
                         response = await mainAxios.delete('/Charges/DeleteCharges/' + stateobject);
                     } else if(successactiontype === ActionTypes.DELETE_PROMO_SUCCESS) {
                         response = await mainAxios.delete('/Promo/DeletePromo/' + stateobject);
                     }  else if(successactiontype === ActionTypes.DELETE_RATE_SUCCESS) {                        
-                        response = await mainAxios.delete('/Rates/deleteRate/', stateobject);
+                        response = await mainAxios.delete('/Rates/deleteRate/' + stateobject);
                     } else if(successactiontype === ActionTypes.DELETE_BANK_SUCCESS) {
                         response = await mainAxios.delete('/JCIBank/DeleteBankAccount/' + stateobject);
                     }
                     const { data } = response.data;
-                    console.log(JSON.stringify(data));
                     const message = response.data.message;
                     const status = response.data.status;
                     if(status === "success")

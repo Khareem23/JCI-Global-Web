@@ -15,7 +15,6 @@ import Button from 'react-bootstrap/Button'
     };
 
     useEffect(() => {
-        console.log("Valued Changed " + show);
     }, [show]);
 
     return (
