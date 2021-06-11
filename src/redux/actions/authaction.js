@@ -88,7 +88,7 @@ import ActionTypes from "../actiontype/ActionTypes"
                     const { data } = response.data;
                     if(response.data.status === "success")
                     {
-                        var decoded = jwt_decode(data);
+                        let decoded = jwt_decode(data);
                         decoded.isLoggedIn = true;
                         decoded.token = data;
                         decoded.status = response.data.status;

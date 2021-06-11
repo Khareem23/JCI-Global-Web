@@ -7,8 +7,9 @@ import DeleteChargeModal from './modals/DeleteChargeModal';
 import EditChargesModal from './modals/EditChargesModal';
 
 const Chargesarea = (props) => {
-    const { createpromo, isLoading, setNotify, show, handleShow, setShow, fetchcharges, allcharges } = props;
+    const { setNotify, show, handleShow, setShow, fetchcharges, allcharges, isLoading } = props;
     const [charges, setCharges] = useState({});
+
     useEffect(() => {
       fetchcharges(show, setNotify, ActionTypes.GET_CHARGES_SUCCESS, ActionTypes.GET_CHARGES_FAIL, setShow);
     }, []);
@@ -51,6 +52,16 @@ const Chargesarea = (props) => {
     function handleDelete (item) {
         setShowDelete(true);
         setItem(item);
+    }
+
+    function refreshPage() {
+        // fetchsingleaccount(bcode, setNotify, ActionTypes.GET_BUSINESS_BANK_SUCCESS, ActionTypes.GET_BUSINESS_BANK_FAIL, setShow);
+        //fetchaccounts(show, setNotify, ActionTypes.GET_BANK_SUCCESS, ActionTypes.GET_BANK_FAIL, setShow);
+    }
+
+    function handleSelect (item) {
+        console.log(item);
+        fetchcharges(item, setNotify, ActionTypes.GET_CHARGES_BY_PAYMENTINTYPE_SUCCESS, ActionTypes.GET_CHARGES_BY_PAYMENTINTYPE_FAIL, setShow);
     }
 
     const renderrow = (items) => {
@@ -106,21 +117,55 @@ const Chargesarea = (props) => {
                 <div className="widget-chat-wrapper-outer">
                     <div className="widget-chart-content pt-3 pl-3 pb-1">
                         
+                                <div className="form-row">
+                                    
+                                            <div className="col-md-6">
+                                                <div className="position-relative form-group">
+                                                <label htmlFor="exampleCountry" ><span className="text-danger"></span>Country</label>
 
-                        <div className="form-row">
-                            
-                        <div className="row">
-                                    <div className="ml-auto" style={{marginRight: 0, marginTop: -2}}>
-                                        <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
-                                            <span className="text-success pl-2">
-                                                <button type="button" className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg" 
-                                                    data-toggle="modal" onClick={handleShow} >Create Charges</button>
-                                                </span>
-                                        </div>
-                                    </div>
+                                                       <select type="select" 
+                                                            id="paymentType" 
+                                                            name="paymentType"
+                                                            className="mb-2 form-control"
+                                                            onChange={(event) => {
+                                                                const paymentType = event.target.value;
+                                                                handleSelect(paymentType)
+                                                                //setChargedetails({...chargedetails, ...{ paymentType } }); 
+                                                            }}>
+                                                            <option> Choose Payment Type </option>
+                                                            <option value="0">Bank Transfer</option>
+                                                            <option value="1">Deposit</option>
+                                                            <option value="2">Cash</option>
+                                                            <option value="3">Withdraw</option>
+                                                        </select>
+                                                        
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="col-md-2">
+                                                <div className="ml-auto" style={{marginRight: 0, marginTop: -2, float: 'right'}}>
+                                                    <label htmlFor="exampleCountry" ><span className="text-danger"></span>.</label>
+                                                    <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
+                                                            <span className="text-success pl-2">
+                                                            <button className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg" disabled={isLoading} onClick={refreshPage}>Reset</button>
+                                                            </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-4">
+                                                <div className="ml-auto" style={{marginRight: 0, marginTop: -2, float: 'right'}}>
+                                                    <label htmlFor="exampleCountry" ><span className="text-danger"></span>`</label>
+                                                    <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
+                                                        <span className="text-success pl-2">
+                                                            <button type="button" className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg" 
+                                                                data-toggle="modal" onClick={handleShow} >Create Charges</button>
+                                                            </span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                 </div>
-                            
-                        </div>
+
+
                     </div>
                 </div>
             </div>
@@ -170,6 +215,7 @@ const Chargesarea = (props) => {
 const mapStateToProps = (state) => {
     return {
         allcharges: state.allcharges.allcharges,
+        isLoading: state.loadingstate.isLoading,
     }
   }
   

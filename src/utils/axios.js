@@ -1,6 +1,6 @@
 import axios from "axios";
     const authobject = localStorage.getItem("auth");
-    var auth = "";
+    let auth = "";
     if(authobject != null && authobject !== undefined)
     {
       auth  = JSON.parse(authobject)

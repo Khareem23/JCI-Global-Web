@@ -788,7 +788,7 @@ marginTop: '-12em'
   max-height: 143px;
   height: 201px;
   overflow-x: visible;
-  z-index:100;
+  z-index: 10;
   padding-left: 0;
   width: calc(400px + 1rem);
 }
@@ -864,6 +864,7 @@ marginTop: '-12em'
   }
 }
 
+
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
   .addposition {
@@ -901,31 +902,27 @@ marginTop: '-12em'
 
 .autocomplete li {
   padding: 8px;
-  z-index:100;
+  z-index: 10;
 }
 .autocomplete > .active,
 .autocomplete li:hover {
   background-color: darkgray;
-  cursor: pointer;
-  z-index:100;
+  cursor: pointer;  z-index: 10;
   font-weight: 700;
 }
 .autocomplete li:not(:last-of-type) {
   border-bottom: 1px solid #999;
-  z-index:100;
   color: white;
   background-color: green;
 }
 
 .list-group-item {
   cursor: pointer;
-  z-index:10;
 }
 .list-group-item.active,
 .list-group-item.hover {
   background-color: #e1e3e5;
   border-color: #d3d5d7;
-  z-index:10;
 }
 
 

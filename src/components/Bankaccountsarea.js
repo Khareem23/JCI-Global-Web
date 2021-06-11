@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { ShowLoading } from '../redux/actions/authaction';
+import { FetchAllCountry, ShowLoading } from '../redux/actions/authaction';
 import { GetAction } from '../redux/actions/getaction';
+import { GetSingleObjectAction } from '../redux/actions/getsoaction';
 import ActionTypes from "../redux/actiontype/ActionTypes"
+import CountryAutocomplete from './CountryAutocomplete';
 import DeleteAccountModal from './modals/DeleteAccountModal';
 import EditAccountModal from './modals/EditAccountModal';
 
 const Bankaccountsarea = (props) => {
-    const { isLoading, setNotify, show, handleShow, setShow, fetchaccounts, allbanks } = props;
+    const { isLoading, setNotify, show, handleShow, setShow, fetchaccounts, fetchsingleaccount, allbanks, fetchallcountry,allcountriesstate } = props;
     const [banks, setBanks] = useState({});
+    const [bcode, setBcode] = useState({});
+
     useEffect(() => {
+        fetchallcountry(setNotify);
         fetchaccounts(show, setNotify, ActionTypes.GET_BANK_SUCCESS, ActionTypes.GET_BANK_FAIL, setShow);
     }, []);
 
@@ -31,17 +36,6 @@ const Bankaccountsarea = (props) => {
     }
 
     const [item, setItem] = useState({});
-
-    const processPaymentType = (type) => {
-        if(type === 1)
-            return 'Bank Transfer';
-        else if(type === 2)
-            return 'Cash';
-        else if(type === 3)
-            return 'Deposit';
-        else 
-        return 'Others';
-    }
 
     function handleEdit (item) {
         setShowEdit(true);
@@ -71,6 +65,16 @@ const Bankaccountsarea = (props) => {
                 )
             })
         }
+    }
+
+    const handlereturnvalue = (cout) => {
+        const _statecode = cout.substring(cout.length - 3, cout.length);
+        fetchsingleaccount(_statecode, setNotify, ActionTypes.GET_BUSINESS_BANK_SUCCESS, ActionTypes.GET_BUSINESS_BANK_FAIL, setShow);
+    }
+
+    function refreshPage() {
+        // fetchsingleaccount(bcode, setNotify, ActionTypes.GET_BUSINESS_BANK_SUCCESS, ActionTypes.GET_BUSINESS_BANK_FAIL, setShow);
+        fetchaccounts(show, setNotify, ActionTypes.GET_BANK_SUCCESS, ActionTypes.GET_BANK_FAIL, setShow);
     }
 
     
@@ -108,16 +112,37 @@ const Bankaccountsarea = (props) => {
 
                                 <div className="form-row">
                                     
-                                <div className="row ">
-                                            <div className="ml-auto" style={{marginRight: 0, marginTop: -2}}>
-                                                <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
-                                                        <span className="text-success pl-2">
-                                                        <button className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg" onClick={handleShow}>Create An Account</button>
-                                                        </span>
+                                            <div className="col-md-6">
+                                                <div className="position-relative form-group">
+                                                <label htmlFor="exampleCountry" ><span className="text-danger"></span>Country</label>
+
+                                                        <CountryAutocomplete placeholder="Select a Country"
+                                                            suggestions={allcountriesstate} passChildData={handlereturnvalue}
+                                                        />
+                                                        
                                                 </div>
                                             </div>
-                                        </div>
-                                    
+                                            
+                                            <div className="col-md-2">
+                                                <div className="ml-auto" style={{marginRight: 0, marginTop: -2, float: 'right'}}>
+                                                    <label htmlFor="exampleCountry" ><span className="text-danger"></span>.</label>
+                                                    <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
+                                                            <span className="text-success pl-2">
+                                                            <button className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg" disabled={isLoading} onClick={refreshPage}>Reset</button>
+                                                            </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-4">
+                                                <div className="ml-auto" style={{marginRight: 0, marginTop: -2, float: 'right'}}>
+                                                    <label htmlFor="exampleCountry" ><span className="text-danger"></span>.</label>
+                                                    <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
+                                                            <span className="text-success pl-2">
+                                                            <button className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg" onClick={handleShow}>Create An Account</button>
+                                                            </span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                 </div>
                             </div>
                         </div>                
@@ -168,7 +193,9 @@ const Bankaccountsarea = (props) => {
 
 const mapStateToProps = (state) => {
     return {
+        isLoading: state.loadingstate.isLoading,
         allbanks: state.allbanks.allbanks,
+        allcountriesstate: state.allcountriesstate.allcountriesstate,
     }
   }
   
@@ -177,8 +204,15 @@ const mapStateToProps = (state) => {
             fetchaccounts: (show, setNotify, successactiontype, failureactiontype, setShow) => {
                 dispatch(ShowLoading(setNotify));
                 dispatch(GetAction(show, setNotify, successactiontype, failureactiontype, setShow)
-            );
-        },
+            )},
+            fetchallcountry: (setNotify) => {
+                dispatch(FetchAllCountry(setNotify));
+            },
+            fetchsingleaccount: (show, setNotify, successactiontype, failureactiontype, setShow) => {
+                dispatch(ShowLoading(setNotify));
+                dispatch(GetSingleObjectAction(show, setNotify, successactiontype, failureactiontype, setShow)
+            )},
+            
     }
   }
   

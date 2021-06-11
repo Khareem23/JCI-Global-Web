@@ -26,7 +26,7 @@ const StatesAutocomplete = (props) => {
       setActive(0);
       setFiltered([]);
       setIsShow(false);
-      var bal = e.currentTarget.innerText;
+      let bal = e.currentTarget.innerText;
       setInput(bal);
       passChildData(bal);
      };

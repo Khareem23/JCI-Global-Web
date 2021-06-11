@@ -7,7 +7,7 @@ import ActionTypes from "../actiontype/ActionTypes"
             try {
                 if(stateobject !== undefined)
                 {
-                    var response = "";
+                    let response = "";
                     if(successactiontype === ActionTypes.DELETE_CHARGES_SUCCESS)
                     {
                         response = await mainAxios.delete('/Charges/DeleteCharges/' + stateobject);

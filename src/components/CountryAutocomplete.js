@@ -29,7 +29,7 @@ const CountryAutocomplete = (props) => {
       setActive(0);
       setFiltered([]);
       setIsShow(false);
-      var bal = e.currentTarget.innerText;
+      let bal = e.currentTarget.innerText;
       const item = bal.substring(0, bal.length - 5);
       setInput(item);
       passChildData(bal);

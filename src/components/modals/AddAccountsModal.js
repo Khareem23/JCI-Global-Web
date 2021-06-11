@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import ActionTypes from "../../redux/actiontype/ActionTypes"
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import CountryAutocomplete from '../CountryAutocomplete';
 
     const AddAccountsModal = (props) => {
-    const {createaccount, isLoading, setNotify, show, handleShow, setShow } = props;
+    const {createaccount, isLoading, setNotify, show, handleShow, setShow, allcountriesstate } = props;
     const [accountdetails, setAccountdetails] = useState({});
     
     const handleSubmit = e => {
@@ -17,6 +18,12 @@ import Button from 'react-bootstrap/Button'
 
     useEffect(() => {
     }, [show]);
+
+    const handlereturnvalue = (cout) => {
+        const _statecode = cout.substring(cout.length - 3, cout.length);
+        const country = cout.substring(0, cout.length - 5);
+        setAccountdetails({...accountdetails, ...{ _statecode, country } });
+    }
 
     return (
             <Modal
@@ -32,37 +39,12 @@ import Button from 'react-bootstrap/Button'
             <form>
                     <div className="col-md-12 position-relative form-group">
                         <div className="form-row">
-                            <div className="col-md-6"> 
+                            <div className="col-md-12"> 
                                 <label htmlFor="exampleGender">Country Code</label>
-                                <select type="select" 
-                                    id="countryCode" 
-                                    name="countryCode"
-                                    className="mb-2 form-control"
-                                    onChange={(event) => {
-                                        const countryCode = event.target.value;
-                                        setAccountdetails({...accountdetails, ...{ countryCode } }); 
-                                    }}>
-                                    <option> --Select Country Code-- </option>
-                                    <option value="NG">Nigeria</option>
-                                    <option value="GH">Ghana</option>
-                                </select>
-                            </div>
-                            
-                            
-                            <div className="col-md-6"> 
-                                <label htmlFor="exampleGender">Country</label>
-                                <select type="select" 
-                                    id="country" 
-                                    name="country"
-                                    className="mb-2 form-control"
-                                    onChange={(event) => {
-                                        const country = event.target.value;
-                                        setAccountdetails({...accountdetails, ...{ country } }); 
-                                    }}>
-                                    <option> --Select Country-- </option>
-                                    <option value="Nigeria">Nigeria</option>
-                                    <option value="Ghana">Ghana</option>
-                                </select>
+                                
+                                <CountryAutocomplete placeholder="Select a Country"
+                                    suggestions={allcountriesstate} passChildData={handlereturnvalue}
+                                />
                             </div>
                         </div>
                     </div>
@@ -128,15 +110,19 @@ import Button from 'react-bootstrap/Button'
 const mapStateToProps = (state) => {
     return {
         isLoading: state.loadingstate.isLoading,
+        allcountriesstate: state.allcountriesstate.allcountriesstate,
     }
   }
   
   const mapDispatchToProps = (dispatch) => {
     return {
             createaccount: (accountdetails, setNotify, successactiontype, failureactiontype, setShow) => {
-                dispatch(ShowLoading(accountdetails));
-                dispatch(CreateAction(accountdetails, setNotify, successactiontype, failureactiontype, setShow)
-            );
+                if(accountdetails.accountName !== undefined && accountdetails.bankAccountNumber !== undefined && accountdetails.bankSwiftCode !== undefined && accountdetails.bankName !== undefined && accountdetails.country !== undefined) {
+                    dispatch(ShowLoading(accountdetails));
+                    dispatch(CreateAction(accountdetails, setNotify, successactiontype, failureactiontype, setShow));
+                } else {
+                    alert("All fields are required!")
+                }
         },
     }
   }

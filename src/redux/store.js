@@ -11,7 +11,7 @@ import signupreducer from "./reducers/signupreducer";
 import fetchchargesreducer from "./reducers/fetchchargesreducer";
 import fetchpromosreducer from "./reducers/fetchpromosreducer";
 import fetchratesreducer from "./reducers/fetchratesreducer";
-import fetchbanksreducer from "./reducers/fetchbanksreducer";
+import { fetchbanksreducer, fetchbusinessbanksreducer } from "./reducers/fetchbanksreducer";
 
 
 
@@ -30,6 +30,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
         allpromos: fetchpromosreducer,
         allrates: fetchratesreducer,
         allbanks: fetchbanksreducer,
+        allbusinessbanks: fetchbusinessbanksreducer,
     })
 
     const store = createStore(

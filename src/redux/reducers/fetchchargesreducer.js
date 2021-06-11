@@ -28,6 +28,12 @@ const fetchchargesreducer = (state = existingCharge, action) => {
             };
             localStorage.setItem("allcharges", JSON.stringify(fetchCharges)); 
             return fetchCharges;
+        case ActionTypes.GET_CHARGES_BY_PAYMENTINTYPE_SUCCESS:
+            const fetchChargesByPayemnt = {
+                allcharges: action.payload,
+            };
+            localStorage.setItem("allcharges", JSON.stringify(fetchChargesByPayemnt)); 
+            return fetchChargesByPayemnt;
         default:
             return state;
     }

@@ -2,26 +2,23 @@ import { mainAxios } from "../../utils/axios"
 import ActionTypes from "../actiontype/ActionTypes"
 
 
-    const GetAction = (stateobject, setNotify, successactiontype, failureactiontype, setShow) => {
+    const GetSingleObjectAction = (stateobject, setNotify, successactiontype, failureactiontype, setShow) => {
         return async (dispatch) => {
             try {
                 if(stateobject !== undefined)
                 {
                     let response = "";
-                    if(successactiontype === ActionTypes.GET_CHARGES_SUCCESS)
-                    {
-                        response = await mainAxios.get('/Charges/GetAllCharges', stateobject);
-                    } else if(successactiontype === ActionTypes.GET_PROMOS_SUCCESS) {
-                        response = await mainAxios.get('/Promo/getAllPromos', stateobject);
-                    }  else if(successactiontype === ActionTypes.GET_RATE_SUCCESS) {
-                        response = await mainAxios.get('/Rates/getRateList', stateobject);
-                    } else if(successactiontype === ActionTypes.GET_BANK_SUCCESS) {
-                        response = await mainAxios.get('/JCIBank/GetAllBankAccount', stateobject);
-                    } 
-                    const { data } = response.data;
+                    if (successactiontype === ActionTypes.GET_BUSINESS_BANK_SUCCESS) {
+                        response = await mainAxios.get('/JCIBank/GetBusinessBankAccount/' + stateobject);
+                    } else if(successactiontype === ActionTypes.GET_CHARGES_BY_PAYMENTINTYPE_SUCCESS) {
+                        response = await mainAxios.get('/Charges/GetChargesByPaymentInType/' + stateobject);
+                    }
+                    const dat  = response.data.data;
                     const message = response.data.message;
                     const status = response.data.status;
-                    console.log(response.data) 
+                    let data = [];
+                    data.push(dat);
+                    console.log(data) 
                     if(status === "success")
                     {
                         dispatch({type: ActionTypes.LOADING_HIDE, payload: message}); 
@@ -71,5 +68,5 @@ import ActionTypes from "../actiontype/ActionTypes"
     
     
 export { 
-    GetAction,
+    GetSingleObjectAction,
 }
