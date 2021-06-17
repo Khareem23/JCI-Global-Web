@@ -11,7 +11,6 @@ import { DeleteAction } from '../../redux/actions/deleteaction';
     
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(item.id)
         deleterate(item.id, setNotify, ActionTypes.DELETE_RATE_SUCCESS, ActionTypes.DELETE_RATE_FAIL, setShow);
     };
 

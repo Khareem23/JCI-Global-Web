@@ -7,9 +7,16 @@ import Sendmoneyarea from '../components/Sendmoneyarea'
 export default function SendMoney() {
 
     const [notify, setNotify] = useState({
-        hasError: false,
-        message: "",
+        isOpen: false,
+        message: '',
+        type: '',
     })
+
+    const [show, setShow] = useState(false);
+
+    const handleShow = () => {
+        setShow(!show);
+    }
 
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
@@ -21,7 +28,7 @@ export default function SendMoney() {
                 <div className="app-main__outer">
                     <div className="app-main__inner">                        
 
-                        <Sendmoneyarea setNotify={setNotify} />
+                        <Sendmoneyarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow} />
 
                         <Footer/>
                     

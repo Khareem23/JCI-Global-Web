@@ -1,6 +1,44 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux';
+import { ShowLoading, FetchAllCountry} from '../redux/actions/authaction';
+import { CreateAction } from '../redux/actions/createaction';
+import { GetPurposeAction } from '../redux/actions/getaction';
+import ActionTypes from "../redux/actiontype/ActionTypes"
+import CountryAutocomplete from './CountryAutocomplete';
 
-export default function Sendmoneyarea() {
+
+const Sendmoneyarea = (props) => {
+    const { isLoading, fetchallcountry, allcountriesstate, allpurposestate, fetchallpurpose, setNotify, show, handleShow, setShow, createconvert} = props;
+
+    const [transferdetails, setTransferDetails] = useState({});
+
+    const [error, setError] = useState({
+        hasError: false,
+        message: "",
+    })
+
+    //fetch all countries
+    useEffect(() => {
+        fetchallcountry(setError);
+        fetchallpurpose(show, setNotify, ActionTypes.FETCH_PURPOSE_SUCCESS, ActionTypes.FETCH_PURPOSE_FAIL, setShow);
+    }, []);
+
+    //handle the return value from country dropdown selection
+    const handlesendingfrom = (cout) => {
+        const sendingfrom = cout.substring(0, cout.length - 5);
+        setTransferDetails({...transferdetails, ...{ sendingfrom } });
+    }
+
+    const handlereceivingfrom = (cout) => {
+        const receivingfrom = cout.substring(0, cout.length - 5);
+        setTransferDetails({...transferdetails, ...{ receivingfrom } });
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        createconvert(transferdetails, setNotify, ActionTypes.ADD_CONVERT_SUCCESS, ActionTypes.ADD_CONVERT_FAIL, handleShow, setShow);
+    };
+
     return (
         <>
         <div className="app-page-title app-page-title-simple">
@@ -89,25 +127,24 @@ export default function Sendmoneyarea() {
                                             <div className="position-relative form-group col-md-6">
                                                 <label htmlFor="exampleAmount">Amount</label>
                                                 <input name="amount" id="exampleAmount" placeholder="Amount" type="number" min="0" className="form-control" 
+                                                onChange={(event) => {
+                                                    const amount = event.target.value;
+                                                    setTransferDetails({...transferdetails, ...{ amount } }); 
+                                                }}
                                                 />
                                             </div>
                                         </div>
                                     </div>
                                    
-
+                                    
                                     <div className="col-md-12 position-relative form-group">
                                         <div className="form-row">                                            
                                             <div className="col-md-6"> 
                                                 <label htmlFor="exampleGender">Sending From</label>
-                                                <select type="select" 
-                                                    id="gender" 
-                                                    name="gender"
-                                                    className="mb-2 form-control"
-                                                    >
-                                                    <option value="">-- Select --</option>
-                                                    <option value="Male">Nigeria</option>
-                                                    <option value="Female">Ghana</option>
-                                                </select>
+                                                
+                                                <CountryAutocomplete className="mb-2 form-control" placeholder="Select a Country"
+                                                    suggestions={allcountriesstate} passChildData={handlesendingfrom}
+                                                />
                                             </div>                                           
                                         </div>
                                     </div>
@@ -118,20 +155,30 @@ export default function Sendmoneyarea() {
                                         <div className="form-row">
                                             <div className="col-md-6"> 
                                                 <label htmlFor="exampleGender">Receiving From</label>
-                                                <select type="select" 
-                                                    id="gender" 
-                                                    name="gender"
-                                                    className="mb-2 form-control"
-                                                    >
-                                                    <option value="">-- Select --</option>
-                                                    <option value="Male">Nigeria</option>
-                                                    <option value="Female">Ghana</option>
-                                                </select>
+                                                <CountryAutocomplete className="mb-2 form-control" placeholder="Select a Country"
+                                                    suggestions={allcountriesstate} passChildData={handlereceivingfrom}
+                                                />
                                             </div>
                                         </div>
                                     </div>
 
-                                    
+                                    <select type="select" 
+                                            id="namePrefix" 
+                                            name="namePrefix" 
+                                            className="custom-select col-md-6"
+                                            onChange={(event) => {
+                                                const purpose = event.target.value;
+                                                setTransferDetails({...transferdetails, ...{ purpose } }); 
+                                            }}
+                                            >
+                                        <option defaultValue>Select</option>
+                                        {allpurposestate?.map((currency, index) => (
+                                            <option key={currency} value={currency}>
+                                                {currency}
+                                            </option>
+                                        ))}
+
+                                    </select>
 
                                     <div className="col-md-12 position-relative form-group">
                                         <div className="form-row">
@@ -149,7 +196,7 @@ export default function Sendmoneyarea() {
                                     <div className="ml-auto">
                                         <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
                                             <span className="text-success pl-2">
-                                                <button className="btn-wide btn btn-danger" style={{marginTop: 15, marginRight: 16}}>   Next   </button>
+                                                <button className="btn-wide btn btn-danger" onClick={handleSubmit} style={{marginTop: 15, marginRight: 16}}>   Next   </button>
                                                 </span>
                                         </div>
                                     </div>
@@ -704,3 +751,32 @@ export default function Sendmoneyarea() {
 
     )
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        // user: state,
+        // isLoading: state.loadingstate.isLoading,
+        // isEmailValid: state.emailcheckstate.isValid,
+        // isPhoneValid: state.phonecheckstate.isValid,
+        allcountriesstate: state.allcountriesstate.allcountriesstate,
+        allpurposestate: state.allpurposestate.allpurposestate,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchallcountry: (setError) => {
+            dispatch(FetchAllCountry(setError));
+        },
+        fetchallpurpose: (show, setNotify, successaction, failaction, setShow) => {
+            dispatch(GetPurposeAction(show, setNotify, successaction, failaction, setShow));
+        },
+        createconvert: (convertiondetails, setNotify, successactiontype, failureactiontype, setShow) => {
+            dispatch(ShowLoading(convertiondetails));
+            dispatch(CreateAction(convertiondetails, setNotify, successactiontype, failureactiontype, setShow))
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sendmoneyarea);

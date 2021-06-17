@@ -3,6 +3,9 @@ import ActionTypes from "../actiontype/ActionTypes"
 const allpromos = [
 ]
 
+const allpurposestate = [
+]
+
 const getPromoState = () => {
     const auth = localStorage.getItem("allpromos");
     try {
@@ -18,7 +21,23 @@ const getPromoState = () => {
     }
 };
 
+const getPaymentPurpose = () => {
+    const allpurpose = localStorage.getItem("allpurpose");
+    try {
+        if(allpurpose != null)
+        {
+            const allpurposeobj = JSON.parse(allpurpose)
+            return allpurposeobj;
+        } else {
+            return allpurposestate;
+        }
+    } catch (error) {
+        return allpurposestate;
+    }
+};
+
 const existingPromo = getPromoState();
+const existingPupose = getPaymentPurpose();
 
 const fetchpromosreducer = (state = existingPromo, action) => {
     switch (action.type) {
@@ -33,4 +52,17 @@ const fetchpromosreducer = (state = existingPromo, action) => {
     }
 };
 
-export default fetchpromosreducer;
+const fetchpurposesreducer = (state = existingPupose, action) => {
+    switch (action.type) {
+        case ActionTypes.FETCH_PURPOSE_SUCCESS:
+            const fetchPurpose = {
+                allpurposestate: action.payload,
+            };
+            localStorage.setItem("allpurpose", JSON.stringify(fetchPurpose)); 
+            return fetchPurpose;
+        default:
+            return state;
+    }
+};
+
+export { fetchpromosreducer, fetchpurposesreducer };

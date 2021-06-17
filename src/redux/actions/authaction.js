@@ -71,8 +71,10 @@ import ActionTypes from "../actiontype/ActionTypes"
     }
     
     const LoginAuthAction = (loginstate, history, setNotify) => {
+        
         return async (dispatch) => {
-            try {
+            
+            
                 if(loginstate.username === undefined || loginstate.username === "" || loginstate.password === undefined || loginstate.password === "")
                 {
                     dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
@@ -83,8 +85,9 @@ import ActionTypes from "../actiontype/ActionTypes"
                     });
                 }
                 else {
-                    
-                    const response = await mainAxios.post('/Users/login', loginstate);
+                    let response = "";
+                    try {
+                    response = await mainAxios.post('/Users/login', loginstate);
                     const { data } = response.data;
                     if(response.data.status === "success")
                     {
@@ -117,19 +120,19 @@ import ActionTypes from "../actiontype/ActionTypes"
                             message: data.message,
                             type: 'error',
                         });
+                    }} catch(error) {
+                        const errmsg = response;
+                        dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
+                        dispatch({type: ActionTypes.USER_LOGIN_FAIL, payload: errmsg });
+                        setNotify({
+                            isOpen: true,
+                            message: errmsg,
+                            type: 'error',
+                        });
                     }
 
                 }
-            } catch(error) {
-                const errmsg = error.message;
-                dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
-                dispatch({type: ActionTypes.USER_LOGIN_FAIL, payload: errmsg });
-                setNotify({
-                    isOpen: true,
-                    message: errmsg,
-                    type: 'error',
-                });
-            }
+           
         }
     }
 

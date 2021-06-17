@@ -9,7 +9,7 @@ import emailcheckreducer from "./reducers/emailcheckreducer";
 import phonecheckreducer from "./reducers/phonecheckreducer";
 import signupreducer from "./reducers/signupreducer";
 import fetchchargesreducer from "./reducers/fetchchargesreducer";
-import fetchpromosreducer from "./reducers/fetchpromosreducer";
+import { fetchpromosreducer, fetchpurposesreducer } from "./reducers/fetchpromosreducer";
 import fetchratesreducer from "./reducers/fetchratesreducer";
 import { fetchbanksreducer, fetchbusinessbanksreducer } from "./reducers/fetchbanksreducer";
 
@@ -28,6 +28,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
         userregstate: signupreducer,
         allcharges: fetchchargesreducer,
         allpromos: fetchpromosreducer,
+        allpurposestate: fetchpurposesreducer,
         allrates: fetchratesreducer,
         allbanks: fetchbanksreducer,
         allbusinessbanks: fetchbusinessbanksreducer,

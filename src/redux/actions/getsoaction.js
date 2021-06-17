@@ -18,7 +18,6 @@ import ActionTypes from "../actiontype/ActionTypes"
                     const status = response.data.status;
                     let data = [];
                     data.push(dat);
-                    console.log(data) 
                     if(status === "success")
                     {
                         dispatch({type: ActionTypes.LOADING_HIDE, payload: message}); 

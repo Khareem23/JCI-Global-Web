@@ -60,7 +60,6 @@ const Chargesarea = (props) => {
     }
 
     function handleSelect (item) {
-        console.log(item);
         fetchcharges(item, setNotify, ActionTypes.GET_CHARGES_BY_PAYMENTINTYPE_SUCCESS, ActionTypes.GET_CHARGES_BY_PAYMENTINTYPE_FAIL, setShow);
     }
 

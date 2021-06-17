@@ -59,9 +59,9 @@ const SignInarea = (props) => {
                         </div>
                         <div className="col-md-12">
                           <div className="position-relative form-group">
-                                <button className="btn-wide btn-pill form-control btn-shadow btn-hover-shine btn btn-primary btn-lg" 
-                                style={{marginTop: 50}}
+                                <button className="btn-wide btn-pill form-control btn-shadow btn-hover-shine btn btn-primary" 
                                 type="submit"
+                                style={{fontSize: 14, marginTop: 40}}
                                 disabled={isLoading}
                                 onClick={handleSubmit}>
                                   Login

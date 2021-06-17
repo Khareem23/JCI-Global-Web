@@ -1,7 +1,6 @@
 import { mainAxios } from "../../utils/axios"
 import ActionTypes from "../actiontype/ActionTypes"
 
-
     const CreateAction = (stateobject, setNotify, successactiontype, failureactiontype, setShow) => {
         return async (dispatch) => {
             try {
@@ -17,7 +16,10 @@ import ActionTypes from "../actiontype/ActionTypes"
                         response = await mainAxios.post('/Rates/createRate', stateobject);
                     } else if(successactiontype === ActionTypes.ADD_BANK_SUCCESS) {
                         response = await mainAxios.post('/JCIBank/createBankAccount', stateobject);
+                    } else if(successactiontype === ActionTypes.ADD_CONVERT_SUCCESS) {
+                        response = await mainAxios.post('/Transactions/convertSendingToReceiving', stateobject);
                     }
+
                     const { data } = response.data;
                     const message = response.data.message;
                     const status = response.data.status;

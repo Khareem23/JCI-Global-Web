@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button'
     const AddPromoModal = (props) => {
     const { createpromo, isLoading, setNotify, show, handleShow, setShow } = props;
     const [promodetails, setPromodetails] = useState({});
+
     const handleSubmit = e => {
         e.preventDefault();
         createpromo(promodetails, setNotify, ActionTypes.ADD_PROMO_SUCCESS, ActionTypes.ADD_PROMO_FAIL, handleShow, setShow);
@@ -31,32 +32,7 @@ import Button from 'react-bootstrap/Button'
             <Modal.Body>
             <form>
                     <div className="col-md-12 position-relative form-group">
-                        <div className="form-row">
-                            {/* <div className="col-md-6"> 
-                                <label htmlFor="exampleGender">Title</label>
-                                <select type="select" 
-                                    id="title" 
-                                    name="title"
-                                    className="mb-2 form-control"
-                                    onChange={(event) => {
-                                        const title = event.target.value;
-                                        setPromodetails({...promodetails, ...{ title } }); 
-                                    }}>
-                                    <option> Choose Title </option>
-                                    <option value="Mr">Mr</option>
-                                    <option value="Mrs">Mrs</option>
-                                    <option value="Miss">Miss</option>
-                                    <option value="Chief">Chief</option>
-                                </select>
-
-                                // "id": 0,
-                                // "title": "Sallah Promo",
-                                // "discountCode": "DIS234098666",
-                                // "bonusValue": 6.2,
-                                // "startDate": "2021-05-02T14:59:20.062Z",
-                                // "isActive": false
-
-                            </div> */}
+                        <div className="form-row">                           
                             <div className="col-md-6"> 
                                 <label htmlFor="title">Title</label>
                                 <input name="title" id="title" placeholder="Title" type="text" className="form-control" 
@@ -76,8 +52,6 @@ import Button from 'react-bootstrap/Button'
                             </div>
                         </div>
                     </div>
-                    
-                    
                     
                     <div className="col-md-12 position-relative form-group">
                         <div className="form-row">
