@@ -8,14 +8,57 @@ import CountryAutocomplete from './CountryAutocomplete';
 
 
 const Sendmoneyarea = (props) => {
-    const { isLoading, fetchallcountry, allcountriesstate, allpurposestate, fetchallpurpose, setNotify, show, handleShow, setShow, createconvert} = props;
+    const { isLoading, 
+        fetchallcountry, 
+        allcountriesstate, 
+        allpurposestate, 
+        fetchallpurpose, 
+        setNotify, 
+        show, 
+        handleShow, 
+        setShow, 
+        createconvert, 
+        createtransact, 
+        conversionstate, 
+        authstate,
+        transactionstate
+    } = props;
 
     const [transferdetails, setTransferDetails] = useState({});
+    const [submitted, setSubmitted] = useState(true)
 
     const [error, setError] = useState({
         hasError: false,
         message: "",
     })
+
+    useEffect(() => {
+
+        if(conversionstate) {
+            console.log(JSON.stringify(conversionstate));
+            //call the create conversion endpoint here;
+            createTransaction(conversionstate);
+        }
+        
+    }, [conversionstate]);
+
+
+    const createTransaction = (props) => {
+        console.log('enter here...')
+        let transactionParams = {};
+        transactionParams.customerId = authstate.nameid;
+        transactionParams.amountToSend = props.amountToSend;
+        transactionParams.exchangeRate = props.rate;
+        transactionParams.paymentPurpose = transferdetails.purpose;
+        transactionParams.paymentDescription = transferdetails.description;
+        transactionParams.sendingCountry = transferdetails.sendCountry;
+        transactionParams.receivingCountry = transferdetails.receieveCountry;
+        transactionParams.amountToReceive = props.amountToReceive;
+        transactionParams.amountToReceive_NgaUSD = props.amountToReceive_NgaUSD;
+        transactionParams.bonusCode = "";
+        createtransact(transactionParams, setNotify, ActionTypes.ADD_TRANSACTION_SUCCESS, ActionTypes.ADD_TRANSACTION_FAIL, handleShow, setShow);
+        setSubmitted(false);
+    }
 
     //fetch all countries
     useEffect(() => {
@@ -25,19 +68,23 @@ const Sendmoneyarea = (props) => {
 
     //handle the return value from country dropdown selection
     const handlesendingfrom = (cout) => {
-        const sendingfrom = cout.substring(0, cout.length - 5);
-        setTransferDetails({...transferdetails, ...{ sendingfrom } });
+        //const sendCountry = cout.substring(0, cout.length - 5);
+        const sendCountry = cout.substring(cout.length - 3, cout.length);
+        setTransferDetails({...transferdetails, ...{ sendCountry } });
     }
 
     const handlereceivingfrom = (cout) => {
-        const receivingfrom = cout.substring(0, cout.length - 5);
-        setTransferDetails({...transferdetails, ...{ receivingfrom } });
+        //const receieveCountry = cout.substring(0, cout.length - 5);
+        const receieveCountry = cout.substring(cout.length - 3, cout.length);
+        setTransferDetails({...transferdetails, ...{ receieveCountry } });
     }
 
     const handleSubmit = e => {
         e.preventDefault();
         createconvert(transferdetails, setNotify, ActionTypes.ADD_CONVERT_SUCCESS, ActionTypes.ADD_CONVERT_FAIL, handleShow, setShow);
     };
+
+
 
     return (
         <>
@@ -127,10 +174,11 @@ const Sendmoneyarea = (props) => {
                                             <div className="position-relative form-group col-md-6">
                                                 <label htmlFor="exampleAmount">Amount</label>
                                                 <input name="amount" id="exampleAmount" placeholder="Amount" type="number" min="0" className="form-control" 
-                                                onChange={(event) => {
-                                                    const amount = event.target.value;
-                                                    setTransferDetails({...transferdetails, ...{ amount } }); 
-                                                }}
+                                                    onChange={(event) => {
+                                                        let amount = event.target.value;
+                                                        let amountToSend = Number(amount)
+                                                        setTransferDetails({...transferdetails, ...{ amountToSend } }); 
+                                                    }}
                                                 />
                                             </div>
                                         </div>
@@ -162,14 +210,18 @@ const Sendmoneyarea = (props) => {
                                         </div>
                                     </div>
 
+                                    <div className="col-md-12 position-relative form-group">
+                                        
+                                    <label htmlFor="exampleGender">Payment Purpose</label>
+                                    <div className="form-row">
                                     <select type="select" 
                                             id="namePrefix" 
                                             name="namePrefix" 
                                             className="custom-select col-md-6"
-                                            onChange={(event) => {
-                                                const purpose = event.target.value;
-                                                setTransferDetails({...transferdetails, ...{ purpose } }); 
-                                            }}
+                                                onChange={(event) => {
+                                                    const purpose = event.target.value;
+                                                    setTransferDetails({...transferdetails, ...{ purpose } }); 
+                                                }}
                                             >
                                         <option defaultValue>Select</option>
                                         {allpurposestate?.map((currency, index) => (
@@ -179,13 +231,19 @@ const Sendmoneyarea = (props) => {
                                         ))}
 
                                     </select>
+                                    </div></div>
 
                                     <div className="col-md-12 position-relative form-group">
                                         <div className="form-row">
                                             <div className="col-md-6" style={{marginTop: 1}}> 
                                                 <div className="position-relative form-group">
                                                 <label htmlFor="exampleText" >Transaction Description</label>
-                                                <textarea name="text" id="exampleText" className="form-control" defaultValue={""} />
+                                                <textarea name="text" id="Paymentdescription" className="form-control" defaultValue={"Payment description"}
+                                                    onChange={(event) => {
+                                                        const description = event.target.value;
+                                                        setTransferDetails({...transferdetails, ...{ description } }); 
+                                                    }}
+                                                 />
                                                 </div>
                                             </div>
                                         </div>
@@ -759,6 +817,9 @@ const mapStateToProps = (state) => {
         // isLoading: state.loadingstate.isLoading,
         // isEmailValid: state.emailcheckstate.isValid,
         // isPhoneValid: state.phonecheckstate.isValid,
+        transactionstate: state.transactionstate.transactionstate,
+        authstate: state.authstate,
+        conversionstate: state.conversionstate.conversionstate,
         allcountriesstate: state.allcountriesstate.allcountriesstate,
         allpurposestate: state.allpurposestate.allpurposestate,
     }
@@ -775,6 +836,10 @@ const mapDispatchToProps = (dispatch) => {
         createconvert: (convertiondetails, setNotify, successactiontype, failureactiontype, setShow) => {
             dispatch(ShowLoading(convertiondetails));
             dispatch(CreateAction(convertiondetails, setNotify, successactiontype, failureactiontype, setShow))
+        },
+        createtransact: (transactiondetails, setNotify, successactiontype, failureactiontype, setShow) => {
+            dispatch(ShowLoading(transactiondetails));
+            dispatch(CreateAction(transactiondetails, setNotify, successactiontype, failureactiontype, setShow))
         },
     }
 }

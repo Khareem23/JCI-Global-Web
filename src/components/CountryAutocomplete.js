@@ -91,7 +91,7 @@ return (
                         placeholder={placeholder}
                         onChange={onChange}
                         className="mb-2 form-control"
-                        style={{backgroundColor: 'white', marginLeft: -16, width: '100%'}}
+                        style={{backgroundColor: 'white', marginLeft: -16, width: '108%'}}
                         onKeyDown={onKeyDown}
                         value={input}
                     />

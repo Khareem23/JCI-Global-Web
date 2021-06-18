@@ -18,7 +18,9 @@ import ActionTypes from "../actiontype/ActionTypes"
                         response = await mainAxios.post('/JCIBank/createBankAccount', stateobject);
                     } else if(successactiontype === ActionTypes.ADD_CONVERT_SUCCESS) {
                         response = await mainAxios.post('/Transactions/convertSendingToReceiving', stateobject);
-                    }
+                    } else if(successactiontype === ActionTypes.ADD_TRANSACTION_SUCCESS) {
+                        response = await mainAxios.post('/Transactions/createTransaction', stateobject);
+                    } 
 
                     const { data } = response.data;
                     const message = response.data.message;
