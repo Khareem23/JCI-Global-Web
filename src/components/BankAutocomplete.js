@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { connect } from 'react-redux';
 
-const CountryAutocomplete = (props) => {
-    const { placeholder, passChildData, disabled } = props
+const BankAutocomplete = (props) => {
+    const { placeholder, passChildData } = props
     const [active, setActive] = useState(0);
     const [filtered, setFiltered] = useState([]);
     const [isShow, setIsShow] = useState(false);
@@ -26,13 +26,12 @@ const CountryAutocomplete = (props) => {
     
     newsuggest(suggestions);
 
-
    
     const newFilteredSuggestions = newsuggestion !== undefined ? newsuggestion.filter(
-        ({country, callingCode, alpha3Code, flag}) => country !== null ? country.toLowerCase().indexOf(input.toLowerCase()) > -1 : {}
-        || callingCode !== null ? callingCode.toLowerCase().indexOf(input.toLowerCase()) > -1 : {}
-        || alpha3Code !== null ? alpha3Code.toLowerCase().indexOf(input.toLowerCase()) > -1 : {}
-        || flag !== null ? flag.toLowerCase().indexOf(input.toLowerCase()) > -1 : {}
+        ({accountName, bankAccountNumber, bankName, country}) => country !== null ? country.toLowerCase().indexOf(input.toLowerCase()) > -1 : {}
+        || accountName !== null ? accountName.toLowerCase().indexOf(input.toLowerCase()) > -1 : {}
+        || bankAccountNumber !== null ? bankAccountNumber.toLowerCase().indexOf(input.toLowerCase()) > -1 : {}
+        || bankName !== null ? bankName.toLowerCase().indexOf(input.toLowerCase()) > -1 : {}
     ) : []
 
     setActive(0);
@@ -46,8 +45,8 @@ const CountryAutocomplete = (props) => {
       setFiltered([]);
       setIsShow(false);
       let bal = e.currentTarget.innerText;
-      const item = bal.substring(0, bal.length - 5);
-      setInput(item);
+      //const item = bal.substring(0, bal.length - 5);
+      setInput(bal);
       passChildData(bal);
      };
 
@@ -76,8 +75,9 @@ const CountryAutocomplete = (props) => {
                           className = "active";
                         }
                         return (
-                          <li className={className} key={suggestion.callingCode} onClick={onClick}>
-                            {suggestion.country}, {suggestion.alpha3Code}
+                          <li className={className} key={suggestion.id} onClick={onClick}>
+                            {suggestion.bankName}
+                            {/* {suggestion.alpha3Code} */}
                           </li>
                         );
                       })}
@@ -104,7 +104,6 @@ return (
         return <div className="single-input-wrap style-two position-relative form-group col-sm-12">
                     <input
                         type="text"
-                        disabled={disabled}
                         placeholder={placeholder}
                         onChange={onChange}
                         className="mb-2 form-control"
@@ -132,5 +131,5 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CountryAutocomplete);
+export default connect(mapStateToProps, mapDispatchToProps)(BankAutocomplete);
 

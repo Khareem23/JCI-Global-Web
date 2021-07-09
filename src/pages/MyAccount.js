@@ -12,6 +12,12 @@ export default function MyAccount() {
         type: '',
     })
 
+    const [show, setShow] = useState(false);
+
+    const handleShow = () => {
+        setShow(!show);
+    }
+    
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
             <AppHeader notify={notify} setNotify={setNotify}/>
@@ -23,7 +29,7 @@ export default function MyAccount() {
                     <div className="app-main__inner">
                         
 
-                        <Myaccountarea/>
+                        <Myaccountarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow}/>
                         <Footer/>
                     
                     </div>

@@ -1,8 +1,46 @@
-import React from 'react'
-import Notification from './Notification'
+import React from 'react';
+import Notification from './Notification';
+import { connect } from 'react-redux';
+import { LogOutAuthAction } from '../redux/actions/authaction';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
-export default function AppHeader(props) {
-    const { notify, setNotify } = props;
+
+const AppHeader = (props) => {
+// export default function AppHeader(props) {
+
+    const { notify, setNotify, authstate, logoutuser, changepassword, profileupdate, changepin, bankaccountupdate} = props;
+    const history = useHistory();
+    // console.log(authstate)
+    
+    const handleLogout = e => {
+        e.preventDefault();
+        logoutuser(history);
+    };
+
+
+    // const handleLogout = e => {
+    //     console.log('cover')
+    //     e.preventDefault();
+    //     logoutuser(history);
+    // };
+
+    const handleChangePassword = e => {
+        e.preventDefault();
+    };
+
+    const handleProfileUpdate = e => {
+        e.preventDefault();
+    };
+
+    const handleChangePin = e => {
+        e.preventDefault();
+    };
+    const handleBankAccountUpdate = e => {
+        e.preventDefault();
+    };
+
+
     return (
         <div className="app-header header-shadow">
             <Notification notify={notify} setNotify={setNotify} />
@@ -61,7 +99,7 @@ export default function AppHeader(props) {
                         <div className="dropdown-menu-header-inner bg-plum-plate">
                             <div className="menu-header-image" style={{backgroundImage: 'url("assets/images/dropdown-header/abstract4.jpg")'}} />
                             <div className="menu-header-content text-white">
-                            <h5 className="menu-header-title">Grid Dashboard</h5>
+                            <h5 className="menu-header-title">Grid Menu</h5>
                             <h6 className="menu-header-subtitle">Easy grid navigation inside dropdowns</h6>
                             </div>
                         </div>
@@ -69,43 +107,43 @@ export default function AppHeader(props) {
                         <div className="grid-menu grid-menu-xl grid-menu-3col">
                         <div className="no-gutters row">
                             <div className="col-sm-6 col-xl-4">
-                            <button className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
-                                <i className="pe-7s-world icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3" /> Automation
-                            </button>
+                            <Link to="/sendmoney" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                <i className="pe-7s-cash icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3" /> Send Money
+                            </Link>
+                            </div>
+                            <div className="col-sm-6 col-xl-4">
+                            <Link to="/transactionhistory" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                <i className="pe-7s-note2 icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"> </i>History
+                            </Link>
+                            </div>
+                            <div className="col-sm-6 col-xl-4">
+                            <Link to="/beneficiaries" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                <i className="pe-7s-users icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"> </i> Benficiaries
+                            </Link>
+                            </div>
+                            <div className="col-sm-6 col-xl-4">
+                            <Link to="/myaccount" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                <i className="pe-7s-user icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"> </i> My Accounts
+                            </Link>
                             </div>
                             <div className="col-sm-6 col-xl-4">
                             <button className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
-                                <i className="pe-7s-piggy icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"> </i> Reports
+                                <i className="pe-7s-config icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"/> Settings
                             </button>
                             </div>
-                            <div className="col-sm-6 col-xl-4">
-                            <button className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
-                                <i className="pe-7s-config icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"> </i> Settings
-                            </button>
-                            </div>
-                            <div className="col-sm-6 col-xl-4">
-                            <button className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
-                                <i className="pe-7s-browser icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"> </i> Content
-                            </button>
-                            </div>
-                            <div className="col-sm-6 col-xl-4">
-                            <button className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
-                                <i className="pe-7s-hourglass icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3" /> Activity
-                            </button>
-                            </div>
-                            <div className="col-sm-6 col-xl-4">
-                            <button className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
-                                <i className="pe-7s-world icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"> </i> Contacts
-                            </button>
+                            <div onClick={handleLogout} className="col-sm-6 col-xl-4">
+                            <Link onClick={handleLogout} className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                <i className="pe-7s-back icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3" onClick={handleLogout}> </i> Log Out
+                            </Link>
                             </div>
                         </div>
                         </div>
-                        <ul className="nav flex-column">
+                        {/* <ul className="nav flex-column">
                         <li className="nav-item-divider nav-item" />
                         <li className="nav-item-btn text-center nav-item">
                             <button className="btn-shadow btn btn-danger btn-sm">Follow-ups</button>
                         </li>
-                        </ul>
+                        </ul> */}
                     </div>
                     </div>
 
@@ -130,78 +168,60 @@ export default function AppHeader(props) {
                                         <img width={42} className="rounded-circle" src="assets/images/avatars/1.jpg" alt="" />
                                     </div>
                                     <div className="widget-content-left">
-                                        <div className="widget-heading">Alina Mcloughlin</div>
-                                        <div className="widget-subheading opacity-8">A short profile description</div>
+                                        <div className="widget-heading">{authstate?.unique_name}</div>
+                                        <div className="widget-subheading opacity-8">{authstate?.email}</div>
                                     </div>
                                     <div className="widget-content-right mr-2">
-                                        <button className="btn-pill btn-shadow btn-shine btn btn-focus">Logout</button>
+                                        <button className="btn-pill btn-shadow btn-shine btn btn-focus" onClick={handleLogout} >Logout</button>
                                     </div>
                                     </div>
                                 </div>
                                 </div>
                             </div>
                             </div>
-                            <div className="scroll-area-xs" style={{height: 150}}>
+                            <div className="scroll-area-xs" style={{height: 350}}>
                             <div className="scrollbar-container ps">
                                 <ul className="nav flex-column">
                                 <li className="nav-item-header nav-item">Activity</li>
                                 <li className="nav-item">
-                                    <a href="javascript:void(0);" className="nav-link">Chat
+                                    <a href="javascript:void(0);" className="nav-link"><span style={{color: '#d92550', fontWeight: 'bold'}}>My Transactions</span>
                                     <div className="ml-auto badge badge-pill badge-info">8</div>
                                     </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a href="javascript:void(0);" className="nav-link">Recover Password</a>
+                                    <a href="javascript:void(0);" className="nav-link"> <span style={{color: '#d92550', fontWeight: 'bold'}}>My Beneficiaries</span>
+                                    <div className="ml-auto badge badge-pill badge-info">5</div>
+                                    </a>
                                 </li>
+                                                               
                                 <li className="nav-item-header nav-item">My Account
                                 </li>
                                 <li className="nav-item">
-                                    <a href="javascript:void(0);" className="nav-link">Settings
+                                    <a href="javascript:void(0);" className="nav-link" onClick={handleChangePassword}><span style={{color: '#d92550', fontWeight: 'bold'}}>Change Password</span></a>
+                                </li>
+                                <li className="nav-item">
+                                    <a href="javascript:void(0);" className="nav-link" onClick={handleChangePin}><span style={{color: '#d92550', fontWeight: 'bold'}}>Change PIN</span></a>
+                                </li>
+                                <li className="nav-item">
+                                    <a href="javascript:void(0);" className="nav-link" onClick={handleProfileUpdate}><span style={{color: '#d92550', fontWeight: 'bold'}}>Update Profile</span></a>
+                                </li>
+                                <li className="nav-item">
+                                    <a href="javascript:void(0);" className="nav-link" onClick={handleBankAccountUpdate}><span style={{color: '#d92550', fontWeight: 'bold'}}>Update Bank Account</span></a>
+                                </li> 
+                                <li className="nav-item">
+                                    <a href="javascript:void(0);" className="nav-link"><span style={{color: '#d92550', fontWeight: 'bold'}}>Settings</span>
                                     <div className="ml-auto badge badge-danger">New</div>
                                     </a>
-                                </li>
-                                <li className="nav-item">
-                                    <a href="javascript:void(0);" className="nav-link">Messages
-                                    <div className="ml-auto badge badge-danger">512</div>
-                                    </a>
-                                </li>
-                                <li className="nav-item">
-                                    <a href="javascript:void(0);" className="nav-link">Logs</a>
                                 </li>
                                 </ul>
                             </div>
                             </div>
-                            <ul className="nav flex-column">
-                            <li className="nav-item-divider mb-0 nav-item" />
-                            </ul>
-                            <div className="grid-menu grid-menu-2col">
-                            <div className="no-gutters row">
-                                <div className="col-sm-6">
-                                <button className="btn-icon-vertical btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-danger">
-                                    <i class="pe-7s-chat icon-gradient bg-amy-crisp btn-icon-wrapper mb-2"></i> Message Inbox
-                                </button>
-                                </div>
-                                <div className="col-sm-6">
-                                <button className="btn-icon-vertical btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-danger">
-                                    <i className="pe-7s-ticket icon-gradient bg-love-kiss btn-icon-wrapper mb-2" />
-                                    <b>Support Tickets</b>
-                                </button>
-                                </div>
-                            </div>
-                            </div>
-                            <ul className="nav flex-column">
-                            <li className="nav-item-divider nav-item">
-                            </li>
-                            <li className="nav-item-btn text-center nav-item">
-                                <button className="btn-wide btn btn-danger btn-sm"> Open Messages </button>
-                            </li>
-                            </ul>
                         </div>
                         </div>
                     </div>
                     <div className="widget-content-left  ml-3 header-user-info">
-                        <div className="widget-heading"> Alina Mclourd </div>
-                        <div className="widget-subheading"> VP People Manager </div>
+                        <div className="widget-heading"> {authstate?.unique_name} </div>
+                        <div className="widget-subheading"> {authstate?.role} </div>
                     </div>
                     </div>
                 </div>
@@ -209,11 +229,40 @@ export default function AppHeader(props) {
 
             </div>
         </div>
+
         </div>
-
-        
-
-
-
     )
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        authstate: state.authstate.authstate,
+        
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        logoutuser: (history) => {
+            // dispatch(ShowLoading(""));
+            dispatch(LogOutAuthAction(history));
+        },
+        changepassword: (passwordetails) => {
+            
+        },
+        profileupdate: (profiledetails) => {
+            
+        },
+        changepin: (pinetails) => {
+            
+        },
+        bankaccountupdate: (bankaccountdetails) => {
+            
+        },
+        
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppHeader);

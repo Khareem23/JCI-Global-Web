@@ -1,29 +1,35 @@
 import { mainAxios } from "../../utils/axios"
 import ActionTypes from "../actiontype/ActionTypes"
 
-
-    const EditAction = (stateobject, setNotify, successactiontype, failureactiontype, setShow) => {
+    const PatchAction = (stateobject, id, setIsLoading, setNotify, successactiontype, failureactiontype, setShow) => {
         return async (dispatch) => {
             try {
-                if(stateobject !== undefined)
+                if(stateobject !== undefined )
                 {
                     let response = "";
-                    if(successactiontype === ActionTypes.EDIT_CHARGES_SUCCESS)
-                    {
-                        response = await mainAxios.put('/Charges/updateCharges/', stateobject);
-                    } else if(successactiontype === ActionTypes.EDIT_PROMO_SUCCESS) {
-                        response = await mainAxios.put('/Promo/UpdatePromo', stateobject);
-                    }  else if(successactiontype === ActionTypes.EDIT_RATE_SUCCESS) {
-                        response = await mainAxios.put('/Rates/updateRate', stateobject);
-                    } else if(successactiontype === ActionTypes.EDIT_BANK_SUCCESS) {
-                        response = await mainAxios.put('/JCIBank/UpdateBankAccount', stateobject);
+                    if(successactiontype === ActionTypes.ADD_NEW_BENEFICIARY_SUCCESS) {
+                        response = await mainAxios.patch('/Transactions/addNewBeneficiaryToTransaction/'+id, stateobject);
+                    } else if(successactiontype === ActionTypes.ADD_PAYMENTS_TO_TRANSACTION_SUCCESS) {
+                        response = await mainAxios.patch('/Transactions/AddPaymentToTransaction/'+id+'/PaymentTypeID/'+stateobject);
+                    } else if(successactiontype === ActionTypes.ADD_EXISTING_BENEFICIARY_SUCCESS) {
+                        response = await mainAxios.patch('/Transactions/addExistingBeneficiaryToTransaction/'+id+'/'+stateobject);
+                    } else if(successactiontype === ActionTypes.UPLOAD_PAYMENTS_CONFIRMATION_SUCCESS) {
+                        response = await mainAxios.post('/Transactions/uploadPaymentConfirmation/'+ id, stateobject);
                     } 
+
                     const { data } = response.data;
                     const message = response.data.message;
-                    const status = response.data.status;
+                    let status = "";
+                    if(response.data.status === 'Redirect' || 'NoNoRedirect') {
+                        status = "success";
+                    } else {
+                        status = response.data.status;
+                    }
+                    
                     if(status === "success")
                     {
-                        dispatch({type: ActionTypes.LOADING_HIDE, payload: message}); 
+                        // dispatch({type: ActionTypes.LOADING_HIDE, payload: message}); 
+                        setIsLoading(false);
                         dispatch({type: successactiontype, payload: data});
                         setNotify({
                             isOpen: true,
@@ -33,7 +39,8 @@ import ActionTypes from "../actiontype/ActionTypes"
                         setShow(false);
                         
                     } else {                        
-                            dispatch({type: ActionTypes.LOADING_HIDE, payload: message}); 
+                            // dispatch({type: ActionTypes.LOADING_HIDE, payload: message}); 
+                            setIsLoading(false);
                             dispatch({type: failureactiontype, payload: message });
                             setNotify({
                                 isOpen: true,
@@ -44,7 +51,8 @@ import ActionTypes from "../actiontype/ActionTypes"
                     }
                 } else {
                     const errormsg = "Kindly Supply all required information";
-                    dispatch({type: ActionTypes.LOADING_HIDE, payload: stateobject}); 
+                    // dispatch({type: ActionTypes.LOADING_HIDE, payload: stateobject}); 
+                    setIsLoading(false);
                     dispatch({type: failureactiontype, payload: errormsg });
                     setNotify({
                         isOpen: true,
@@ -65,8 +73,8 @@ import ActionTypes from "../actiontype/ActionTypes"
                     errmsg = error.response.data.message;
                 }
                 
-                dispatch({type: ActionTypes.LOADING_HIDE, payload: errmsg}); 
-                // setIsLoading(false);
+                // dispatch({type: ActionTypes.LOADING_HIDE, payload: errmsg}); 
+                setIsLoading(false);
                 dispatch({type: failureactiontype, payload: errmsg });
                 setNotify({
                     isOpen: true,
@@ -91,5 +99,5 @@ import ActionTypes from "../actiontype/ActionTypes"
     
     
 export { 
-    EditAction,
+    PatchAction,
 }

@@ -74,7 +74,6 @@ import ActionTypes from "../actiontype/ActionTypes"
         
         return async (dispatch) => {
             
-            
                 if(loginstate.username === undefined || loginstate.username === "" || loginstate.password === undefined || loginstate.password === "")
                 {
                     dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
@@ -105,7 +104,7 @@ import ActionTypes from "../actiontype/ActionTypes"
                         });
                         if(decoded.role === "Customer")
                         {
-                            history.push("/sendmoney");                            
+                            history.push("/sendmoney#step-1");                            
                         } else if(decoded.role === "Admin")
                         {
                             history.push("/dashboard"); 
@@ -121,14 +120,29 @@ import ActionTypes from "../actiontype/ActionTypes"
                             type: 'error',
                         });
                     }} catch(error) {
-                        const errmsg = response;
-                        dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
-                        dispatch({type: ActionTypes.USER_LOGIN_FAIL, payload: errmsg });
-                        setNotify({
-                            isOpen: true,
-                            message: errmsg,
-                            type: 'error',
-                        });
+                        // const errmsg = response;
+                        // dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
+                        // dispatch({type: ActionTypes.USER_LOGIN_FAIL, payload: errmsg });
+                        // setNotify({
+                        //     isOpen: true,
+                        //     message: errmsg,
+                        //     type: 'error',
+                        // });
+                        if(error.response) {
+                            let errorarray = error.response.data.errors;
+                            let list = prepareError(errorarray);
+                            const errmsg = list;
+                            dispatch({type: ActionTypes.LOADING_HIDE, payload: errmsg}); 
+                            // setIsLoading(false);
+                            dispatch({type: ActionTypes.USER_LOGIN_FAIL, payload: errmsg });
+                            setNotify({
+                                isOpen: true,
+                                message: errmsg,
+                                type: 'error',
+                            });
+                        }
+                        
+                        // setShow(false);
                     }
 
                 }
@@ -136,6 +150,17 @@ import ActionTypes from "../actiontype/ActionTypes"
         }
     }
 
+    const prepareError = (array) => {
+        let errorlist = "";
+        if(array) {
+            for (const [key, value] of Object.entries(array)) {
+                console.log(value[0]);
+                errorlist += value[0] + '\n'
+            }
+        } 
+        return errorlist;
+    } 
+    
     const LogOutAuthAction = (history) => {
         return async (dispatch) => {
             try {    

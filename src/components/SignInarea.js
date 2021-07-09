@@ -91,7 +91,7 @@ const SignInarea = (props) => {
 const mapStateToProps = (state) => {
   return {
       isLoading: state.loadingstate.isLoading,
-      authstate: state.authstate,
+      authstate: state.authstate.authstate,
   }
 }
 

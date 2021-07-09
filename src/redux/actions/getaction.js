@@ -3,6 +3,7 @@ import ActionTypes from "../actiontype/ActionTypes"
 
 
     const GetAction = (stateobject, setNotify, successactiontype, failureactiontype, setShow) => {
+        console.log('araoluwa')
         return async (dispatch) => {
             try {
                 if(stateobject !== undefined)
@@ -17,7 +18,18 @@ import ActionTypes from "../actiontype/ActionTypes"
                         response = await mainAxios.get('/Rates/getRateList', stateobject);
                     } else if(successactiontype === ActionTypes.GET_BANK_SUCCESS) {
                         response = await mainAxios.get('/JCIBank/GetAllBankAccount', stateobject);
+                    } else if(successactiontype === ActionTypes.GET_ALL_RECEIVING_CURRENCY_SUCCESS) {
+                        response = await mainAxios.get('/Rates/getAllReceivingCurrency', stateobject);
+                    } else if(successactiontype === ActionTypes.GET_ALL_SENDING_CURRENCY_SUCCESS) {
+                        response = await mainAxios.get('/Rates/getAllSendingCurrency', stateobject);
+                    } else if(successactiontype === ActionTypes.GET_USER_RECEIVERS_SUCCESS) {
+                        response = await mainAxios.get('/Transactions/getUserReceivers', stateobject);
+                    } else if(successactiontype === ActionTypes.DOWNLOAD_TRANSACTION_RECEIPT_SUCCESS) {
+                        response = await mainAxios.get('/Transactions/downloadTransactionReceipt/' + stateobject);
+                    } else if(successactiontype === ActionTypes.FETCH_CUSTOMER_TRANSACTION_SUCCESS) {
+                        response = await mainAxios.get('/Transactions/getCustomertransactions/');
                     } 
+                    
                     const { data } = response.data;
                     const message = response.data.message;
                     const status = response.data.status;
@@ -32,7 +44,7 @@ import ActionTypes from "../actiontype/ActionTypes"
                         });
                         setShow(false);
                         
-                    } else {                     
+                    } else {                 
                             dispatch({type: ActionTypes.LOADING_HIDE, payload: message}); 
                             dispatch({type: failureactiontype, payload: message });
                             setNotify({

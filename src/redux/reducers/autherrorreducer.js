@@ -18,6 +18,12 @@ const authErrorReducer = (state = autherror, action) => {
             return { message: action.payload }
         case ActionTypes.PHONE_EXIST_FAIL:
             return { message: action.payload }
+        case ActionTypes.GET_ALL_SENDING_CURRENCY_FAIL:
+            return { message: action.payload }
+        case ActionTypes.GET_CHARGES_BY_PAYMENTINTYPE_FAIL:
+            return { message: action.payload }
+        case ActionTypes.GET_ALL_RECEIVING_CURRENCY_FAIL:
+            return { message: action.payload }
         default:
             return state;
     }

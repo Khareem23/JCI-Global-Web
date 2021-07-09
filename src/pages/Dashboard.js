@@ -49,7 +49,7 @@ function Dashboard(props) {
 
 const mapStateToProps = (state) => {
     return {
-        authstate: state.authstate,
+        authstate: state.authstate.authstate,
     }
 }
 

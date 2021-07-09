@@ -56,7 +56,7 @@ const AppSidebar = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        authstate: state.authstate,
+        authstate: state.authstate.authstate,
     }
   }
   

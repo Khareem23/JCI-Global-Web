@@ -7,13 +7,12 @@ import fetchcountryreducer from "./reducers/fetchcountryreducer";
 import fetchstatesreducer from "./reducers/fetchstatesreducer";
 import emailcheckreducer from "./reducers/emailcheckreducer";
 import phonecheckreducer from "./reducers/phonecheckreducer";
-import signupreducer from "./reducers/signupreducer";
-import fetchchargesreducer from "./reducers/fetchchargesreducer";
+import { signupreducer, userprofilereducer } from "./reducers/signupreducer";
+import { fetchuserrecieversreducer, fetchchargesreducer, downloadreceiptreducer, uploadconfrimationreducer, addpaymentreducer} from "./reducers/fetchchargesreducer";
 import { fetchpromosreducer, fetchpurposesreducer } from "./reducers/fetchpromosreducer";
 import fetchratesreducer from "./reducers/fetchratesreducer";
 import { fetchbanksreducer, fetchbusinessbanksreducer } from "./reducers/fetchbanksreducer";
-import { transactionreducer, conversionreducer, allreceivingcurrencyreducer } from "./reducers/transactionreducer"; 
-
+import { transactionreducer, conversionreducer, allreceivingcurrencyreducer, allsendingcurrencyreducer, customertransactionsreducer } from "./reducers/transactionreducer"; 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; 
 
@@ -27,6 +26,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
         allstatesstate: fetchstatesreducer,
         userregstate: signupreducer,
         allcharges: fetchchargesreducer,
+        alluserreceivers: fetchuserrecieversreducer,
         allpromos: fetchpromosreducer,
         allpurposestate: fetchpurposesreducer,
         allrates: fetchratesreducer,
@@ -35,6 +35,12 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
         conversionstate: conversionreducer,
         transactionstate: transactionreducer,
         allreceivingcurrencystate: allreceivingcurrencyreducer,
+        allsendingcurrencystate: allsendingcurrencyreducer,
+        downloadreceiptstatus: downloadreceiptreducer,
+        uploadconfirmation: uploadconfrimationreducer,
+        allcustomertransactions: customertransactionsreducer,
+        redirecturl: addpaymentreducer,
+        userprofilestate: userprofilereducer,
     })
 
     const store = createStore(

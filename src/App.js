@@ -18,6 +18,7 @@ import Beneficiary from './pages/Beneficiary'
 import NewBeneficiary from './pages/NewBeneficiary';
 import MyAccount from './pages/MyAccount';
 import BankAccount from './pages/BankAccount';
+import Paymentpage from './components/Paymentpage';
 
 function App() {
   return (
@@ -98,6 +99,23 @@ function App() {
           <Route exact path='/accounts'>
             <BankAccount />
           </Route>
+
+          <Route exact path='/paymentpage'>
+            <Paymentpage />
+          </Route>
+
+          <Route exact path='/Success'>
+            <Paymentpage />
+          </Route>
+
+          <Route exact path='/Failed'>
+            <Paymentpage />
+          </Route>
+
+          <Route exact path='/Cancelled'>
+            <Paymentpage />
+          </Route>
+          
           
           {/* <Route exact path='/'>
             <Home/>

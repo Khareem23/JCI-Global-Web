@@ -12,7 +12,10 @@ import ActionTypes from "../actiontype/ActionTypes"
                         response = await mainAxios.get('/JCIBank/GetBusinessBankAccount/' + stateobject);
                     } else if(successactiontype === ActionTypes.GET_CHARGES_BY_PAYMENTINTYPE_SUCCESS) {
                         response = await mainAxios.get('/Charges/GetChargesByPaymentInType/' + stateobject);
+                    } else if(successactiontype === ActionTypes.FETCH_USER_PROFILE_SUCCESS) {
+                        response = await mainAxios.get('/Users/' + stateobject);
                     }
+
                     const dat  = response.data.data;
                     const message = response.data.message;
                     const status = response.data.status;

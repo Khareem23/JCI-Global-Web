@@ -12,6 +12,12 @@ export default function TransactionHistory() {
         type: '',
     })
 
+    const [show, setShow] = useState(false);
+
+    const handleShow = () => {
+        setShow(!show);
+    }
+
 
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
@@ -23,7 +29,7 @@ export default function TransactionHistory() {
                 <div className="app-main__outer">
                     <div className="app-main__inner">                        
 
-                        <Transactionhistoryarea/>
+                        <Transactionhistoryarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow}/>
 
                         <Footer/>
                     

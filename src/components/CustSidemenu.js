@@ -18,59 +18,59 @@ const CustSidemenu = (props) => {
             <div className="app-sidebar__inner">
                     <ul className="vertical-nav-menu">
                     <div className="col-md-3 col-xl-3"><div className="card no-shadow rm-border bg-transparent text-right"><img src="assets/images/logo-inverse.jpeg" alt="" width={225} height={100} /><div className="widget-chart-content" /></div></div>
-                    <div className="progress-bar-xs progress" style={{marginLeft: -23, marginRight: -23}}>
+                    <div className="progress-bar-xs progress sidemenu" style={{marginLeft: -23, marginRight: -23}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                         </div>
                     </div>
                     <li style={{margin: 32, marginLeft: 32}}>
                         <li className="app-sidebar__heading">Modules</li>
                     </li>
-                    <div className="progress-bar-xs progress" style={{marginLeft: -23, marginRight: -23}}>
+                    <div className="progress-bar-xs progress sidemenu" style={{marginLeft: -23, marginRight: -23}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                         </div>
                     </div>
                     <li style={{margin: 16}}>
                         <Link to="/sendmoney">
-                            <i className="metismenu-icon pe-7s-way" />Send Money
+                            <i className="metismenu-icon pe-7s-cash" />Send Money
                         </Link>
                     </li>
-                    <div className="progress-bar-xs progress" style={{marginLeft: -23, marginRight: -23}}>
+                    <div className="progress-bar-xs progress sidemenu" style={{marginLeft: -23, marginRight: -23}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                         </div>
                     </div>
                     <li style={{margin: 16}}>
                         <Link to="/transactionhistory">
-                            <i className="metismenu-icon pe-7s-way" />Transaction History
+                            <i className="metismenu-icon pe-7s-note2" />Transaction History
                         </Link>
                     </li>
-                    <div className="progress-bar-xs progress" style={{marginLeft: -23, marginRight: -23}}>
+                    <div className="progress-bar-xs progress sidemenu" style={{marginLeft: -23, marginRight: -23}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                         </div>
                     </div>
                     <li style={{margin: 16}}>
                         <Link to="/beneficiaries">
-                            <i className="metismenu-icon pe-7s-way" />Benficiaries
+                            <i className="metismenu-icon pe-7s-users" />Benficiaries
                         </Link>
                     </li>
-                    <div className="progress-bar-xs progress" style={{marginLeft: -23, marginRight: -23}}>
+                    <div className="progress-bar-xs progress sidemenu" style={{marginLeft: -23, marginRight: -23}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                         </div>
                     </div>
                     <li style={{margin: 16}}>
                         <Link to="/myaccount">
-                            <i className="metismenu-icon pe-7s-way" />My Accounts
+                            <i className="metismenu-icon pe-7s-user" />My Accounts
                         </Link>
                     </li>
-                    <div className="progress-bar-xs progress" style={{marginLeft: -23, marginRight: -23}}>
+                    <div className="progress-bar-xs progress sidemenu" style={{marginLeft: -23, marginRight: -23}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                         </div>
                     </div>
                     <li style={{margin: 16}}>
-                        <a href="" onClick={handleLogout} >
-                            <i className="metismenu-icon pe-7s-way" />Log Out
-                        </a>
+                        <Link onClick={handleLogout} >
+                            <i className="metismenu-icon pe-7s-back" />Log Out
+                        </Link>
                     </li>
-                    <div className="progress-bar-xs progress" style={{marginLeft: -23, marginRight: -23}}>
+                    <div className="progress-bar-xs progress sidemenu" style={{marginLeft: -23, marginRight: -23}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                         </div>
                     </div>

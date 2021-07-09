@@ -62,18 +62,8 @@ const Ratesarea = (props) => {
             return items.map((item, i) => {
                 return (
                 <>
-                {/* "id": 1,
-                    "currencyDesc": "AUS-NGA",
-                    "rateType": "TransactionRate",
-                    "sendCurrencyCode": "AUS",
-                    "receiveCurrencyCode": "NGA",
-                    "isUSDDisplay": true,
-                    "isActive": true,
-                    "amount_NGN": 285.78,
-                    "amount_USD": 0.70 */}
                     <tr>
                         <td>{item.rateType}</td>
-                        {/* <td>{item.currencyDesc}</td> */}
                         <td>{item.sendCurrencyCode}</td>
                         <td>{item.receiveCurrencyCode}</td>
                         <td>{processDisplay(item.isUSDDisplay)}</td>
