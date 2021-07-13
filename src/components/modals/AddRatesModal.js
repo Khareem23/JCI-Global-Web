@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import { ShowLoading } from '../../redux/actions/authaction';
 import { CreateAction } from '../../redux/actions/createaction';
 import { connect } from 'react-redux';
 import ActionTypes from "../../redux/actiontype/ActionTypes"
@@ -7,13 +6,13 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
     const AddRatesModal = (props) => {
-    const {createrate, isLoading, setNotify, show, handleShow, setShow } = props;
+    const {createrate, setNotify, show, handleShow, setShow, ratesLoading, setRatesLoading } = props;
     const [ratedetails, setRatedetails] = useState({});
-    
 
     const handleSubmit = e => {
         e.preventDefault();
-        createrate(ratedetails, setNotify, ActionTypes.ADD_RATE_SUCCESS, ActionTypes.ADD_RATE_FAIL, handleShow, setShow);
+        setRatesLoading(true);
+        createrate(ratedetails, setNotify, ActionTypes.ADD_RATE_SUCCESS, ActionTypes.ADD_RATE_FAIL, setShow, setRatesLoading);
     };
 
     useEffect(() => {
@@ -44,8 +43,8 @@ import Button from 'react-bootstrap/Button'
                                         setRatedetails({...ratedetails, ...{ rateType } }); 
                                     }}>
                                     <option> Select Rate Type </option>
-                                    <option value="0">Solo Rate</option>
-                                    <option value="1">Mega Rate</option>
+                                    <option value="0">Live Rate</option>
+                                    <option value="1">Transaction Rate</option>
                                 </select>
                             </div>
                             
@@ -152,7 +151,7 @@ import Button from 'react-bootstrap/Button'
             <Button variant="secondary" onClick={handleShow}>
                 Close
             </Button>
-            <Button variant="danger" onClick={handleSubmit} disabled={isLoading} >Add Charges</Button>
+            <Button variant="danger" onClick={handleSubmit} disabled={ratesLoading}>Add Rate</Button>
             </Modal.Footer>
             </Modal>
             
@@ -161,15 +160,13 @@ import Button from 'react-bootstrap/Button'
 
 const mapStateToProps = (state) => {
     return {
-        isLoading: state.loadingstate.isLoading,
     }
   }
   
   const mapDispatchToProps = (dispatch) => {
     return {
-            createrate: (ratedetails, setNotify, successactiontype, failureactiontype, setShow) => {
-                dispatch(ShowLoading(ratedetails));
-                dispatch(CreateAction(ratedetails, setNotify, successactiontype, failureactiontype, setShow)
+            createrate: (ratedetails, setNotify, successactiontype, failureactiontype, setShow, setRatesLoading) => {
+                dispatch(CreateAction(ratedetails, setNotify, successactiontype, failureactiontype, setShow, setRatesLoading)
             );
         },
     }

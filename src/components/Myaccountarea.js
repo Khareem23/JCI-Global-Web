@@ -7,7 +7,7 @@ import ActionTypes from "../redux/actiontype/ActionTypes"
 import CountryAutocomplete from './CountryAutocomplete';
 
 const Myaccountarea = (props) => {
-    const { isLoading, setNotify, show, handleShow, setShow, fetchprofiledetails, userprofilestate, authstate, editaccount, allcountriesstate, fetchallcountry } = props;
+    const { setNotify, handleShow, setShow, fetchprofiledetails, userprofilestate, authstate, editaccount, allcountriesstate, fetchallcountry } = props;
     const [userprofile, setUserProfile] = useState({});
     const [accountdetails, setAccountdetails] = useState({});
     useEffect(() => {
@@ -17,17 +17,20 @@ const Myaccountarea = (props) => {
     }, []);
 
     useEffect(() => {
+        
         let firstobject = userprofilestate[0];
         setUserProfile(firstobject);
 
-        const bankSwiftCode = firstobject.customerBankAccount.accSwiftCode;
-        const accountName = firstobject.customerBankAccount.accountName;
-        const bankAccountNumber = firstobject.customerBankAccount.accNumber;
-        const bankName = firstobject.customerBankAccount.accBankName;
-        const accCountry = firstobject.customerBankAccount.accCountry;
-        const id = firstobject.id;
-
-        setAccountdetails({...accountdetails, ...{ bankSwiftCode, accountName, bankAccountNumber, bankName, accCountry, id} });
+        if(firstobject.customerBankAccount !== null)
+        {
+            const bankSwiftCode = firstobject.customerBankAccount.accSwiftCode;
+            const accountName = firstobject.customerBankAccount.accountName;
+            const bankAccountNumber = firstobject.customerBankAccount.accNumber;
+            const bankName = firstobject.customerBankAccount.accBankName;
+            const accCountry = firstobject.customerBankAccount.accCountry;
+            const id = firstobject.id;
+            setAccountdetails({...accountdetails, ...{ bankSwiftCode, accountName, bankAccountNumber, bankName, accCountry, id} });
+        }
 
     }, [userprofilestate]);
 
@@ -39,7 +42,6 @@ const Myaccountarea = (props) => {
     const handlesendingfrom = (cout) => {
         const countryCode = cout.substring(cout.length - 3, cout.length);
         const country = cout.substring(0, cout.length - 5);
-        console.log(country)
         setAccountdetails({...accountdetails, ...{ countryCode, country } });
     }
 

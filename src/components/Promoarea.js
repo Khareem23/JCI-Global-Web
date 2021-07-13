@@ -7,11 +7,20 @@ import DeletePromoModal from './modals/DeletePromoModal';
 import EditPromoModal from './modals/EditPromoModal';
 
 const Promoarea = (props) => {
-    const { createpromo, isLoading, setNotify, show, handleShow, setShow, fetchpromos, allpromos } = props;
+    const { setNotify, show, handleShow, setShow, fetchpromos, allpromos, addPromoLoading, setAddPromoLoading } = props;
     const [promos, setPromos] = useState({});
+
     useEffect(() => {
       fetchpromos(show, setNotify, ActionTypes.GET_PROMOS_SUCCESS, ActionTypes.GET_PROMOS_FAIL, setShow);
     }, []);
+
+    //this is to check for changes in addpromoloading variable
+    useEffect(() => {
+        if(!addPromoLoading) {
+            fetchpromos(show, setNotify, ActionTypes.GET_PROMOS_SUCCESS, ActionTypes.GET_PROMOS_FAIL, setShow);
+        }
+    }, [addPromoLoading]);
+    
 
     useEffect(() => {
         if(allpromos !== undefined)
@@ -146,8 +155,8 @@ const Promoarea = (props) => {
                 </div>
             </div>
         
-            <EditPromoModal item={item} setNotify={setNotify} show={showEdit} handleEdit={handleEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} />
-            <DeletePromoModal item={item} setNotify={setNotify} show={showDelete} handleDelete={handleDelete} setShow={setShowDelete} handleShowDelete={handleShowDelete} />
+            <EditPromoModal item={item} setNotify={setNotify} show={showEdit} handleEdit={handleEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} addPromoLoading={addPromoLoading} setAddPromoLoading={setAddPromoLoading}/>
+            <DeletePromoModal item={item} setNotify={setNotify} show={showDelete} handleDelete={handleDelete} setShow={setShowDelete} handleShowDelete={handleShowDelete} addPromoLoading={addPromoLoading} setAddPromoLoading={setAddPromoLoading} />
         </>
 
     )

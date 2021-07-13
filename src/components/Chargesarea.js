@@ -7,12 +7,19 @@ import DeleteChargeModal from './modals/DeleteChargeModal';
 import EditChargesModal from './modals/EditChargesModal';
 
 const Chargesarea = (props) => {
-    const { setNotify, show, handleShow, setShow, fetchcharges, allcharges, isLoading } = props;
+    const { setNotify, show, handleShow, setShow, fetchcharges, allcharges, chargesLoading, setChargesLoading} = props;
     const [charges, setCharges] = useState({});
 
     useEffect(() => {
       fetchcharges(show, setNotify, ActionTypes.GET_CHARGES_SUCCESS, ActionTypes.GET_CHARGES_FAIL, setShow);
     }, []);
+
+    //this is to check for changes in chargesLoading variable
+    useEffect(() => {
+        if(!chargesLoading) {
+            fetchcharges(show, setNotify, ActionTypes.GET_CHARGES_SUCCESS, ActionTypes.GET_CHARGES_FAIL, setShow);
+        }
+    }, [chargesLoading]);
 
     useEffect(() => {
         if(allcharges !== undefined)
@@ -146,7 +153,7 @@ const Chargesarea = (props) => {
                                                     <label htmlFor="exampleCountry" ><span className="text-danger"></span>.</label>
                                                     <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
                                                             <span className="text-success pl-2">
-                                                            <button className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg" disabled={isLoading} onClick={refreshPage}>Reset</button>
+                                                            <button className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg" onClick={refreshPage}>Reset</button>
                                                             </span>
                                                     </div>
                                                 </div>
@@ -204,8 +211,8 @@ const Chargesarea = (props) => {
                 </div>
             </div>
         
-            <EditChargesModal item={item} setNotify={setNotify} show={showEdit} handleEdit={handleEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} />
-            <DeleteChargeModal item={item} setNotify={setNotify} show={showDelete} handleDelete={handleDelete} setShow={setShowDelete} handleShowDelete={handleShowDelete} />
+            <EditChargesModal item={item} setNotify={setNotify} show={showEdit} handleEdit={handleEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} chargesLoading={chargesLoading} setChargesLoading={setChargesLoading}/>
+            <DeleteChargeModal item={item} setNotify={setNotify} show={showDelete} handleDelete={handleDelete} setShow={setShowDelete} handleShowDelete={handleShowDelete} chargesLoading={chargesLoading} setChargesLoading={setChargesLoading}/>
         </>
 
     )

@@ -25,11 +25,9 @@ import { EditAction } from '../../redux/actions/editaction';
 
     const processRateType = (type) => {
         if(type === 0)
-            return 'Solo Rate';
+            return 'Live Rate';
         else if(type === 1)
-            return 'Mega Rate';
-        else if(type === 2)
-            return 'Deposit';
+            return 'Transaction Rate';
     }
 
     useEffect(() => {
@@ -62,8 +60,8 @@ import { EditAction } from '../../redux/actions/editaction';
                                     }}>
                                     <option> Select Rate Type </option>
                                     <option selected="selected" value={item.rateType}>{processRateType(item.rateType)}</option>
-                                    <option value="0">Solo Rate</option>
-                                    <option value="1">Mega Rate</option>
+                                    <option value="0">Live Rate</option>
+                                    <option value="1">Transaction Rate</option>
                                 </select>
                             </div>
                             

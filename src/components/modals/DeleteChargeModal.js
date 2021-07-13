@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import { ShowLoading } from '../../redux/actions/authaction';
 import { connect } from 'react-redux';
 import ActionTypes from "../../redux/actiontype/ActionTypes"
 import Modal from 'react-bootstrap/Modal'
@@ -7,11 +6,12 @@ import Button from 'react-bootstrap/Button'
 import { DeleteAction } from '../../redux/actions/deleteaction';
 
     const DeleteChargeModal = (props) => {
-    const { deletecharge, isLoading, setNotify, show, setShow, item, handleShowDelete } = props;
+    const { deletecharge, setNotify, show, setShow, item, handleShowDelete, chargesLoading, setChargesLoading } = props;
     
     const handleSubmit = e => {
         e.preventDefault();
-        deletecharge(item.id, setNotify, ActionTypes.DELETE_CHARGES_SUCCESS, ActionTypes.DELETE_CHARGES_FAIL, setShow);
+        setChargesLoading(true);
+        deletecharge(item.id, setNotify, ActionTypes.DELETE_CHARGES_SUCCESS, ActionTypes.DELETE_CHARGES_FAIL, setShow, setChargesLoading);
     };
 
     useEffect(() => {
@@ -45,7 +45,7 @@ import { DeleteAction } from '../../redux/actions/deleteaction';
             <Button variant="secondary" onClick={handleShowDelete}>
                 No
             </Button>
-            <Button variant="danger" disabled={isLoading} onClick={handleSubmit} >Yes</Button>
+            <Button variant="danger" disabled={chargesLoading} onClick={handleSubmit}>Yes</Button>
             </Modal.Footer>
             </Modal>
             
@@ -54,15 +54,13 @@ import { DeleteAction } from '../../redux/actions/deleteaction';
 
 const mapStateToProps = (state) => {
     return {
-        isLoading: state.loadingstate.isLoading,
     }
   }
   
   const mapDispatchToProps = (dispatch) => {
     return {
-            deletecharge: (chargeid, setNotify, successactiontype, failureactiontype, setShow) => {
-                dispatch(ShowLoading(chargeid));
-                dispatch(DeleteAction(chargeid, setNotify, successactiontype, failureactiontype, setShow)
+            deletecharge: (chargeid, setNotify, successactiontype, failureactiontype, setShow, setChargesLoading) => {
+                dispatch(DeleteAction(chargeid, setNotify, successactiontype, failureactiontype, setShow, setChargesLoading)
             );
         },
     }

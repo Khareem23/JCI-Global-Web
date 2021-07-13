@@ -1,45 +1,102 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Notification from './Notification';
 import { connect } from 'react-redux';
-import { LogOutAuthAction } from '../redux/actions/authaction';
+import { FetchAllCountry, LogOutAuthAction } from '../redux/actions/authaction';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import ChangePasswordModal from './modals/ChangePasswordModal';
+import ChangePinModal from './modals/ChangePinModal';
+import UpdateProfileModal from './modals/UpdateProfileModal';
+import ActionTypes from '../redux/actiontype/ActionTypes';
+import { GetSingleObjectAction } from '../redux/actions/getsoaction';
+import UpdateBankAccountModal from './modals/UpdateBankAccountModal';
+import { GetAction } from '../redux/actions/getaction';
 
 
 const AppHeader = (props) => {
-// export default function AppHeader(props) {
-
-    const { notify, setNotify, authstate, logoutuser, changepassword, profileupdate, changepin, bankaccountupdate} = props;
+    const { 
+        notify, 
+        setNotify, 
+        authstate, 
+        logoutuser, 
+        fetchallcountry, 
+        fetchprofiledetails, 
+        userprofilestate, 
+        fetchalluserreceivers, 
+        alluserreceivers, 
+        fetchhistory,
+        allcustomertransactions
+    } = props;
     const history = useHistory();
-    // console.log(authstate)
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPin, setShowPin] = useState(false);
+    const [showProfile, setShowProfile] = useState(false);
+    const [showacctupdate, setShowAcctUpdate] = useState(false);
+
+    const [userprofile, setUserProfile] = useState({});
+
+    const handleShowPassword = () => {
+        setShowPassword(!showPassword);
+    }
+
+    const handleShowPin = () => {
+        setShowPin(!showPin);
+    }
+
+    const handleShowProfile = () => {
+        setShowProfile(!showProfile);
+    }
+
+    const handleShowAccountUpdate = () => {
+        setShowAcctUpdate(!showacctupdate);
+    }
     
     const handleLogout = e => {
         e.preventDefault();
         logoutuser(history);
     };
 
-
-    // const handleLogout = e => {
-    //     console.log('cover')
-    //     e.preventDefault();
-    //     logoutuser(history);
-    // };
-
     const handleChangePassword = e => {
         e.preventDefault();
+        setShowPassword(true);
     };
 
     const handleProfileUpdate = e => {
         e.preventDefault();
+        setShowProfile(true);
     };
 
     const handleChangePin = e => {
         e.preventDefault();
-    };
-    const handleBankAccountUpdate = e => {
-        e.preventDefault();
+        setShowPin(true);
     };
 
+    const handleBankAccountUpdate = e => {
+        e.preventDefault();
+        setShowAcctUpdate(true);
+    };
+
+    const handleBankAccountCreate = e => {
+        e.preventDefault();
+        
+    };
+
+    useEffect(() => {
+        fetchallcountry(setNotify);
+        let customerId = authstate.nameid;
+        fetchprofiledetails(customerId, setNotify, ActionTypes.FETCH_USER_PROFILE_SUCCESS, ActionTypes.FETCH_USER_PROFILE_FAIL, setShowPassword);
+        fetchalluserreceivers(showPassword, setNotify, ActionTypes.GET_USER_RECEIVERS_SUCCESS, ActionTypes.GET_USER_RECEIVERS_FAIL, setShowPassword);
+        fetchhistory(showPassword, setNotify, ActionTypes.FETCH_CUSTOMER_TRANSACTION_SUCCESS, ActionTypes.FETCH_CUSTOMER_TRANSACTION_FAIL, setShowPassword);
+    }, [])
+
+    
+
+    useEffect(() => {
+        if(userprofilestate) {
+            let firstobject = userprofilestate[0];
+            setUserProfile(firstobject);
+        }
+    }, [userprofilestate]);
 
     return (
         <div className="app-header header-shadow">
@@ -149,6 +206,7 @@ const AppHeader = (props) => {
 
                 </div>
                 <div className="header-btn-lg pr-0">
+                
                     <div className="widget-content p-0">
                     <div className="widget-content-wrapper">
                     <div className="widget-content-left">
@@ -184,33 +242,45 @@ const AppHeader = (props) => {
                                 <ul className="nav flex-column">
                                 <li className="nav-item-header nav-item">Activity</li>
                                 <li className="nav-item">
-                                    <a href="javascript:void(0);" className="nav-link"><span style={{color: '#d92550', fontWeight: 'bold'}}>My Transactions</span>
-                                    <div className="ml-auto badge badge-pill badge-info">8</div>
-                                    </a>
+                                    <Link to="/transactionhistory" className="nav-link"><span style={{color: '#d92550', fontWeight: 'bold'}}>My Transactions</span>
+                                    <div className="ml-auto badge badge-pill badge-info">{allcustomertransactions?.length}</div>
+                                    </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <a href="javascript:void(0);" className="nav-link"> <span style={{color: '#d92550', fontWeight: 'bold'}}>My Beneficiaries</span>
-                                    <div className="ml-auto badge badge-pill badge-info">5</div>
-                                    </a>
+                                <Link to="/beneficiaries" className="nav-link"> <span style={{color: '#d92550', fontWeight: 'bold'}}>My Beneficiaries</span>
+                                    <div className="ml-auto badge badge-pill badge-info">{alluserreceivers.length}</div>
+                                    </Link>
                                 </li>
                                                                
                                 <li className="nav-item-header nav-item">My Account
                                 </li>
                                 <li className="nav-item">
-                                    <a href="javascript:void(0);" className="nav-link" onClick={handleChangePassword}><span style={{color: '#d92550', fontWeight: 'bold'}}>Change Password</span></a>
+                                    <Link onClick={handleChangePassword} className="nav-link"><span style={{color: '#d92550', fontWeight: 'bold'}}>Change Password</span></Link>
+                                    
                                 </li>
                                 <li className="nav-item">
-                                    <a href="javascript:void(0);" className="nav-link" onClick={handleChangePin}><span style={{color: '#d92550', fontWeight: 'bold'}}>Change PIN</span></a>
+                                    <Link onClick={handleChangePin} className="nav-link"><span style={{color: '#d92550', fontWeight: 'bold'}}>Change PIN</span></Link>
                                 </li>
                                 <li className="nav-item">
-                                    <a href="javascript:void(0);" className="nav-link" onClick={handleProfileUpdate}><span style={{color: '#d92550', fontWeight: 'bold'}}>Update Profile</span></a>
+                                <Link onClick={handleProfileUpdate} className="nav-link"><span style={{color: '#d92550', fontWeight: 'bold'}}>Update Profile</span></Link>
                                 </li>
-                                <li className="nav-item">
-                                    <a href="javascript:void(0);" className="nav-link" onClick={handleBankAccountUpdate}><span style={{color: '#d92550', fontWeight: 'bold'}}>Update Bank Account</span></a>
-                                </li> 
+                                
+                                {(() => {
+                                    if(userprofile.customerBankAccount !== null)
+                                    {
+                                        return  <li className="nav-item">
+                                                    <Link onClick={handleBankAccountUpdate} className="nav-link"><span style={{color: '#d92550', fontWeight: 'bold'}}>Update Bank Account</span></Link>
+                                                </li>
+                                    } else {
+                                        return  <li className="nav-item">
+                                                    <Link onClick={handleBankAccountCreate} className="nav-link"><span style={{color: '#d92550', fontWeight: 'bold'}}>Add Bank Account</span></Link>
+                                                </li>
+                                    }
+                                })()}
+
                                 <li className="nav-item">
                                     <a href="javascript:void(0);" className="nav-link"><span style={{color: '#d92550', fontWeight: 'bold'}}>Settings</span>
-                                    <div className="ml-auto badge badge-danger">New</div>
+                                    <div className="ml-auto badge badge-danger">Coming Soon</div>
                                     </a>
                                 </li>
                                 </ul>
@@ -230,6 +300,10 @@ const AppHeader = (props) => {
             </div>
         </div>
 
+        <ChangePasswordModal setNotify={setNotify} show={showPassword} setShowPassword={setShowPassword} handleShowPassword={handleShowPassword} />
+        <ChangePinModal setNotify={setNotify} show={showPin} setShowPin={setShowPin} handleShowPin={handleShowPin} />
+        <UpdateProfileModal setNotify={setNotify} show={showProfile} setShowProfile={setShowProfile} handleShowProfile={handleShowProfile} />
+        <UpdateBankAccountModal setNotify={setNotify} show={showacctupdate} setShowAcctUpdate={setShowAcctUpdate} handleShowAccountUpdate={handleShowAccountUpdate} />
         </div>
     )
 }
@@ -238,30 +312,30 @@ const AppHeader = (props) => {
 const mapStateToProps = (state) => {
     return {
         authstate: state.authstate.authstate,
-        
+        allcountriesstate: state.allcountriesstate.allcountriesstate,
+        userprofilestate: state.userprofilestate.userprofilestate,
+        alluserreceivers: state.alluserreceivers.alluserreceivers,
+        allcustomertransactions: state.allcustomertransactions.allcustomertransactions,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         logoutuser: (history) => {
-            // dispatch(ShowLoading(""));
             dispatch(LogOutAuthAction(history));
         },
-        changepassword: (passwordetails) => {
-            
+        fetchallcountry: (setNotify) => {
+            dispatch(FetchAllCountry(setNotify));
         },
-        profileupdate: (profiledetails) => {
-            
+        fetchprofiledetails: (customerId, setNotify, successactiontype, failureactiontype, setShow) => {                
+            dispatch(GetSingleObjectAction(customerId, setNotify, successactiontype, failureactiontype, setShow));
         },
-        changepin: (pinetails) => {
-            
+        fetchalluserreceivers: (show, setNotify, successaction, failaction, setShow) => {
+            dispatch(GetAction(show, setNotify, successaction, failaction, setShow));
         },
-        bankaccountupdate: (bankaccountdetails) => {
-            
-        },
-        
-
+        fetchhistory: (show, setNotify, successactiontype, failureactiontype, setShow) => {                
+            dispatch(GetAction(show, setNotify, successactiontype, failureactiontype, setShow)
+        )},
     }
 }
 

@@ -5,7 +5,7 @@ import ActionTypes from "../redux/actiontype/ActionTypes"
 
 const Transactionhistoryarea = (props) => {
 
-    const { isLoading, setNotify, show, handleShow, setShow, fetchhistory, allcustomertransactions } = props;
+    const { setNotify, show, setShow, fetchhistory, allcustomertransactions } = props;
     const [transactions, setTransactions] = useState({});
 
     useEffect(() => {

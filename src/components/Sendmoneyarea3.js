@@ -58,7 +58,6 @@ const Sendmoneyarea = (props) => {
 
     useEffect(() => {
         if(transactionstate) {
-            console.log(JSON.stringify(transactionstate));
         }
         
     }, [transactionstate]);
@@ -95,7 +94,6 @@ const Sendmoneyarea = (props) => {
 
     useEffect(() => {
         if(allbanks) {
-            console.log(allbanks);
         }
     }, [allbanks]);
 
@@ -113,16 +111,10 @@ const Sendmoneyarea = (props) => {
         let corresBankName = "";
         let corresBankIBAN = "";
         let customerId = authstate.nameid;
-        setBeneficiarydetails({...beneficiarydetails, ...{ accountCurrency, corresBankCountry, corresBankName, corresBankIBAN, customerId } });
-       
-        // const receieveCountry = cout.substring(0, cout.length - 10);
-        // console.log(receieveCountry);
-       
-        
+        setBeneficiarydetails({...beneficiarydetails, ...{ accountCurrency, corresBankCountry, corresBankName, corresBankIBAN, customerId }});
     }
 
     const handlereturncountry = (cout) => {
-        console.log(cout.substring(cout.length - 3, cout.length));
         const country = cout.substring(cout.length - 3, cout.length);
         setBeneficiarydetails({...beneficiarydetails, ...{ country } });
     }

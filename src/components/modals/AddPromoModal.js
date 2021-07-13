@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import { ShowLoading } from '../../redux/actions/authaction';
 import { CreateAction } from '../../redux/actions/createaction';
 import { connect } from 'react-redux';
 import ActionTypes from "../../redux/actiontype/ActionTypes"
@@ -7,12 +6,13 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
     const AddPromoModal = (props) => {
-    const { createpromo, isLoading, setNotify, show, handleShow, setShow } = props;
+    const { createpromo, setNotify, show, handleShow, setShow, addPromoLoading, setAddPromoLoading } = props;
     const [promodetails, setPromodetails] = useState({});
 
     const handleSubmit = e => {
         e.preventDefault();
-        createpromo(promodetails, setNotify, ActionTypes.ADD_PROMO_SUCCESS, ActionTypes.ADD_PROMO_FAIL, handleShow, setShow);
+        setAddPromoLoading(true);
+        createpromo(promodetails, setNotify, ActionTypes.ADD_PROMO_SUCCESS, ActionTypes.ADD_PROMO_FAIL, setShow, setAddPromoLoading);
     };
 
     useEffect(() => {
@@ -101,7 +101,7 @@ import Button from 'react-bootstrap/Button'
             <Button variant="secondary" onClick={handleShow}>
                 Close
             </Button>
-            <Button variant="danger" onClick={handleSubmit} disabled={isLoading} >Add Promo</Button>
+            <Button variant="danger" onClick={handleSubmit} disabled={addPromoLoading} >Add Promo</Button>
             </Modal.Footer>
             </Modal>
             
@@ -116,9 +116,8 @@ const mapStateToProps = (state) => {
   
   const mapDispatchToProps = (dispatch) => {
     return {
-            createpromo: (promodetails, setNotify, successactiontype, failureactiontype, setShow) => {
-                dispatch(ShowLoading(promodetails));
-                dispatch(CreateAction(promodetails, setNotify, successactiontype, failureactiontype, setShow)
+            createpromo: (promodetails, setNotify, successactiontype, failureactiontype, setShow, setAddPromoLoading) => {
+                dispatch(CreateAction(promodetails, setNotify, successactiontype, failureactiontype, setShow, setAddPromoLoading)
             );
         },
     }

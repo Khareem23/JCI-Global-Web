@@ -19,6 +19,7 @@ export default function Charges() {
         setShow(!show);
     }
 
+    const [chargesLoading, setChargesLoading] = useState(false);
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
             <AppHeader notify={notify} setNotify={setNotify}/>
@@ -29,7 +30,7 @@ export default function Charges() {
                 <div className="app-main__outer">
                     <div className="app-main__inner">                        
 
-                        <Chargesarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow} />
+                        <Chargesarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow} chargesLoading={chargesLoading} setChargesLoading={setChargesLoading}/>
 
                         <Footer/>
                     
@@ -37,7 +38,7 @@ export default function Charges() {
                 </div>        
             </div>
             <div className="app-drawer-overlay d-none animated fadeIn" />
-            <AddChargesModal notify={notify} setNotify={setNotify} show={show}  handleShow={handleShow} setShow={setShow} />
+            <AddChargesModal notify={notify} setNotify={setNotify} show={show}  handleShow={handleShow} setShow={setShow} chargesLoading={chargesLoading} setChargesLoading={setChargesLoading}/>
         </div>
         
     )

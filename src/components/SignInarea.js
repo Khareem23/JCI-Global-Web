@@ -31,7 +31,7 @@ const SignInarea = (props) => {
                   <div className="app-logo" />
                   <h4>
                     <h2>Welcome back.</h2>
-                    <span>Sign in <span className="text-success">to access</span> your account</span>
+                    <span>Sign in <span className="text-danger">to access</span> your account</span>
                   </h4>
                   <div>
                     <form >
@@ -73,12 +73,12 @@ const SignInarea = (props) => {
                       </div>
                       <div className="mt-3 position-relative form-check">
                         <input name="check" id="exampleCheck" type="checkbox" className="form-check-input" />
-                        <label htmlFor="exampleCheck" className="form-check-label">Remember this Device.</label>
+                        <label htmlFor="exampleCheck" className="form-check-label text-danger">Remember this Device.</label>
                       </div>
                       <div className="mt-4 d-flex align-items-center">
                         <h5 className="mb-0">New User?</h5>
                         <h5 className="ml-auto">
-                            <Link to="/register#step-1" className="text-primary btn-wide">Sign Up</Link>
+                            <Link to="/register#step-1" className="text-danger btn-wide">Sign Up</Link>
                         </h5>
                       </div>
                     </form>

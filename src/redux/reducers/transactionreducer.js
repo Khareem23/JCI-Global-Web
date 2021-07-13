@@ -8,7 +8,8 @@ const allsendingcurrencystate = {};
 const allcustomertransactions = [
 ]
 
-
+const alltransactions = [
+]
 
 const getAllReceivingCurrency = () => {
     const receieving = localStorage.getItem("allreceivingcurrencystate");
@@ -55,8 +56,26 @@ const getCustomerTransactions = () => {
     }
 };
 
+const getAllTransactions = () => {
+    const trans = localStorage.getItem("alltransactions");
+    try {
+        if(trans != null)
+        {
+            const authobj = JSON.parse(trans)
+            return authobj;
+        } else {
+            return alltransactions;
+        }
+    } catch (error) {
+        return alltransactions;
+    }
+};
+
+
+
 const existingreceivingCurrency = getAllReceivingCurrency();
 const existingsendingCurrency = getAllSendingCurrency();
+const existingAllTransactions = getAllTransactions();
 
 const allreceivingcurrencyreducer = (state = existingreceivingCurrency, action) => {
     switch (action.type) {
@@ -110,6 +129,19 @@ const transactionreducer = (state = transactionstate, action) => {
     }
 };
 
+const alltransactionreducer = (state = existingAllTransactions, action) => {
+    switch (action.type) {
+        case ActionTypes.FETCH_ALL_TRANSACTION_SUCCESS:
+            const allTransactions = {
+                alltransactions: action.payload,
+            };
+            localStorage.setItem("alltransactions", JSON.stringify(allTransactions)); 
+            return allTransactions;
+        default:
+            return state;
+    }
+};
+
 const customertransactionsreducer = (state = getCustomerTransactions, action) => {
     switch (action.type) {
         case ActionTypes.FETCH_CUSTOMER_TRANSACTION_SUCCESS:
@@ -123,4 +155,4 @@ const customertransactionsreducer = (state = getCustomerTransactions, action) =>
     }
 };
 
-export { transactionreducer, conversionreducer, allreceivingcurrencyreducer, allsendingcurrencyreducer, customertransactionsreducer };
+export { transactionreducer, conversionreducer, allreceivingcurrencyreducer, allsendingcurrencyreducer, customertransactionsreducer, alltransactionreducer };

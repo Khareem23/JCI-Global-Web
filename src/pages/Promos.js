@@ -20,6 +20,8 @@ export default function Promos() {
         setShow(!show);
     }
 
+    const [addPromoLoading, setAddPromoLoading] = useState(false);
+
 
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
@@ -31,7 +33,7 @@ export default function Promos() {
                 <div className="app-main__outer">
                     <div className="app-main__inner">                        
                     
-                        <Promoarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow}/>
+                        <Promoarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow} addPromoLoading={addPromoLoading} setAddPromoLoading={setAddPromoLoading}/>
 
                         <Footer/>
                     
@@ -39,7 +41,7 @@ export default function Promos() {
                 </div>        
             </div>
             <div className="app-drawer-overlay d-none animated fadeIn" />
-            <AddPromoModal notify={notify} setNotify={setNotify} show={show}  handleShow={handleShow} setShow={setShow} />
+            <AddPromoModal notify={notify} setNotify={setNotify} show={show}  handleShow={handleShow} setShow={setShow} addPromoLoading={addPromoLoading} setAddPromoLoading={setAddPromoLoading} />
         </div>
         
     )

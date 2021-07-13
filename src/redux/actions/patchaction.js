@@ -51,7 +51,6 @@ import ActionTypes from "../actiontype/ActionTypes"
                     }
                 } else {
                     const errormsg = "Kindly Supply all required information";
-                    // dispatch({type: ActionTypes.LOADING_HIDE, payload: stateobject}); 
                     setIsLoading(false);
                     dispatch({type: failureactiontype, payload: errormsg });
                     setNotify({
@@ -64,7 +63,6 @@ import ActionTypes from "../actiontype/ActionTypes"
                 
             } catch(error) {
                 let errorarray = error.response.data.errors;
-                console.log(error.response)
                 let errmsg = "";
                 if(error.response.data.errors) {
                     let list = prepareError(errorarray);
@@ -90,7 +88,6 @@ import ActionTypes from "../actiontype/ActionTypes"
         let errorlist = "";
         if(array) {
             for (const [key, value] of Object.entries(array)) {
-                console.log(value[0]);
                 errorlist += value[0] + '\n'
             }
         } 

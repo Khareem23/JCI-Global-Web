@@ -5,7 +5,6 @@ import Iframe from 'react-iframe'
 
 const Paymentpage = (props) => {
     const location = useLocation();
-    console.log(JSON.stringify(location.state.url));
     let uurl = null;
     if(document.getElementById('myId')) {
         uurl = document.getElementById('myId')
@@ -14,13 +13,12 @@ const Paymentpage = (props) => {
     useEffect(() => {
         // alert(document.getElementById('iframeId').src);
         //if(uurl?.src) {
-            console.log(window.location.href)
+            // console.log(window.location.href)
         //}
         
     }, [uurl]);
 
     const ojina = () => {
-        console.log(window.location.href)
     }
     
     return (

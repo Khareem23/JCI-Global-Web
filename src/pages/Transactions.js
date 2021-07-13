@@ -12,6 +12,14 @@ export default function Transactions() {
         type: '',
     })
 
+    const [show, setShow] = useState(false);
+
+    const handleShow = () => {
+        setShow(!show);
+    }
+
+    const [transactionLoading, setTransactionLoading] = useState(false);
+
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
             <AppHeader notify={notify} setNotify={setNotify}/>
@@ -22,7 +30,7 @@ export default function Transactions() {
                 <div className="app-main__outer">
                     <div className="app-main__inner">                        
 
-                        <Transactionsarea/>
+                        <Transactionsarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow} transactionLoading={transactionLoading} setTransactionLoading={setTransactionLoading}/>
 
                         <Footer/>
                     

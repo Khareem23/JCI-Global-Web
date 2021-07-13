@@ -20,18 +20,17 @@ import ActionTypes from "../actiontype/ActionTypes"
                         response = await mainAxios.post('/Transactions/convertSendingToReceiving', stateobject);
                     } else if(successactiontype === ActionTypes.ADD_TRANSACTION_SUCCESS) {
                         response = await mainAxios.post('/Transactions/createTransaction', stateobject);
-                    } 
+                    } else if(successactiontype === ActionTypes.DELETE_PROMO_SUCCESS) {
+                        response = await mainAxios.delete('/Promo/DeletePromo/' + stateobject);
+                    } else if(successactiontype === ActionTypes.DELETE_RATE_SUCCESS) {                        
+                        response = await mainAxios.delete('/Rates/deleteRate/' + stateobject);
+                    }
 
                     const { data } = response.data;
                     const message = response.data.message;
                     const status = response.data.status;
-                    console.log(status);
                     if(status === "success")
                     {
-                        console.log(successactiontype);
-
-                        // dispatch({type: ActionTypes.LOADING_HIDE, payload: message}); 
-                        // 
                         dispatch({type: successactiontype, payload: data});
                         setNotify({
                             isOpen: true,
@@ -41,7 +40,6 @@ import ActionTypes from "../actiontype/ActionTypes"
                         setShow(false);
                         setIsLoading(false);
                     } else {                        
-                            // dispatch({type: ActionTypes.LOADING_HIDE, payload: message}); 
                             setIsLoading(false);
                             dispatch({type: failureactiontype, payload: message });
                             setNotify({
@@ -53,7 +51,6 @@ import ActionTypes from "../actiontype/ActionTypes"
                     }
                 } else {
                     const errormsg = "Kindly Supply all required information";
-                    // dispatch({type: ActionTypes.LOADING_HIDE, payload: stateobject}); 
                     setIsLoading(false);
                     dispatch({type: failureactiontype, payload: errormsg });
                     setNotify({
@@ -68,18 +65,13 @@ import ActionTypes from "../actiontype/ActionTypes"
                 setIsLoading(false);
                 if(error.response) {
                     let errmsg = "";
-                    console.log(JSON.stringify(error.response.data.data))
                     if(error.response.data.data !== null) {
                         let errorarray = error.response.data.errors;
                         let list = prepareError(errorarray);
                         errmsg = list;
-                        console.log('data 1');
                     } else if(error.response.data.message) {
                         errmsg = error.response.data.message;
-                        console.log('data 2');
                     }
-                    console.log(JSON.stringify(error.response))
-                    // dispatch({type: ActionTypes.LOADING_HIDE, payload: errmsg}); 
                    
                     dispatch({type: failureactiontype, payload: errmsg });
                     setNotify({
@@ -97,7 +89,6 @@ import ActionTypes from "../actiontype/ActionTypes"
         let errorlist = "";
         if(array) {
             for (const [key, value] of Object.entries(array)) {
-                console.log(value[0]);
                 errorlist += value[0] + '\n'
             }
         } 

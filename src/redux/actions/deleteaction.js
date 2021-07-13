@@ -11,11 +11,7 @@ import ActionTypes from "../actiontype/ActionTypes"
                     if(successactiontype === ActionTypes.DELETE_CHARGES_SUCCESS)
                     {
                         response = await mainAxios.delete('/Charges/DeleteCharges/' + stateobject);
-                    } else if(successactiontype === ActionTypes.DELETE_PROMO_SUCCESS) {
-                        response = await mainAxios.delete('/Promo/DeletePromo/' + stateobject);
-                    }  else if(successactiontype === ActionTypes.DELETE_RATE_SUCCESS) {                        
-                        response = await mainAxios.delete('/Rates/deleteRate/' + stateobject);
-                    } else if(successactiontype === ActionTypes.DELETE_BANK_SUCCESS) {
+                    }  else if(successactiontype === ActionTypes.DELETE_BANK_SUCCESS) {
                         response = await mainAxios.delete('/JCIBank/DeleteBankAccount/' + stateobject);
                     }
                     const { data } = response.data;

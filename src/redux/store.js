@@ -12,7 +12,7 @@ import { fetchuserrecieversreducer, fetchchargesreducer, downloadreceiptreducer,
 import { fetchpromosreducer, fetchpurposesreducer } from "./reducers/fetchpromosreducer";
 import fetchratesreducer from "./reducers/fetchratesreducer";
 import { fetchbanksreducer, fetchbusinessbanksreducer } from "./reducers/fetchbanksreducer";
-import { transactionreducer, conversionreducer, allreceivingcurrencyreducer, allsendingcurrencyreducer, customertransactionsreducer } from "./reducers/transactionreducer"; 
+import { transactionreducer, conversionreducer, allreceivingcurrencyreducer, allsendingcurrencyreducer, customertransactionsreducer, alltransactionreducer } from "./reducers/transactionreducer"; 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; 
 
@@ -41,6 +41,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
         allcustomertransactions: customertransactionsreducer,
         redirecturl: addpaymentreducer,
         userprofilestate: userprofilereducer,
+        alltransactions: alltransactionreducer,
     })
 
     const store = createStore(

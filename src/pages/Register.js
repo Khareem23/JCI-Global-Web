@@ -7,6 +7,7 @@ import { UserRegisterAuthAction, ShowLoading, FetchAllCountry, FetchStatesByCoun
 import { usePasswordValidation } from "../utils/passwordValidation";
 import CountryAutocomplete from '../components/CountryAutocomplete';
 import StatesAutocomplete from '../components/StatesAutocomplete';
+import Notification from '../components/Notification';
 
 
 const Register = (props) => {
@@ -49,12 +50,28 @@ const Register = (props) => {
     secondPassword: password.secondPassword,
     });
 
+    const [notify, setNotify] = useState({
+        isOpen: false,
+        message: '',
+        type: '',
+    })
+
+
     const handlereturnvalue = (cout) => {
+        // const _statecode = cout.substring(cout.length - 3, cout.length);
+        // fetchallcountrystates(setError, _statecode)
+        const countryOfNationality = cout.substring(0, cout.length - 5);
+        setUserdetails({...userdetails, ...{ countryOfNationality } });
+    }
+
+    const handlereturnvalue2 = (cout) => {
         const _statecode = cout.substring(cout.length - 3, cout.length);
         fetchallcountrystates(setError, _statecode)
+        const countryofResidence = cout.substring(0, cout.length - 5);
         const country = cout.substring(0, cout.length - 5);
-        setUserdetails({...userdetails, ...{ country } });
+        setUserdetails({...userdetails, ...{ countryofResidence, country } });
     }
+
     const handlereturnvalueforstates = (state) => {
         setUserdetails({...userdetails, ...{ state } });
     }
@@ -79,7 +96,7 @@ const Register = (props) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        registeruser(userdetails, history, setError);
+        registeruser(userdetails, history, setError, setNotify);
     };
     
     const setFirst = (event) => {
@@ -118,7 +135,7 @@ const Register = (props) => {
             <div className="app-container app-theme-white body-tabs-shadow">
                 <div className="app-container">
                     <div className="h-100">
-                        
+                    <Notification notify={notify} setNotify={setNotify} />
                         <div className="h-100 no-gutters row">
                             
                                 <div className="h-100 d-md-flex d-sm-block bg-white justify-content-center align-items-center col-md-12 col-lg-12" >
@@ -264,14 +281,26 @@ const Register = (props) => {
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div className="col-md-6">
-                                                                                    <div className="position-relative form-group">
-                                                                                    <label htmlFor="exampleCountry" ><span className="text-danger"></span>Country</label>
+                                                                                <div className="col-md-6 position-relative form-group">
+                                                                                    <div className="form-row">
+                                                                                        <div className="col-md-6"> 
+                                                                                            <div className="position-relative form-group">
+                                                                                            <label htmlFor="exampleCountry" ><span className="text-danger"></span>Country Of Nationality</label>
 
                                                                                             <CountryAutocomplete placeholder="Select a Country"
                                                                                                 suggestions={allcountriesstate} passChildData={handlereturnvalue}
                                                                                             />
-                                                                                            
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="col-md-6"> 
+                                                                                            <div className="position-relative form-group">
+                                                                                            <label htmlFor="exampleCountry" ><span className="text-danger"></span>Country of Residence</label>
+
+                                                                                            <CountryAutocomplete placeholder="Select a Country"
+                                                                                                suggestions={allcountriesstate} passChildData={handlereturnvalue2}
+                                                                                            />
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                                 </div>
@@ -513,9 +542,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        registeruser: (userdetails, history, setError) => {
+        registeruser: (userdetails, history, setError, setNotify) => {
             dispatch(ShowLoading(userdetails));
-            dispatch(UserRegisterAuthAction(userdetails, history, setError));
+            dispatch(UserRegisterAuthAction(userdetails, history, setError, setNotify));
         },
         fetchallcountry: (setError) => {
             dispatch(FetchAllCountry(setError));

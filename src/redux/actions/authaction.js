@@ -21,7 +21,7 @@ import ActionTypes from "../actiontype/ActionTypes"
         }
     }
 
-    const UserRegisterAuthAction = (userstate, history, setError) => {
+    const UserRegisterAuthAction = (userstate, history, setError, setNotify) => {
         return async (dispatch) => {
             try {
                 if(userstate.email !== undefined && userstate.firstName !== undefined && userstate.phoneNumber !== undefined && userstate.lastName !== undefined 
@@ -34,38 +34,63 @@ import ActionTypes from "../actiontype/ActionTypes"
                     const { data } = response.data.data;
                     if(response.data.status === "success")
                     {
+                        setNotify({
+                            isOpen: true,
+                            message: response.data.message,
+                            type: 'success',
+                        });
+
                         dispatch({type: ActionTypes.LOADING_HIDE, payload: userstate}); 
                         dispatch({type: ActionTypes.USER_REGISTRATION_SUCCESS, payload: data});
                         history.push("/dashboard");
                     } else {
-                        
+                            setNotify({
+                                isOpen: true,
+                                message: data.message,
+                                type: 'error',
+                            });
                             dispatch({type: ActionTypes.LOADING_HIDE, payload: userstate}); 
                             dispatch({type: ActionTypes.USER_REGISTRATION_FAIL, payload: data.message });
-                            setError({
-                                hasError: true,
-                                message: data.message,
-                            })
+                            // setError({
+                            //     hasError: true,
+                            //     message: data.message,
+                            // })
 
                     }
                 } else {
                     dispatch({type: ActionTypes.LOADING_HIDE, payload: userstate}); 
-                    setError({
-                        hasError: true,
-                        message: "Kindly fill all empty spaces",
-                    })
+                    // setError({
+                    //     hasError: true,
+                    //     message: "Kindly fill all empty spaces",
+                    // })
+                    setNotify({
+                        isOpen: true,
+                        message: 'Kindly fill all empty spaces',
+                        type: 'error',
+                    });
                 }
                 
             } catch(error) {
+                let errmsg = "";
+                if(error.response.data.errors) {
+                    let errorarray = error.response.data.errors;
+                    let list = prepareError(errorarray);
+                    errmsg = list;
+                } else if(error.response.data.message) {
+                    errmsg = error.response.data.message;
+                }
+
                 dispatch({type: ActionTypes.LOADING_HIDE, payload: userstate}); 
-                const errmsg = error.message +  "  Error occurred while registering..."
+                //const errmsg = error.message +  "  Error occurred while registering..."
                 dispatch({
                     type: ActionTypes.USER_REGISTRATION_FAIL, 
                     payload: errmsg,
                 });
-                setError({
-                    hasError: true,
-                    message: errmsg,
-                })
+                setNotify({
+                    isOpen: true,
+                    message: 'Kindly fill all empty spaces',
+                    type: 'error',
+                });
             }
         }
     }
@@ -154,7 +179,6 @@ import ActionTypes from "../actiontype/ActionTypes"
         let errorlist = "";
         if(array) {
             for (const [key, value] of Object.entries(array)) {
-                console.log(value[0]);
                 errorlist += value[0] + '\n'
             }
         } 

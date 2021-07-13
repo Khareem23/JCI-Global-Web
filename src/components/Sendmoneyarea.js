@@ -59,13 +59,11 @@ const Sendmoneyarea = (props) => {
     
     useEffect(() => {
         if(paymenttype) { 
-            console.log(paymenttype)
         }
     }, [paymenttype]);
 
     useEffect(() => {
         if(screen) {
-            console.log(JSON.stringify(screen));
         }
         
     }, [screen]);
@@ -110,7 +108,6 @@ const Sendmoneyarea = (props) => {
     }
 
     useEffect(() => {
-        console.log(redirecturl);
         if(redirecturl) {
             //window.location.href = redirecturl; 
             //<div dangerouslySetInnerHTML={{ __html: "<iframe src={"+ redirecturl +"} sandbox='' />"}} />;
@@ -136,7 +133,6 @@ const Sendmoneyarea = (props) => {
 
     useEffect(() => {
         if(transactionstate) {
-            console.log(JSON.stringify(transactionstate));
         }
         
     }, [transactionstate]);
@@ -162,8 +158,6 @@ const Sendmoneyarea = (props) => {
     useEffect(() => {
         const search = location.search;
         const params = new URLSearchParams(search);
-        console.log(alluserreceivers)
-        // console.log(params)
         fetchallcountry(setNotify);
         fetchaccounts(show, setNotify, ActionTypes.GET_BANK_SUCCESS, ActionTypes.GET_BANK_FAIL, setShow);
         fetchallpurpose(show, setNotify, ActionTypes.FETCH_PURPOSE_SUCCESS, ActionTypes.FETCH_PURPOSE_FAIL, setShow);
@@ -182,23 +176,17 @@ const Sendmoneyarea = (props) => {
         const receieveCountry = cout.substring(cout.length - 8, cout.length - 5);
         let country = receieveCountry;
         setTransferDetails({...transferdetails, ...{ receieveCountry } });
-        const accountCurrency = cout.substring(cout.length - 3, cout.length);
-        console.log(accountCurrency);
-        
+        const accountCurrency = cout.substring(cout.length - 3, cout.length);        
         if(accountCurrency === 'NGN')
         {
-            console.log('is nigeria')
             setIsNigeria(true);
         }
-        console.log('not nigeria ' + isNigeria)
         let customerId = authstate.nameid;
         setBeneficiarydetails({...beneficiarydetails, ...{ accountCurrency, customerId, country } });
     }
 
     const handlereturncountry = (cout) => {
-        console.log(cout.substring(cout.length - 3, cout.length));
         const corresBankCountry = cout.substring(cout.length - 3, cout.length);
-        console.log(corresBankCountry);
         setBeneficiarydetails({...beneficiarydetails, ...{ corresBankCountry } });
     }
 
@@ -225,7 +213,6 @@ const Sendmoneyarea = (props) => {
                     createbeneficiary(beneficiarydetails, transactionstate.id, setIsLoading, setNotify, ActionTypes.ADD_NEW_BENEFICIARY_SUCCESS, ActionTypes.ADD_NEW_BENEFICIARY_FAIL, setShow);
                 }
             } else{
-                console.log(beneficiarydetails.country)
             }
     };
 
@@ -235,7 +222,6 @@ const Sendmoneyarea = (props) => {
     }
     
     const downloadReceipt = () => {
-        console.log('popo')
         setBeneficiaryLoading(true);
         downloadreceiptaction(transactionstate.id, setNotify, ActionTypes.ADD_EXISTING_BENEFICIARY_SUCCESS, ActionTypes.ADD_EXISTING_BENEFICIARY_FAIL, setShow);
     }

@@ -3,7 +3,6 @@ import ActionTypes from "../actiontype/ActionTypes"
 
 
     const GetAction = (stateobject, setNotify, successactiontype, failureactiontype, setShow) => {
-        console.log('araoluwa')
         return async (dispatch) => {
             try {
                 if(stateobject !== undefined)
@@ -11,7 +10,7 @@ import ActionTypes from "../actiontype/ActionTypes"
                     let response = "";
                     if(successactiontype === ActionTypes.GET_CHARGES_SUCCESS)
                     {
-                        response = await mainAxios.get('/Charges/GetAllCharges', stateobject);
+                        response = await mainAxios.get('/Charges/GetAllCharges');
                     } else if(successactiontype === ActionTypes.GET_PROMOS_SUCCESS) {
                         response = await mainAxios.get('/Promo/getAllPromos', stateobject);
                     }  else if(successactiontype === ActionTypes.GET_RATE_SUCCESS) {
@@ -28,8 +27,9 @@ import ActionTypes from "../actiontype/ActionTypes"
                         response = await mainAxios.get('/Transactions/downloadTransactionReceipt/' + stateobject);
                     } else if(successactiontype === ActionTypes.FETCH_CUSTOMER_TRANSACTION_SUCCESS) {
                         response = await mainAxios.get('/Transactions/getCustomertransactions/');
+                    } else if(successactiontype === ActionTypes.FETCH_ALL_TRANSACTION_SUCCESS) {
+                        response = await mainAxios.get('/Transactions/getAllTransactions/');
                     } 
-                    
                     const { data } = response.data;
                     const message = response.data.message;
                     const status = response.data.status;

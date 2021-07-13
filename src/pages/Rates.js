@@ -18,6 +18,8 @@ export default function Rates() {
         setShow(!show);
     }
 
+    const [ratesLoading, setRatesLoading] = useState(false);
+
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
             <AppHeader notify={notify} setNotify={setNotify} />
@@ -28,7 +30,7 @@ export default function Rates() {
                 <div className="app-main__outer">
                     <div className="app-main__inner">                        
 
-                        <Ratesarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow}/>
+                        <Ratesarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow} ratesLoading={ratesLoading} setRatesLoading={setRatesLoading}/>
 
                         <Footer/>
                     
@@ -36,7 +38,7 @@ export default function Rates() {
                 </div>        
             </div>
             <div className="app-drawer-overlay d-none animated fadeIn" />
-            <AddRatesModal notify={notify} setNotify={setNotify} show={show}  handleShow={handleShow} setShow={setShow} />
+            <AddRatesModal notify={notify} setNotify={setNotify} show={show}  handleShow={handleShow} setShow={setShow} ratesLoading={ratesLoading} setRatesLoading={setRatesLoading} />
         </div>
         
     )

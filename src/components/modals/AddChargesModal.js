@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import { ShowLoading } from '../../redux/actions/authaction';
 import { CreateAction } from '../../redux/actions/createaction';
 import { connect } from 'react-redux';
 import ActionTypes from "../../redux/actiontype/ActionTypes"
@@ -7,13 +6,14 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
     const AddChargesModal = (props) => {
-    const { createcharge, isLoading, setNotify, show, handleShow, setShow } = props;
+    const { createcharge, setNotify, show, handleShow, setShow, chargesLoading, setChargesLoading } = props;
     const [chargedetails, setChargedetails] = useState({});
     
 
     const handleSubmit = e => {
         e.preventDefault();
-        createcharge(chargedetails, setNotify, ActionTypes.ADD_CHARGES_SUCCESS, ActionTypes.ADD_CHARGES_FAIL, handleShow, setShow);
+        setChargesLoading(true);
+        createcharge(chargedetails, setNotify, ActionTypes.ADD_CHARGES_SUCCESS, ActionTypes.ADD_CHARGES_FAIL, setShow, setChargesLoading);
     };
 
     useEffect(() => {
@@ -53,7 +53,7 @@ import Button from 'react-bootstrap/Button'
                             
                             <div className="col-md-6"> 
                                 <label htmlFor="providerRateCharges">Provider Rate Charge</label>
-                                <input name="providerRateCharges" id="providerRateCharges" placeholder="Provider Rate Charges" type="text" className="form-control" 
+                                <input name="providerRateCharges" id="providerRateCharges" placeholder="Provider Rate Charges" type="number" className="form-control" 
                                     onChange={(event) => {
                                     const providerRateCharges = event.target.value;
                                       setChargedetails({...chargedetails, ...{ providerRateCharges } }); 
@@ -67,7 +67,7 @@ import Button from 'react-bootstrap/Button'
                             <div className="col-md-6"> 
                                 <label htmlFor="providerFlatCharges">Flat Charges</label>
                                 
-                                <input name="providerFlatCharges" id="providerFlatCharges" placeholder="Provider Flat Charges" type="text" className="form-control" 
+                                <input name="providerFlatCharges" id="providerFlatCharges" placeholder="Provider Flat Charges" type="number" className="form-control" 
                                     onChange={(event) => {
                                     const providerFlatCharges = event.target.value;
                                       setChargedetails({...chargedetails, ...{ providerFlatCharges } }); 
@@ -76,7 +76,7 @@ import Button from 'react-bootstrap/Button'
                             
                             <div className="col-md-6"> 
                                 <label htmlFor="transactionCharges">Transaction Charges</label>
-                                <input name="transactionCharges" id="transactionCharges" placeholder="Transaction Charges" type="text" className="form-control" 
+                                <input name="transactionCharges" id="transactionCharges" placeholder="Transaction Charges" type="number" className="form-control" 
                                     onChange={(event) => {
                                     const transactionCharges = event.target.value;
                                       setChargedetails({...chargedetails, ...{ transactionCharges } }); 
@@ -91,7 +91,7 @@ import Button from 'react-bootstrap/Button'
             <Button variant="secondary" onClick={handleShow}>
                 Close
             </Button>
-            <Button variant="danger" onClick={handleSubmit} disabled={isLoading} >Add Charges</Button>
+            <Button variant="danger" onClick={handleSubmit} disabled={chargesLoading}>Add Charge</Button>
             </Modal.Footer>
             </Modal>
             
@@ -100,15 +100,13 @@ import Button from 'react-bootstrap/Button'
 
 const mapStateToProps = (state) => {
     return {
-        isLoading: state.loadingstate.isLoading,
     }
   }
   
   const mapDispatchToProps = (dispatch) => {
     return {
-            createcharge: (chargedetails, setNotify, successactiontype, failureactiontype, setShow) => {
-                dispatch(ShowLoading(chargedetails));
-                dispatch(CreateAction(chargedetails, setNotify, successactiontype, failureactiontype, setShow)
+            createcharge: (chargedetails, setNotify, successactiontype, failureactiontype, setShow, setChargesLoading) => {
+                dispatch(CreateAction(chargedetails, setNotify, successactiontype, failureactiontype, setShow, setChargesLoading)
             );
         },
     }

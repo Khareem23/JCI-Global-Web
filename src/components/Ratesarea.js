@@ -7,11 +7,19 @@ import DeleteRateModal from './modals/DeleteRateModal';
 import EditRateModal from './modals/EditRateModal';
 
 const Ratesarea = (props) => {
-    const { isLoading, setNotify, show, handleShow, setShow, fetchrates, allrates } = props;
+    const { setNotify, show, handleShow, setShow, fetchrates, allrates, ratesLoading, setRatesLoading} = props;
     const [rates, setRates] = useState({});
+
     useEffect(() => {
         fetchrates(show, setNotify, ActionTypes.GET_RATE_SUCCESS, ActionTypes.GET_RATE_FAIL, setShow);
     }, []);
+
+    //this is to check for changes in ratesLoading variable
+    useEffect(() => {
+        if(!ratesLoading) {
+            fetchrates(show, setNotify, ActionTypes.GET_RATE_SUCCESS, ActionTypes.GET_RATE_FAIL, setShow);
+        }
+    }, [ratesLoading]);
 
     useEffect(() => {
         if(allrates !== undefined)
@@ -136,7 +144,6 @@ const Ratesarea = (props) => {
                         <thead style={{textAlign: 'center'}}>
                             <tr>
                             <th>Rate Type</th>
-                            {/* <th>Currency Desc</th> */}
                             <th>Send Currency Code</th>
                             <th>Receive Currency Code</th>
                             <th>USD Display</th>
@@ -156,7 +163,6 @@ const Ratesarea = (props) => {
                         <tfoot style={{textAlign: 'center'}}>
                             <tr>
                             <th>Rate Type</th>
-                            {/* <th>Currency Desc</th> */}
                             <th>Send Currency Code</th>
                             <th>Receive Currency Code</th>
                             <th>USD Display</th>
@@ -171,8 +177,8 @@ const Ratesarea = (props) => {
                 </div>
             </div>
         
-            <EditRateModal item={item} setNotify={setNotify} show={showEdit} handleEdit={handleEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} />
-            <DeleteRateModal item={item} setNotify={setNotify} show={showDelete} handleDelete={handleDelete} setShow={setShowDelete} handleShowDelete={handleShowDelete} />
+            <EditRateModal item={item} setNotify={setNotify} show={showEdit} handleEdit={handleEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} ratesLoading={ratesLoading} setRatesLoading={setRatesLoading}/>
+            <DeleteRateModal item={item} setNotify={setNotify} show={showDelete} handleDelete={handleDelete} setShow={setShowDelete} handleShowDelete={handleShowDelete} ratesLoading={ratesLoading} setRatesLoading={setRatesLoading}/>
         </>
 
     )
