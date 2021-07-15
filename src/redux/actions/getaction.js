@@ -29,7 +29,10 @@ import ActionTypes from "../actiontype/ActionTypes"
                         response = await mainAxios.get('/Transactions/getCustomertransactions/');
                     } else if(successactiontype === ActionTypes.FETCH_ALL_TRANSACTION_SUCCESS) {
                         response = await mainAxios.get('/Transactions/getAllTransactions/');
+                    } else if(successactiontype === ActionTypes.FETCH_ALL_USERS_SUCCESS) {
+                        response = await mainAxios.get('/Users/getAllCustomers/');
                     } 
+                    
                     const { data } = response.data;
                     const message = response.data.message;
                     const status = response.data.status;

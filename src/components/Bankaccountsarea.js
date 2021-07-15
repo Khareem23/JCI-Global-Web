@@ -9,7 +9,7 @@ import DeleteAccountModal from './modals/DeleteAccountModal';
 import EditAccountModal from './modals/EditAccountModal';
 
 const Bankaccountsarea = (props) => {
-    const { isLoading, setNotify, show, handleShow, setShow, fetchaccounts, fetchsingleaccount, allbanks, fetchallcountry,allcountriesstate } = props;
+    const { isLoading, setNotify, show, handleShow, setShow, fetchaccounts, fetchsingleaccount, allbanks, fetchallcountry,allcountriesstate, addaccountLoading, setAddAccountLoading } = props;
     const [banks, setBanks] = useState({});
     const [bcode, setBcode] = useState({});
 
@@ -24,6 +24,13 @@ const Bankaccountsarea = (props) => {
             setBanks(allbanks);
         }
     }, [allbanks]);
+
+    useEffect(() => {
+        if(!addaccountLoading) {
+            fetchaccounts(show, setNotify, ActionTypes.GET_BANK_SUCCESS, ActionTypes.GET_BANK_FAIL, setShow);
+        }
+    }, [addaccountLoading]);
+    
 
     const [showEdit, setShowEdit] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
@@ -58,7 +65,7 @@ const Bankaccountsarea = (props) => {
                         <td>{item.bankName}</td>
                         <td>{item.bankAccountNumber}</td>
                         <td>{item.bankSwiftCode}</td>
-                        <td><button className="mb-2 mr-2 btn btn-warning" onClick={() => handleEdit(item)}>Edit</button></td>
+                        {/* <td><button className="mb-2 mr-2 btn btn-warning" onClick={() => handleEdit(item)}>Edit</button></td> */}
                         <td><button className="mb-2 mr-2 btn btn-danger" onClick={() => handleDelete(item)}>Delete</button></td>
                     </tr>
                 </>
@@ -73,7 +80,6 @@ const Bankaccountsarea = (props) => {
     }
 
     function refreshPage() {
-        // fetchsingleaccount(bcode, setNotify, ActionTypes.GET_BUSINESS_BANK_SUCCESS, ActionTypes.GET_BUSINESS_BANK_FAIL, setShow);
         fetchaccounts(show, setNotify, ActionTypes.GET_BANK_SUCCESS, ActionTypes.GET_BANK_FAIL, setShow);
     }
 
@@ -159,7 +165,7 @@ const Bankaccountsarea = (props) => {
                                 <th>Bank Name</th>
                                 <th>Bank Account Name</th>
                                 <th>Bank Swift Code</th>
-                                <th>Edit</th>
+                                {/* <th>Edit</th> */}
                                 <th>Delete</th>
                             </tr>
                         </thead>
@@ -176,7 +182,7 @@ const Bankaccountsarea = (props) => {
                                 <th>Bank Name</th>
                                 <th>Bank Account Name</th>
                                 <th>Bank Swift Code</th>
-                                <th>Edit</th>
+                                {/* <th>Edit</th> */}
                                 <th>Delete</th>
                             </tr>
                         </tfoot>
@@ -184,8 +190,8 @@ const Bankaccountsarea = (props) => {
                 </div>
             </div>
         
-            <EditAccountModal item={item} setNotify={setNotify} show={showEdit} handleEdit={handleEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} />
-            <DeleteAccountModal item={item} setNotify={setNotify} show={showDelete} handleDelete={handleDelete} setShow={setShowDelete} handleShowDelete={handleShowDelete} />
+            {/* <EditAccountModal item={item} setNotify={setNotify} show={showEdit} handleEdit={handleEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} /> */}
+            <DeleteAccountModal item={item} setNotify={setNotify} show={showDelete} handleDelete={handleDelete} setShow={setShowDelete} handleShowDelete={handleShowDelete} addaccountLoading={addaccountLoading} setAddAccountLoading={setAddAccountLoading} />
         </>
 
     )

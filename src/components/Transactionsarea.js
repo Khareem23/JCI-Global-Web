@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { GetAction } from '../redux/actions/getaction';
 import ActionTypes from '../redux/actiontype/ActionTypes';
+import generatePDF from '../utils/reportGenerator';
 
 
 const Transactionsarea = (props) => {
     const { setNotify, show, setShow, fetchalltransactions, alltransactions, transactionLoading, setTransactionLoading} = props;
     const [transactions, setTransactions] = useState({});
+    const [exportdetails, setExportdetails] = useState({});
 
     useEffect(() => {
         fetchalltransactions(show, setNotify, ActionTypes.FETCH_ALL_TRANSACTION_SUCCESS, ActionTypes.FETCH_ALL_TRANSACTION_FAIL, setShow);
@@ -14,11 +16,27 @@ const Transactionsarea = (props) => {
 
     useEffect(() => {
         if(alltransactions !== undefined)
-        {
-            
+        {            
             setTransactions(alltransactions);
         }
     }, [alltransactions]);
+
+    const returndate = (nmdate) => {
+        let sdate = new Date(nmdate);
+        return sdate
+    }
+
+    const exportReport = () => {
+        const typetransactions = transactions !== undefined ? transactions.filter(
+            ({transactionType }) => transactionType !== null ? transactionType.toLowerCase().indexOf(exportdetails.transType.toLowerCase()) > -1 : {}) : []
+
+        const finalfil = typetransactions.filter(
+            user => (returndate(user.dateSent.substring(0, 10)).getTime()) >= returndate(exportdetails.startDate.toLowerCase()).getTime() && (returndate(user.dateSent.substring(0, 10)).getTime()) <=  returndate(exportdetails.endDate.toLowerCase()).getTime()
+        )
+
+        //calling the generate report function
+        generatePDF(finalfil);
+    }
 
     const renderrow = (items) => {
         if(Object.keys(items).length !== 0) {
@@ -177,6 +195,12 @@ const Transactionsarea = (props) => {
                                         id="gender" 
                                         name="gender"
                                         className="mb-2 form-control"
+
+                                        onChange={(event) => {
+                                            const transType = event.target.value;
+                                            setExportdetails({...exportdetails, ...{ transType } }); 
+                                        }}
+
                                         >
                                         <option value="">Transaction Type</option>
                                         <option value="Buy">Buy</option>
@@ -186,13 +210,23 @@ const Transactionsarea = (props) => {
                                 <div className="col-md-2"> 
                                     <label htmlfor="exampleDate">From Date</label>
                                     <div className="position-relative form-group">
-                                        <input name="date" id="exampleDate" placeholder="date placeholder" type="date" className="form-control" />
+                                        <input name="startDate"  id="exampleDate" placeholder="date placeholder" type="date" className="form-control"
+                                            onChange={(event) => {
+                                                const startDate = event.target.value;
+                                                setExportdetails({...exportdetails, ...{ startDate } }); 
+                                            }}
+                                        />
                                     </div>
                                 </div>
                                 <div className="col-md-2"> 
                                     <label htmlfor="exampleDate">To Date</label>
                                     <div className="position-relative form-group">
-                                        <input name="date" id="exampleDate" placeholder="date placeholder" type="date" className="form-control" />
+                                        <input name="endDate" id="exampleDate" placeholder="date placeholder" type="date" className="form-control" 
+                                            onChange={(event) => {
+                                                const endDate = event.target.value;
+                                                setExportdetails({...exportdetails, ...{ endDate } }); 
+                                            }}
+                                        />
                                     </div>
 
                                    
@@ -203,7 +237,7 @@ const Transactionsarea = (props) => {
                                     <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
                                                 <span className="text-success pl-2">
                                                     {/* <button className="btn-wide mb-2 mr-2 btn btn-shadow btn-danger btn-lg">Export Report</button> */}
-                                                    <button className="btn-wide btn btn-danger" style={{marginTop: 12}}>Export Report</button>
+                                                    <button className="btn-wide btn btn-danger" style={{marginTop: 12}} onClick={() => { exportReport() }}>Export Report</button>
                                                     </span>
                                             </div>                                   
                                 </div>
@@ -234,14 +268,6 @@ const Transactionsarea = (props) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
-                            </tr> */}
                             {
                                 renderrow(transactions)
                             }

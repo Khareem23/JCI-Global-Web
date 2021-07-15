@@ -11,9 +11,7 @@ import ActionTypes from "../actiontype/ActionTypes"
                     if(successactiontype === ActionTypes.DELETE_CHARGES_SUCCESS)
                     {
                         response = await mainAxios.delete('/Charges/DeleteCharges/' + stateobject);
-                    }  else if(successactiontype === ActionTypes.DELETE_BANK_SUCCESS) {
-                        response = await mainAxios.delete('/JCIBank/DeleteBankAccount/' + stateobject);
-                    }
+                    }  
                     const { data } = response.data;
                     const message = response.data.message;
                     const status = response.data.status;

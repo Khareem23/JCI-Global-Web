@@ -4,7 +4,7 @@ import { ShowLoading } from '../redux/actions/authaction';
 import { GetAction } from '../redux/actions/getaction';
 import ActionTypes from "../redux/actiontype/ActionTypes"
 import DeleteRateModal from './modals/DeleteRateModal';
-import EditRateModal from './modals/EditRateModal';
+import ViewRateModal from './modals/ViewRateModal';
 
 const Ratesarea = (props) => {
     const { setNotify, show, handleShow, setShow, fetchrates, allrates, ratesLoading, setRatesLoading} = props;
@@ -50,6 +50,18 @@ const Ratesarea = (props) => {
         setItem(item);
     }
 
+    function viewRate (item) {
+        setShowEdit(true);
+        setItem(item);
+    }
+
+    const processRateType = (type) => {
+        if(type === 0)
+            return 'Live Rate';
+        else if(type === 1)
+            return 'Transaction Rate';
+    }
+
     const processStatus = (type) => {
         if(type === true)
             return 'Active';
@@ -71,14 +83,15 @@ const Ratesarea = (props) => {
                 return (
                 <>
                     <tr>
-                        <td>{item.rateType}</td>
+                        <td>{processRateType(item.rateType)}</td>
                         <td>{item.sendCurrencyCode}</td>
                         <td>{item.receiveCurrencyCode}</td>
                         <td>{processDisplay(item.isUSDDisplay)}</td>
                         <td>{item.amount}</td>
                         <td>{item.amount_NgaUSD}</td>
                         <td>{processStatus(item.isActive)}</td>
-                        <td><button className="mb-2 mr-2 btn btn-warning" onClick={() => handleEdit(item)}>Edit</button></td>
+                        <td> <button className="btn-wide btn btn-danger" onClick={() => { viewRate(item)}}>View</button> </td>
+                        {/* <td><button className="mb-2 mr-2 btn btn-warning" onClick={() => handleEdit(item)}>Edit</button></td> */}
                         <td><button className="mb-2 mr-2 btn btn-danger" onClick={() => handleDelete(item)}>Delete</button></td>
                     </tr>
                 </>
@@ -150,8 +163,7 @@ const Ratesarea = (props) => {
                             <th>Amount (#)</th>
                             <th>USD ($)</th>
                             <th>Status</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th colspan={3}>User Action</th>
                             </tr>
                         </thead>
                         <tbody style={{textAlign: 'center'}}>
@@ -169,15 +181,14 @@ const Ratesarea = (props) => {
                             <th>Amount (#)</th>
                             <th>USD ($)</th>
                             <th>Status</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th colspan={3}>User Action</th>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
-        
-            <EditRateModal item={item} setNotify={setNotify} show={showEdit} handleEdit={handleEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} ratesLoading={ratesLoading} setRatesLoading={setRatesLoading}/>
+            <ViewRateModal item={item} show={showEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} />
+            {/* <EditRateModal item={item} setNotify={setNotify} show={showEdit} handleEdit={handleEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} ratesLoading={ratesLoading} setRatesLoading={setRatesLoading}/> */}
             <DeleteRateModal item={item} setNotify={setNotify} show={showDelete} handleDelete={handleDelete} setShow={setShowDelete} handleShowDelete={handleShowDelete} ratesLoading={ratesLoading} setRatesLoading={setRatesLoading}/>
         </>
 

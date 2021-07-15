@@ -1,17 +1,17 @@
 import React, {useEffect} from 'react';
-import { ShowLoading } from '../../redux/actions/authaction';
 import { connect } from 'react-redux';
 import ActionTypes from "../../redux/actiontype/ActionTypes"
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
-import { DeleteAction } from '../../redux/actions/deleteaction';
+import { CreateAction } from '../../redux/actions/createaction';
 
     const DeleteAccountModal = (props) => {
-    const { deleteaccount, isLoading, setNotify, show, setShow, item, handleShowDelete } = props;
+    const { deleteaccount, setNotify, show, setShow, item, handleShowDelete, addaccountLoading, setAddAccountLoading } = props;
     
     const handleSubmit = e => {
         e.preventDefault();
-        deleteaccount(item.id, setNotify, ActionTypes.DELETE_BANK_SUCCESS, ActionTypes.DELETE_BANK_FAIL, setShow);
+        setAddAccountLoading(true);
+        deleteaccount(item.id, setNotify, ActionTypes.DELETE_BANK_SUCCESS, ActionTypes.DELETE_BANK_FAIL, setShow, setAddAccountLoading);
     };
 
     useEffect(() => {
@@ -43,7 +43,7 @@ import { DeleteAction } from '../../redux/actions/deleteaction';
             <Button variant="secondary" onClick={handleShowDelete}>
                 No
             </Button>
-            <Button variant="danger" disabled={isLoading} onClick={handleSubmit} >Yes</Button>
+            <Button variant="danger" disabled={addaccountLoading} onClick={handleSubmit} >Yes</Button>
             </Modal.Footer>
             </Modal>
             
@@ -58,9 +58,9 @@ const mapStateToProps = (state) => {
   
   const mapDispatchToProps = (dispatch) => {
     return {
-            deleteaccount: (accountid, setNotify, successactiontype, failureactiontype, setShow) => {
-                dispatch(ShowLoading(accountid));
-                dispatch(DeleteAction(accountid, setNotify, successactiontype, failureactiontype, setShow)
+            deleteaccount: (accountid, setNotify, successactiontype, failureactiontype, setShow, setAddAccountLoading) => {
+                // dispatch(ShowLoading(accountid));
+                dispatch(CreateAction(accountid, setNotify, successactiontype, failureactiontype, setShow, setAddAccountLoading)
             );
         },
     }

@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import { ShowLoading } from '../../redux/actions/authaction';
 import { CreateAction } from '../../redux/actions/createaction';
 import { connect } from 'react-redux';
 import ActionTypes from "../../redux/actiontype/ActionTypes"
@@ -8,21 +7,21 @@ import Button from 'react-bootstrap/Button'
 import CountryAutocomplete from '../CountryAutocomplete';
 
     const AddAccountsModal = (props) => {
-    const {createaccount, isLoading, setNotify, show, handleShow, setShow, allcountriesstate } = props;
+    const {createaccount, setNotify, show, handleShow, setShow, allcountriesstate, addaccountLoading, setAddAccountLoading } = props;
     const [accountdetails, setAccountdetails] = useState({});
     
     const handleSubmit = e => {
         e.preventDefault();
-        createaccount(accountdetails, setNotify, ActionTypes.ADD_BANK_SUCCESS, ActionTypes.ADD_BANK_FAIL, handleShow, setShow);
+        createaccount(accountdetails, setNotify, ActionTypes.ADD_BANK_SUCCESS, ActionTypes.ADD_BANK_FAIL, setShow, setAddAccountLoading);
     };
 
     useEffect(() => {
     }, [show]);
 
     const handlereturnvalue = (cout) => {
-        const _statecode = cout.substring(cout.length - 3, cout.length);
+        const countryCode = cout.substring(cout.length - 3, cout.length);
         const country = cout.substring(0, cout.length - 5);
-        setAccountdetails({...accountdetails, ...{ _statecode, country } });
+        setAccountdetails({...accountdetails, ...{ countryCode, country } });
     }
 
     return (
@@ -100,7 +99,7 @@ import CountryAutocomplete from '../CountryAutocomplete';
             <Button variant="secondary" onClick={handleShow}>
                 Close
             </Button>
-            <Button variant="danger" onClick={handleSubmit} disabled={isLoading} >Add Account</Button>
+            <Button variant="danger" onClick={handleSubmit} disabled={addaccountLoading} >Add Account</Button>
             </Modal.Footer>
             </Modal>
             
@@ -116,10 +115,11 @@ const mapStateToProps = (state) => {
   
   const mapDispatchToProps = (dispatch) => {
     return {
-            createaccount: (accountdetails, setNotify, successactiontype, failureactiontype, setShow) => {
+            createaccount: (accountdetails, setNotify, successactiontype, failureactiontype, setShow, setAddAccountLoading) => {
                 if(accountdetails.accountName !== undefined && accountdetails.bankAccountNumber !== undefined && accountdetails.bankSwiftCode !== undefined && accountdetails.bankName !== undefined && accountdetails.country !== undefined) {
-                    dispatch(ShowLoading(accountdetails));
-                    dispatch(CreateAction(accountdetails, setNotify, successactiontype, failureactiontype, setShow));
+                    // dispatch(ShowLoading(accountdetails));
+                    setAddAccountLoading(true);
+                    dispatch(CreateAction(accountdetails, setNotify, successactiontype, failureactiontype, setShow, setAddAccountLoading));
                 } else {
                     alert("All fields are required!")
                 }

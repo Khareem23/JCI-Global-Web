@@ -6,6 +6,12 @@ const allpromos = [
 const allpurposestate = [
 ]
 
+const allusers = [
+]
+
+const austracreport = [
+]
+
 const getPromoState = () => {
     const auth = localStorage.getItem("allpromos");
     try {
@@ -20,6 +26,22 @@ const getPromoState = () => {
         return allpromos;
     }
 };
+
+const getAllUserState = () => {
+    const allus = localStorage.getItem("allusers");
+    try {
+        if(allus != null)
+        {
+            const authobj = JSON.parse(allus)
+            return authobj;
+        } else {
+            return allusers;
+        }
+    } catch (error) {
+        return allusers;
+    }
+};
+
 
 const getPaymentPurpose = () => {
     const allpurpose = localStorage.getItem("allpurpose");
@@ -38,6 +60,7 @@ const getPaymentPurpose = () => {
 
 const existingPromo = getPromoState();
 const existingPupose = getPaymentPurpose();
+const existingUsers = getAllUserState();
 
 const fetchpromosreducer = (state = existingPromo, action) => {
     switch (action.type) {
@@ -65,4 +88,29 @@ const fetchpurposesreducer = (state = existingPupose, action) => {
     }
 };
 
-export { fetchpromosreducer, fetchpurposesreducer };
+const fetchallusersreducer = (state = existingUsers, action) => {
+    switch (action.type) {
+        case ActionTypes.FETCH_ALL_USERS_SUCCESS:
+            const Fetchallusers = {
+                allusers: action.payload,
+            };
+            localStorage.setItem("allusers", JSON.stringify(Fetchallusers)); 
+            return Fetchallusers;
+        default:
+            return state;
+    }
+};
+
+const fetchaustracreportreducer = (state = austracreport, action) => {
+    switch (action.type) {
+        case ActionTypes.FETCH_AUSTRAC_SUCCESS:
+            const Fetchaustrac = {
+                austracreport: action.payload,
+            };
+            return Fetchaustrac;
+        default:
+            return state;
+    }
+};
+
+export { fetchpromosreducer, fetchpurposesreducer, fetchallusersreducer, fetchaustracreportreducer };

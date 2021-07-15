@@ -24,8 +24,14 @@ import ActionTypes from "../actiontype/ActionTypes"
                         response = await mainAxios.delete('/Promo/DeletePromo/' + stateobject);
                     } else if(successactiontype === ActionTypes.DELETE_RATE_SUCCESS) {                        
                         response = await mainAxios.delete('/Rates/deleteRate/' + stateobject);
+                    } else if(successactiontype === ActionTypes.FETCH_AUSTRAC_SUCCESS) {
+                        // console.log(stateobject.fromDateText);
+                        // console.log(stateobject.toDateText);
+                        response = await mainAxios.get('/Transactions/ExportAustracReportByDateRange/' + stateobject.fromDateText + "/" + stateobject.toDateText);
+                    } else if(successactiontype === ActionTypes.DELETE_BANK_SUCCESS) {
+                        response = await mainAxios.delete('/JCIBank/DeleteBankAccount/' + stateobject);
                     }
-
+                    
                     const { data } = response.data;
                     const message = response.data.message;
                     const status = response.data.status;

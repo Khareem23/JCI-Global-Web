@@ -12,6 +12,14 @@ export default function Users() {
         type: '',
     })
 
+    const [show, setShow] = useState(false);
+
+    const handleShow = () => {
+        setShow(!show);
+    }
+
+    const [usersLoading, setUsersLoading] = useState(false);
+
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
             <AppHeader notify={notify} setNotify={setNotify}/>
@@ -22,7 +30,7 @@ export default function Users() {
                 <div className="app-main__outer">
                     <div className="app-main__inner">
 
-                        <Usersarea/>
+                        <Usersarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow} usersLoading={usersLoading} setUsersLoading={setUsersLoading}/>
 
 
                         <Footer/>

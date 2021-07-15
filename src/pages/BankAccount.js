@@ -18,25 +18,25 @@ export default function BankAccount() {
         setShow(!show);
     }
 
+    const [addaccountLoading, setAddAccountLoading] = useState(false);
+
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
             <AppHeader notify={notify} setNotify={setNotify} />
-            <div className="app-main">
-            
+            <div className="app-main">            
                 <AppSidebar/>
-
                 <div className="app-main__outer">
                     <div className="app-main__inner">                        
 
-                        <Bankaccountsarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow}/>
+                        <Bankaccountsarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow} addaccountLoading={addaccountLoading} setAddAccountLoading={setAddAccountLoading}/>
 
                         <Footer/>
                     
                     </div>
                 </div>        
             </div>
-            <div className="app-drawer-overlay d-none animated fadeIn" />
-            <AddAccountsModal notify={notify} setNotify={setNotify} show={show}  handleShow={handleShow} setShow={setShow} />
+            <div className="app-drawer-overlay d-none animated fadeIn"/>
+            <AddAccountsModal notify={notify} setNotify={setNotify} show={show}  handleShow={handleShow} setShow={setShow} addaccountLoading={addaccountLoading} setAddAccountLoading={setAddAccountLoading}/>
         </div>
         
     )

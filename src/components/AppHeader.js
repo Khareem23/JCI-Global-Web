@@ -162,38 +162,97 @@ const AppHeader = (props) => {
                         </div>
                         </div>
                         <div className="grid-menu grid-menu-xl grid-menu-3col">
-                        <div className="no-gutters row">
-                            <div className="col-sm-6 col-xl-4">
-                            <Link to="/sendmoney" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
-                                <i className="pe-7s-cash icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3" /> Send Money
-                            </Link>
-                            </div>
-                            <div className="col-sm-6 col-xl-4">
-                            <Link to="/transactionhistory" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
-                                <i className="pe-7s-note2 icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"> </i>History
-                            </Link>
-                            </div>
-                            <div className="col-sm-6 col-xl-4">
-                            <Link to="/beneficiaries" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
-                                <i className="pe-7s-users icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"> </i> Benficiaries
-                            </Link>
-                            </div>
-                            <div className="col-sm-6 col-xl-4">
-                            <Link to="/myaccount" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
-                                <i className="pe-7s-user icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"> </i> My Accounts
-                            </Link>
-                            </div>
-                            <div className="col-sm-6 col-xl-4">
-                            <button className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
-                                <i className="pe-7s-config icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"/> Settings
-                            </button>
-                            </div>
-                            <div onClick={handleLogout} className="col-sm-6 col-xl-4">
-                            <Link onClick={handleLogout} className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
-                                <i className="pe-7s-back icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3" onClick={handleLogout}> </i> Log Out
-                            </Link>
-                            </div>
-                        </div>
+                            {(() => {
+                                if(authstate.role === "Customer")
+                                {
+                                    return <div className="no-gutters row">
+                                    <div className="col-sm-6 col-xl-4">
+                                    <Link to="/sendmoney" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                        <i className="pe-7s-cash icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3" /> Send Money
+                                    </Link>
+                                    </div>
+                                    <div className="col-sm-6 col-xl-4">
+                                    <Link to="/transactionhistory" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                        <i className="pe-7s-note2 icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"> </i>History
+                                    </Link>
+                                    </div>
+                                    <div className="col-sm-6 col-xl-4">
+                                    <Link to="/beneficiaries" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                        <i className="pe-7s-users icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"> </i> Benficiaries
+                                    </Link>
+                                    </div>
+                                    <div className="col-sm-6 col-xl-4">
+                                    <Link to="/myaccount" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                        <i className="pe-7s-user icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"> </i> My Accounts
+                                    </Link>
+                                    </div>
+                                    <div className="col-sm-6 col-xl-4">
+                                    <button className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                        <i className="pe-7s-config icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"/> Settings
+                                    </button>
+                                    </div>
+                                    <div onClick={handleLogout} className="col-sm-6 col-xl-4">
+                                    <Link onClick={handleLogout} className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                        <i className="pe-7s-back icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3" onClick={handleLogout}> </i> Log Out
+                                    </Link>
+                                    </div>
+                                </div>
+                                
+                                } else if(authstate.role === "Admin") {
+                                    return <div className="no-gutters row">
+                                    <div className="col-sm-6 col-xl-4">
+                                    <Link to="/dashboard" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                        <i className="pe-7s-home icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3" /> Dashboard
+                                    </Link>
+                                    </div>
+                                    <div className="col-sm-6 col-xl-4">
+                                    <Link to="/transactions" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                        <i className="pe-7s-cart icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"> </i>Transactions
+                                    </Link>
+                                    </div>
+                                    <div className="col-sm-6 col-xl-4">
+                                    <Link to="/users" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                        <i className="pe-7s-users icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"> </i> User & Verifications
+                                    </Link>
+                                    </div>
+                                    <div className="col-sm-6 col-xl-4">
+                                    <Link to="/charges" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                        <i className="pe-7s-helm icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"> </i>Charges Management
+                                    </Link>
+                                    </div>
+                                    <div className="col-sm-6 col-xl-4">
+                                    <Link to="/rates" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                        <i className="pe-7s-tools icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"/>Rates Management
+                                    </Link>
+                                    </div>
+
+                                    <div className="col-sm-6 col-xl-4">
+                                    <Link to="/promos" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                        <i className="pe-7s-target icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"/>Promo Management
+                                    </Link>
+                                    </div>
+
+                                    <div className="col-sm-6 col-xl-4">
+                                    <Link to="/accounts" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                        <i className="pe-7s-cash icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"/>Bank Accounts
+                                    </Link>
+                                    </div>
+
+                                    <div className="col-sm-6 col-xl-4">
+                                    <Link to="/ausreport" className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                        <i className="pe-7s-print icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3"/> Austrac Report
+                                    </Link>
+                                    </div>
+
+
+                                    <div onClick={handleLogout} className="col-sm-6 col-xl-4">
+                                    <Link onClick={handleLogout} className="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                        <i className="pe-7s-back icon-gradient bg-night-fade btn-icon-wrapper btn-icon-lg mb-3" onClick={handleLogout}> </i> Log Out
+                                    </Link>
+                                    </div>
+                                </div>
+                                }
+                            })()}
                         </div>
                         {/* <ul className="nav flex-column">
                         <li className="nav-item-divider nav-item" />
