@@ -9,14 +9,12 @@ const Austracreportarea = (props) => {
     const [austrac, setAustrac] = useState({});
 
     const handleSubmit = () => {
-        //console.log(austracdetails); 2021-06-10/2021-07-01 let sdate = new Date(nmdate); toDateText fromDateText
         let smo = {};
         smo.fromDateText = "01-01-2021";
         smo.toDateText = "14-07-2021";
         fetchaustracreport(smo, setNotify, ActionTypes.FETCH_AUSTRAC_SUCCESS, ActionTypes.FETCH_AUSTRAC_FAIL, setShow, setAustracLoading);
     }
 
-    
     useEffect(() => {
         if(austracreport !== undefined)
         {
@@ -136,14 +134,14 @@ const Austracreportarea = (props) => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            {/* <tr>
                             <td>Tiger Nixon</td>
                             <td>System Architect</td>
                             <td>Edinburgh</td>
                             <td>61</td>
                             <td>2011/04/25</td>
                             <td>$320,800</td>
-                            </tr>
+                            </tr> */}
                             
                         </tbody>
                         <tfoot>

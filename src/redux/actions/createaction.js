@@ -25,13 +25,22 @@ import ActionTypes from "../actiontype/ActionTypes"
                     } else if(successactiontype === ActionTypes.DELETE_RATE_SUCCESS) {                        
                         response = await mainAxios.delete('/Rates/deleteRate/' + stateobject);
                     } else if(successactiontype === ActionTypes.FETCH_AUSTRAC_SUCCESS) {
-                        // console.log(stateobject.fromDateText);
-                        // console.log(stateobject.toDateText);
                         response = await mainAxios.get('/Transactions/ExportAustracReportByDateRange/' + stateobject.fromDateText + "/" + stateobject.toDateText);
                     } else if(successactiontype === ActionTypes.DELETE_BANK_SUCCESS) {
                         response = await mainAxios.delete('/JCIBank/DeleteBankAccount/' + stateobject);
+                    } else if(successactiontype === ActionTypes.EDIT_USER_SUCCESS) {
+                        response = await mainAxios.put('/Users/updateCustomerByCustomer/', stateobject);
+                    } else if(successactiontype === ActionTypes.EDIT_TRANSACTION_SUCCESS) {
+                        response = await mainAxios.put('/Transactions/updateTransactionByAdmin/' + stateobject.id, stateobject);
+                    } else if(successactiontype === ActionTypes.EDIT_RATE_SUCCESS) {
+                        response = await mainAxios.put('/Rates/updateRate', stateobject);
+                    } else if(successactiontype === ActionTypes.EDIT_CHARGES_SUCCESS)
+                    {
+                        response = await mainAxios.put('/Charges/updateCharges/', stateobject);
                     }
                     
+                    //console.log(JSON.stringify(response));
+
                     const { data } = response.data;
                     const message = response.data.message;
                     const status = response.data.status;

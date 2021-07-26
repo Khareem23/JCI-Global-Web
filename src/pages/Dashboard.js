@@ -23,15 +23,6 @@ function Dashboard(props) {
     }
 
     const [dashboardLoading, setDashboardLoading] = useState(false);
-
-    // useEffect(() => {
-    //     setNotify({
-    //         isOpen: true,
-    //         message: authstate.message,
-    //         type: 'success',
-    //     });
-    // }, []);
-    
     
 
     return (

@@ -44,11 +44,11 @@ function App() {
             <Userdetails/>
           </Route>
 
-          <Route exact path='/transactions'>
+          <Route path='/transactions'>
             <Transactions/>
           </Route>
 
-          <Route exact path='/transactiondetails'>
+          <Route path='/transactiondetails'>
             <TransactionDetails/>
           </Route>
 

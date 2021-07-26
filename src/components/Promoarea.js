@@ -5,6 +5,8 @@ import { GetAction } from '../redux/actions/getaction';
 import ActionTypes from "../redux/actiontype/ActionTypes"
 import DeletePromoModal from './modals/DeletePromoModal';
 import EditPromoModal from './modals/EditPromoModal';
+import $ from 'jquery';
+import DataTable from 'datatables.net';
 
 const Promoarea = (props) => {
     const { setNotify, show, handleShow, setShow, fetchpromos, allpromos, addPromoLoading, setAddPromoLoading } = props;
@@ -13,6 +15,12 @@ const Promoarea = (props) => {
     useEffect(() => {
       fetchpromos(show, setNotify, ActionTypes.GET_PROMOS_SUCCESS, ActionTypes.GET_PROMOS_FAIL, setShow);
     }, []);
+
+    useEffect(()=>{
+        $(document).ready(function(){
+            $('#examtable').DataTable({responsive:!0})
+        })
+    },[])
 
     //this is to check for changes in addpromoloading variable
     useEffect(() => {
@@ -28,6 +36,7 @@ const Promoarea = (props) => {
             setPromos(allpromos);
         }
     }, [allpromos]);
+
 
     const [showEdit, setShowEdit] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
@@ -124,7 +133,7 @@ const Promoarea = (props) => {
 
             <div className="main-card mb-3 card">
                 <div className="card-body">
-                    <table style={{width: '100%'}} id="example" className="table table-hover table-striped table-bordered">
+                    <table style={{width: '100%'}} id="examtable" className="table table-hover table-striped table-bordered">
                         <thead style={{textAlign: 'center'}}>
                             <tr>
                             <th>Discount Code</th>
@@ -165,6 +174,7 @@ const Promoarea = (props) => {
 const mapStateToProps = (state) => {
     return {
         allpromos: state.allpromos.allpromos,
+        
     }
   }
   

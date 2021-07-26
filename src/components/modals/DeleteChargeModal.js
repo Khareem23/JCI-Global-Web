@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ActionTypes from "../../redux/actiontype/ActionTypes"
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
-import { DeleteAction } from '../../redux/actions/deleteaction';
+import { CreateAction } from '../../redux/actions/createaction';
 
     const DeleteChargeModal = (props) => {
     const { deletecharge, setNotify, show, setShow, item, handleShowDelete, chargesLoading, setChargesLoading } = props;
@@ -60,7 +60,7 @@ const mapStateToProps = (state) => {
   const mapDispatchToProps = (dispatch) => {
     return {
             deletecharge: (chargeid, setNotify, successactiontype, failureactiontype, setShow, setChargesLoading) => {
-                dispatch(DeleteAction(chargeid, setNotify, successactiontype, failureactiontype, setShow, setChargesLoading)
+                dispatch(CreateAction(chargeid, setNotify, successactiontype, failureactiontype, setShow, setChargesLoading)
             );
         },
     }

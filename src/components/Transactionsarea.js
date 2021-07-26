@@ -3,14 +3,30 @@ import { connect } from 'react-redux';
 import { GetAction } from '../redux/actions/getaction';
 import ActionTypes from '../redux/actiontype/ActionTypes';
 import generatePDF from '../utils/reportGenerator';
+import $ from 'jquery';
+import DataTable from 'datatables.net';
+import ViewTransactionModal from './modals/ViewTransactionModal';
+import EditTransactionModal from './modals/EditTransactionModal';
 
 
 const Transactionsarea = (props) => {
-    const { setNotify, show, setShow, fetchalltransactions, alltransactions, transactionLoading, setTransactionLoading} = props;
+    const { setNotify, show, setShow, fetchalltransactions, alltransactions} = props;
     const [transactions, setTransactions] = useState({});
     const [exportdetails, setExportdetails] = useState({});
+    const [item, setItem] = useState({});
+    const [showEdit, setShowEdit] = useState(false);
+    const [showView, setShowView] = useState(false);
+
+    const [editTransactionLoading, setEditTransactionLoading] = useState(false)
+    
+    useEffect(()=>{
+        $(document).ready(function(){
+            $('#examtable').DataTable({responsive:!0})
+        })
+    },[])
 
     useEffect(() => {
+        
         fetchalltransactions(show, setNotify, ActionTypes.FETCH_ALL_TRANSACTION_SUCCESS, ActionTypes.FETCH_ALL_TRANSACTION_FAIL, setShow);
     }, []);
 
@@ -38,6 +54,24 @@ const Transactionsarea = (props) => {
         generatePDF(finalfil);
     }
 
+    const handleShowEdit = () => {
+        setShowEdit(!showEdit);
+    }
+
+    const handleShowView = () => {
+        setShowView(!showView);
+    }
+
+    function viewUser (item) {
+        setShowView(true);
+        setItem(item);
+    }
+
+    function editUser (item) {
+        setShowEdit(true);
+        setItem(item);
+    }
+
     const renderrow = (items) => {
         if(Object.keys(items).length !== 0) {
             return items.map((item, i) => {
@@ -52,7 +86,8 @@ const Transactionsarea = (props) => {
                         <td>{item.payInMethod}</td>
                         <td>{item.transactionStatus}</td>
                         <td>{item.transactionType}</td>
-                        
+                        <td> <button className="btn-wide btn btn-danger" onClick={() => { viewUser(item)}}>View</button> </td>
+                        <td> <button className="btn-wide btn btn-danger" onClick={() => { editUser(item)}}>Edit</button> </td>
                     </tr>
                 </>
                 )
@@ -84,6 +119,7 @@ const Transactionsarea = (props) => {
                     </div>
                 </div>
             </div>
+
 
             <div className="col-md-6 col-xl-12">
                 <div className="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-danger">
@@ -175,7 +211,7 @@ const Transactionsarea = (props) => {
                             <div className="form-row">
                                 
                                
-                                <div className="col-md-3"> 
+                                {/* <div className="col-md-3"> 
                                     <label htmlFor="exampleGender">Currency List</label>
                                     <select type="select" 
                                         id="gender" 
@@ -186,10 +222,10 @@ const Transactionsarea = (props) => {
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
-                                </div>
+                                </div> */}
                                 
                                
-                                <div className="col-md-3"> 
+                                <div className="col-md-4"> 
                                     <label htmlFor="exampleGender">Transaction Type</label>
                                     <select type="select" 
                                         id="gender" 
@@ -207,7 +243,7 @@ const Transactionsarea = (props) => {
                                         <option value="Sell">Sell</option>
                                     </select>
                                 </div>
-                                <div className="col-md-2"> 
+                                <div className="col-md-3"> 
                                     <label htmlfor="exampleDate">From Date</label>
                                     <div className="position-relative form-group">
                                         <input name="startDate"  id="exampleDate" placeholder="date placeholder" type="date" className="form-control"
@@ -218,7 +254,7 @@ const Transactionsarea = (props) => {
                                         />
                                     </div>
                                 </div>
-                                <div className="col-md-2"> 
+                                <div className="col-md-3"> 
                                     <label htmlfor="exampleDate">To Date</label>
                                     <div className="position-relative form-group">
                                         <input name="endDate" id="exampleDate" placeholder="date placeholder" type="date" className="form-control" 
@@ -228,11 +264,9 @@ const Transactionsarea = (props) => {
                                             }}
                                         />
                                     </div>
-
-                                   
                                 </div>
                                 
-                                <div className="col-md-2" style={{marginLeft: 0}}> 
+                                <div className="col-md-3" style={{marginLeft: 0}}> 
                                     <label htmlfor="exampleDate"></label>
                                     <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
                                                 <span className="text-success pl-2">
@@ -253,7 +287,7 @@ const Transactionsarea = (props) => {
 
             <div className="main-card mb-3 card">
                 <div className="card-body">
-                    <table style={{width: '100%'}} id="example" className="table table-hover table-striped table-bordered">
+                    <table style={{width: '100%'}} id="examtable" className="table table-hover table-striped table-bordered">
                         <thead>
                             <tr>
                             <th>Transaction Ref. No</th>
@@ -264,6 +298,8 @@ const Transactionsarea = (props) => {
                             <th>PayIn Method</th>
                             <th>Transaction Status</th>
                             <th>Transaction Type</th>
+                            <th>View</th>
+                            <th>Edit</th>
                             
                             </tr>
                         </thead>
@@ -282,11 +318,18 @@ const Transactionsarea = (props) => {
                             <th>PayIn Method</th>
                             <th>Transaction Status</th>
                             <th>Transaction Type</th>
+                            <th>View</th>
+                            <th>Edit</th>
                         </tr>
                     </tfoot>
                     </table>
                 </div>
             </div>
+
+
+            <ViewTransactionModal item={item} show={showView} setShow={setShowView} handleShowView={handleShowView} />
+            <EditTransactionModal item={item} show={showEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} setNotify={setNotify} editTransactionLoading={editTransactionLoading} setEditTransactionLoading={setEditTransactionLoading}/>
+
         </>
     )
 }
@@ -295,7 +338,6 @@ const Transactionsarea = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        allrates: state.allrates.allrates,
         alltransactions: state.alltransactions.alltransactions,
     }
   }

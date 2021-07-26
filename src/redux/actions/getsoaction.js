@@ -14,7 +14,9 @@ import ActionTypes from "../actiontype/ActionTypes"
                         response = await mainAxios.get('/Charges/GetChargesByPaymentInType/' + stateobject);
                     } else if(successactiontype === ActionTypes.FETCH_USER_PROFILE_SUCCESS) {
                         response = await mainAxios.get('/Users/' + stateobject);
-                    }
+                    } else if(successactiontype === ActionTypes.FETCH_USERS_BY_COUNTRY_SUCCESS) {
+                        response = await mainAxios.get('/Users/GetTotalUsersByCountry/' + stateobject);
+                    } 
 
                     const dat  = response.data.data;
                     const message = response.data.message;

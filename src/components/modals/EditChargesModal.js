@@ -1,20 +1,32 @@
 import React, {useState, useEffect} from 'react';
-import { ShowLoading } from '../../redux/actions/authaction';
 import { connect } from 'react-redux';
 import ActionTypes from "../../redux/actiontype/ActionTypes"
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
-import { EditAction } from '../../redux/actions/editaction';
+import { CreateAction } from '../../redux/actions/createaction';
 
     const EditChargesModal = (props) => {
-    const { editcharge, isLoading, setNotify, show, setShow, item, handleShowEdit } = props;
+    const { editcharge, setNotify, show, setShow, item, handleShowEdit, chargesLoading, setChargesLoading } = props;
     const [chargedetails, setChargedetails] = useState({});
     
 
     const handleSubmit = e => {
         e.preventDefault();
-        editcharge(chargedetails, setNotify, ActionTypes.EDIT_CHARGES_SUCCESS, ActionTypes.EDIT_CHARGES_FAIL, handleShowEdit, setShow);
+        setChargesLoading(true);
+        editcharge(chargedetails, setNotify, ActionTypes.EDIT_CHARGES_SUCCESS, ActionTypes.EDIT_CHARGES_FAIL, setShow, setChargesLoading);
     };
+
+    useEffect(() => {
+        if(Object.keys(item).length !== 0) {
+            let id = item.id;
+            let paymentType = item.paymentType;
+            let providerRateCharges = item.providerRateCharges;
+            let providerFlatCharges = item.providerFlatCharges;
+            let transactionCharges = item.transactionCharges;
+            setChargedetails({...chargedetails, ...{ id, paymentType, providerRateCharges, providerFlatCharges, transactionCharges } });
+        }
+    }, [item])
+    
 
     const processPaymentType = (type) => {
         if(type === 1)
@@ -65,7 +77,7 @@ import { EditAction } from '../../redux/actions/editaction';
                             
                             <div className="col-md-6"> 
                                 <label htmlFor="providerRateCharges">Provider Rate Charge</label>
-                                <input name="providerRateCharges" id="providerRateCharges" placeholder={item.providerRateCharges} type="text" className="form-control" 
+                                <input name="providerRateCharges" id="providerRateCharges" defaultValue={item.providerRateCharges} placeholder={item.providerRateCharges} type="number" className="form-control" 
                                     onChange={(event) => {
                                     const providerRateCharges = event.target.value;
                                       setChargedetails({...chargedetails, ...{ providerRateCharges } }); 
@@ -79,7 +91,7 @@ import { EditAction } from '../../redux/actions/editaction';
                             <div className="col-md-6"> 
                                 <label htmlFor="providerFlatCharges">Flat Charges</label>
                                 
-                                <input name="providerFlatCharges" id="providerFlatCharges" placeholder={item.providerFlatCharges} type="text" className="form-control" 
+                                <input name="providerFlatCharges" id="providerFlatCharges" defaultValue={item.providerFlatCharges} placeholder={item.providerFlatCharges} type="number" className="form-control" 
                                     onChange={(event) => {
                                     const providerFlatCharges = event.target.value;
                                       setChargedetails({...chargedetails, ...{ providerFlatCharges } }); 
@@ -88,7 +100,7 @@ import { EditAction } from '../../redux/actions/editaction';
                             
                             <div className="col-md-6"> 
                                 <label htmlFor="transactionCharges">Transaction Charges</label>
-                                <input name="transactionCharges" id="transactionCharges" placeholder={item.transactionCharges} type="text" className="form-control" 
+                                <input name="transactionCharges" id="transactionCharges" defaultValue={item.transactionCharges} placeholder={item.transactionCharges} type="number" className="form-control" 
                                     onChange={(event) => {
                                       const transactionCharges = event.target.value;
                                       const id = item.id;
@@ -106,8 +118,7 @@ import { EditAction } from '../../redux/actions/editaction';
             <Button variant="secondary" onClick={handleShowEdit}>
                 Close
             </Button>
-            {/* disabled={isLoading} */}
-            <Button variant="danger" disabled={isLoading} onClick={handleSubmit} >Update Charge</Button>
+            <Button variant="danger" disabled={chargesLoading} onClick={handleSubmit}>Update Charge</Button>
             </Modal.Footer>
             </Modal>
             
@@ -116,15 +127,14 @@ import { EditAction } from '../../redux/actions/editaction';
 
 const mapStateToProps = (state) => {
     return {
-        isLoading: state.loadingstate.isLoading,
+        // isLoading: state.loadingstate.isLoading,
     }
   }
   
   const mapDispatchToProps = (dispatch) => {
     return {
-            editcharge: (chargedetails, setNotify, successactiontype, failureactiontype, setShow) => {
-                dispatch(ShowLoading(chargedetails));
-                dispatch(EditAction(chargedetails, setNotify, successactiontype, failureactiontype, setShow)
+            editcharge: (chargedetails, setNotify, successactiontype, failureactiontype, setShow, setChargesLoading) => {
+                dispatch(CreateAction(chargedetails, setNotify, successactiontype, failureactiontype, setShow, setChargesLoading)
             );
         },
     }

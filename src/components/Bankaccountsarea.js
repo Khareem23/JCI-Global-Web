@@ -7,6 +7,9 @@ import ActionTypes from "../redux/actiontype/ActionTypes"
 import CountryAutocomplete from './CountryAutocomplete';
 import DeleteAccountModal from './modals/DeleteAccountModal';
 import EditAccountModal from './modals/EditAccountModal';
+import $ from 'jquery';
+import DataTable from 'datatables.net';
+
 
 const Bankaccountsarea = (props) => {
     const { isLoading, setNotify, show, handleShow, setShow, fetchaccounts, fetchsingleaccount, allbanks, fetchallcountry,allcountriesstate, addaccountLoading, setAddAccountLoading } = props;
@@ -17,6 +20,12 @@ const Bankaccountsarea = (props) => {
         fetchallcountry(setNotify);
         fetchaccounts(show, setNotify, ActionTypes.GET_BANK_SUCCESS, ActionTypes.GET_BANK_FAIL, setShow);
     }, []);
+
+    useEffect(()=>{
+        $(document).ready(function(){
+            $('#examtable').DataTable({responsive:!0})
+        })
+    },[])
 
     useEffect(() => {
         if(allbanks !== undefined)
@@ -157,7 +166,7 @@ const Bankaccountsarea = (props) => {
 
             <div className="main-card mb-3 card">
                 <div className="card-body">
-                    <table style={{width: '100%'}} id="example" className="table table-hover table-striped table-bordered">
+                    <table style={{width: '100%'}} id="examtable" className="table table-hover table-striped table-bordered">
                         <thead style={{textAlign: 'center'}}>
                             <tr>
                                 <th>Account Name</th>

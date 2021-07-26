@@ -307,7 +307,7 @@ const AppHeader = (props) => {
                                 </li>
                                 <li className="nav-item">
                                 <Link to="/beneficiaries" className="nav-link"> <span style={{color: '#d92550', fontWeight: 'bold'}}>My Beneficiaries</span>
-                                    <div className="ml-auto badge badge-pill badge-info">{alluserreceivers.length}</div>
+                                    <div className="ml-auto badge badge-pill badge-info">{alluserreceivers?.length}</div>
                                     </Link>
                                 </li>
                                                                

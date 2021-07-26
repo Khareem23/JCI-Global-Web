@@ -21,7 +21,7 @@ const Register = (props) => {
     const [err2, setErr2] = useState();
     const [showerr, setShowErr] = useState(false);
     const [errmsg, setErrmsg] = useState();
-    const [errmsg2, setErrmsg2] = useState();
+    // const [errmsg2, setErrmsg2] = useState();
     const today = new Date();
 
     const [error, setError] = useState({

@@ -32,7 +32,9 @@ import ActionTypes from "../actiontype/ActionTypes"
                     } else if(successactiontype === ActionTypes.FETCH_ALL_USERS_SUCCESS) {
                         response = await mainAxios.get('/Users/getAllCustomers/');
                     } 
-                    
+
+                    console.log("get Action response" + response.data);
+
                     const { data } = response.data;
                     const message = response.data.message;
                     const status = response.data.status;

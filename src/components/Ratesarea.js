@@ -5,18 +5,29 @@ import { GetAction } from '../redux/actions/getaction';
 import ActionTypes from "../redux/actiontype/ActionTypes"
 import DeleteRateModal from './modals/DeleteRateModal';
 import ViewRateModal from './modals/ViewRateModal';
+import $ from 'jquery';
+import DataTable from 'datatables.net';
+import EditRateModal from './modals/EditRateModal';
+
 
 const Ratesarea = (props) => {
     const { setNotify, show, handleShow, setShow, fetchrates, allrates, ratesLoading, setRatesLoading} = props;
     const [rates, setRates] = useState({});
-
+    
+    useEffect(()=>{
+        $(document).ready(function(){
+            $('#examtable').DataTable({responsive:!0})
+        })
+    },[])
     useEffect(() => {
         fetchrates(show, setNotify, ActionTypes.GET_RATE_SUCCESS, ActionTypes.GET_RATE_FAIL, setShow);
     }, []);
 
     //this is to check for changes in ratesLoading variable
     useEffect(() => {
+        
         if(!ratesLoading) {
+            console.log(ratesLoading);
             fetchrates(show, setNotify, ActionTypes.GET_RATE_SUCCESS, ActionTypes.GET_RATE_FAIL, setShow);
         }
     }, [ratesLoading]);
@@ -29,6 +40,7 @@ const Ratesarea = (props) => {
     }, [allrates]);
 
     const [showEdit, setShowEdit] = useState(false);
+    const [showView, setShowView] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
 
     const handleShowEdit = () => {
@@ -36,6 +48,10 @@ const Ratesarea = (props) => {
     }
     const handleShowDelete = () => {
         setShowDelete(!showDelete);
+    }
+
+    const handleShowView = () => {
+        setShowView(!showView);
     }
 
     const [item, setItem] = useState({});
@@ -51,11 +67,12 @@ const Ratesarea = (props) => {
     }
 
     function viewRate (item) {
-        setShowEdit(true);
+        setShowView(true);
         setItem(item);
     }
 
     const processRateType = (type) => {
+        console.log(type)
         if(type === 0)
             return 'Live Rate';
         else if(type === 1)
@@ -83,7 +100,7 @@ const Ratesarea = (props) => {
                 return (
                 <>
                     <tr>
-                        <td>{processRateType(item.rateType)}</td>
+                        <td>{item.rateType}</td>
                         <td>{item.sendCurrencyCode}</td>
                         <td>{item.receiveCurrencyCode}</td>
                         <td>{processDisplay(item.isUSDDisplay)}</td>
@@ -91,8 +108,8 @@ const Ratesarea = (props) => {
                         <td>{item.amount_NgaUSD}</td>
                         <td>{processStatus(item.isActive)}</td>
                         <td> <button className="btn-wide btn btn-danger" onClick={() => { viewRate(item)}}>View</button> </td>
-                        {/* <td><button className="mb-2 mr-2 btn btn-warning" onClick={() => handleEdit(item)}>Edit</button></td> */}
-                        <td><button className="mb-2 mr-2 btn btn-danger" onClick={() => handleDelete(item)}>Delete</button></td>
+                        <td><button className="mb-2 mr-2 btn btn-warning" onClick={() => handleEdit(item)}>Edit</button></td>
+                        {/* <td><button className="mb-2 mr-2 btn btn-danger" onClick={() => handleDelete(item)}>Delete</button></td> */}
                     </tr>
                 </>
                 )
@@ -153,7 +170,7 @@ const Ratesarea = (props) => {
 
             <div className="main-card mb-3 card">
                 <div className="card-body">
-                    <table style={{width: '100%'}} id="example" className="table table-hover table-striped table-bordered">
+                    <table style={{width: '100%'}} id="examtable" className="table table-hover table-striped table-bordered">
                         <thead style={{textAlign: 'center'}}>
                             <tr>
                             <th>Rate Type</th>
@@ -163,7 +180,8 @@ const Ratesarea = (props) => {
                             <th>Amount (#)</th>
                             <th>USD ($)</th>
                             <th>Status</th>
-                            <th colspan={3}>User Action</th>
+                            <th>View</th>
+                            <th>Edit</th>
                             </tr>
                         </thead>
                         <tbody style={{textAlign: 'center'}}>
@@ -181,14 +199,15 @@ const Ratesarea = (props) => {
                             <th>Amount (#)</th>
                             <th>USD ($)</th>
                             <th>Status</th>
-                            <th colspan={3}>User Action</th>
+                            <th>View</th>
+                            <th>Edit</th>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
-            <ViewRateModal item={item} show={showEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} />
-            {/* <EditRateModal item={item} setNotify={setNotify} show={showEdit} handleEdit={handleEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} ratesLoading={ratesLoading} setRatesLoading={setRatesLoading}/> */}
+            <ViewRateModal item={item} show={showView} setShow={setShowView} handleShowView={handleShowView} />
+            <EditRateModal item={item} setNotify={setNotify} show={showEdit} handleEdit={handleEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} ratesLoading={ratesLoading} setRatesLoading={setRatesLoading}/>
             <DeleteRateModal item={item} setNotify={setNotify} show={showDelete} handleDelete={handleDelete} setShow={setShowDelete} handleShowDelete={handleShowDelete} ratesLoading={ratesLoading} setRatesLoading={setRatesLoading}/>
         </>
 

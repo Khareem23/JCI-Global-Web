@@ -3,14 +3,24 @@ import { connect } from 'react-redux';
 import { GetAction } from '../redux/actions/getaction';
 import ActionTypes from '../redux/actiontype/ActionTypes';
 import ViewUsersModal from './modals/ViewUsersModal';
+import $ from 'jquery';
+import DataTable from 'datatables.net';
+import EditUserModal from './modals/EditUserModal';
 
 
 const Usersarea = (props) => {
-    const { setNotify, show, setShow, fetchallusers, allusers, handleShow } = props;
+    const { setNotify, show, setShow, fetchallusers, allusers } = props;
     const [users, setUsers] = useState({});
     const [item, setItem] = useState({});
-    const [exportdetails, setExportdetails] = useState({});
     const [showEdit, setShowEdit] = useState(false);
+    const [showView, setShowView] = useState(false);
+    const [editUserLoading, setEditUserLoading] = useState(false);
+
+    useEffect(()=>{
+        $(document).ready(function(){
+            $('#examtable').DataTable({responsive:!0})
+        })
+    },[])
 
     useEffect(() => {
         fetchallusers(show, setNotify, ActionTypes.FETCH_ALL_USERS_SUCCESS, ActionTypes.FETCH_ALL_USERS_FAIL, setShow);
@@ -22,6 +32,12 @@ const Usersarea = (props) => {
             setUsers(allusers);
         }
     }, [allusers]);
+
+    useEffect(() => {
+        if(!editUserLoading) {
+            fetchallusers(show, setNotify, ActionTypes.FETCH_ALL_USERS_SUCCESS, ActionTypes.FETCH_ALL_USERS_FAIL, setShow);
+        }
+    }, [editUserLoading]);
 
     const processStatus = (type) => {
         if(type === true)
@@ -35,10 +51,20 @@ const Usersarea = (props) => {
         setShowEdit(!showEdit);
     }
 
+    const handleShowView = () => {
+        setShowView(!showView);
+    }
+
     function viewUser (item) {
+        setShowView(true);
+        setItem(item);
+    }
+
+    function editUser (item) {
         setShowEdit(true);
         setItem(item);
     }
+
 
     const renderrow = (items) => {
         if(Object.keys(items).length !== 0) {
@@ -51,7 +77,7 @@ const Usersarea = (props) => {
                         <td>{processStatus(item.isActive)}</td>
                         <td>{item.createdDate.substring(0, 10)}</td>
                         <td> <button className="btn-wide btn btn-danger" onClick={() => { viewUser(item)}}>View</button> </td>
-                        
+                        <td> <button className="btn-wide btn btn-danger" onClick={() => { editUser(item)}}>Edit</button> </td>
                     </tr>
                 </>
                 )
@@ -159,14 +185,15 @@ const Usersarea = (props) => {
 
             <div className="main-card mb-3 card">
                 <div className="card-body">
-                    <table style={{width: '100%'}} id="example" className="table table-hover table-striped table-bordered">
+                    <table style={{width: '100%'}} id="examtable" className="table table-hover table-striped table-bordered">
                         <thead>
                             <tr style={{textAlign: 'center'}}>
                             <th>Email Address</th>
                             <th>Full Name</th>
                             <th>Verification Status</th>
                             <th>Date Created</th>
-                            <th>User Action</th>
+                            <th>View</th>
+                            <th>Edit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -180,14 +207,18 @@ const Usersarea = (props) => {
                             <th>Full Name</th>
                             <th>Verification Status</th>
                             <th>Date Created</th>
-                            <th>User Action</th>
+                            <th>View</th>
+                            <th>Edit</th>
                         </tr>
                     </tfoot>
                     </table>
                 </div>
             </div>
             
-            <ViewUsersModal item={item} show={showEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} />
+            <ViewUsersModal item={item} show={showView} setShow={setShowView} handleShowView={handleShowView} />
+
+            <EditUserModal item={item} show={showEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} setNotify={setNotify} editUserLoading={editUserLoading} setEditUserLoading={setEditUserLoading}/>
+
         </>
     )
 }

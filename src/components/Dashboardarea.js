@@ -1,6 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux';
+import { GetAction } from '../redux/actions/getaction';
+import { GetSingleObjectAction } from '../redux/actions/getsoaction';
+import ActionTypes from '../redux/actiontype/ActionTypes';
+import CountryAutocomplete from './CountryAutocomplete';
 
-export default function Dashboardarea() {
+
+const Dashboardarea = (props) => {
+    const { setNotify, show, setShow, fetchalltransactions,fetchallusers, allusers, alltransactions, fetchusersbycountry, allcountriesstate, countryusers, dashboardLoading, setDashboardLoading} = props;
+
+   
+    
+    useEffect(() => {
+        fetchalltransactions(show, setNotify, ActionTypes.FETCH_ALL_TRANSACTION_SUCCESS, ActionTypes.FETCH_ALL_TRANSACTION_FAIL, setShow);
+        fetchallusers(show, setNotify, ActionTypes.FETCH_ALL_USERS_SUCCESS, ActionTypes.FETCH_ALL_USERS_FAIL, setShow);
+    }, []);
+
+    useEffect(() => {
+        if(alltransactions !== undefined)
+        {            
+            // setTransactions(alltransactions);
+        }
+    }, [alltransactions]);
+
+    useEffect(() => {
+        if(allusers !== undefined)
+        {            
+            // setUsers(allusers);
+        }
+    }, [allusers]);
+
+    const handlereturnvalue = (cout) => {
+        const _statecode = cout.substring(cout.length - 3, cout.length);
+        fetchusersbycountry(_statecode, setNotify, ActionTypes.FETCH_USERS_BY_COUNTRY_SUCCESS, ActionTypes.FETCH_USERS_BY_COUNTRY_FAIL, setShow);
+    }
+    
+
     return (
         <>
             <div className="app-page-title app-page-title-simple">
@@ -77,6 +112,7 @@ export default function Dashboardarea() {
                     </li>
                     </ul>
                 </div>
+                
                 <div className="tab-content">
                     <div className="tab-pane fade active show" id="tab-minimal-1">
                         <div className="card-body">
@@ -347,6 +383,78 @@ export default function Dashboardarea() {
                 </div>
             </div>
 
+            
+            <div className="row">
+  <div className="col-sm-12 col-md-7 col-lg-8">
+    <div className="mb-3 card">
+      <div className="card-header-tab card-header">
+        <div className="card-header-title font-size-lg text-capitalize font-weight-normal">Traffic Sources
+        </div>
+        <div className="btn-actions-pane-right text-capitalize">
+          <button className="btn btn-warning">Actions</button>
+        </div>
+      </div>
+      <div className="pt-0 card-body">
+        <div id="chart-combined" />
+      </div>
+    </div>
+  </div>
+  <div className="col-sm-12 col-md-5 col-lg-4">
+    <div className="mb-3 card">
+      <div className="card-header-tab card-header">
+        <div className="card-header-title font-size-lg text-capitalize font-weight-normal">Income</div>
+        <div className="btn-actions-pane-right text-capitalize actions-icon-btn">
+          <div className="btn-group">
+            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="btn-icon btn-icon-only btn btn-link">
+              <i className="lnr-cog btn-icon-wrapper" />
+            </button>
+            <div tabIndex={-1} role="menu" aria-hidden="true" className="dropdown-menu-right rm-pointers dropdown-menu-shadow dropdown-menu-hover-link dropdown-menu dropdown-menu-right">
+              <h6 tabIndex={-1} className="dropdown-header">
+                Header
+              </h6>
+              <button type="button" tabIndex={0} className="dropdown-item">
+                <i className="dropdown-icon lnr-inbox"> </i><span>Menus</span>
+              </button>
+              <button type="button" tabIndex={0} className="dropdown-item">
+                <i className="dropdown-icon lnr-file-empty"> </i><span>Settings</span>
+              </button>
+              <button type="button" tabIndex={0} className="dropdown-item">
+                <i className="dropdown-icon lnr-book"> </i><span>Actions</span>
+              </button>
+              <div tabIndex={-1} className="dropdown-divider" />
+              <div className="p-1 text-right">
+                <button className="mr-2 btn-shadow btn-sm btn btn-link">View Details</button>
+                <button className="mr-2 btn-shadow btn-sm btn btn-primary">Action</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="p-0 card-body">
+        <div id="chart-radial" />
+        <div className="widget-content pt-0 w-100">
+          <div className="widget-content-outer">
+            <div className="widget-content-wrapper">
+              <div className="widget-content-left pr-2 fsize-1">
+                <div className="widget-numbers mt-0 fsize-3 text-warning">32%</div>
+              </div>
+              <div className="widget-content-right w-100">
+                <div className="progress-bar-xs progress">
+                  <div className="progress-bar bg-warning" role="progressbar" aria-valuenow={32} aria-valuemin={0} aria-valuemax={100} style={{width: '32%'}}>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="widget-content-left fsize-1">
+              <div className="text-muted opacity-6">Spendings Target</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
             <div className="mbg-3 h-auto pl-0 pr-0 bg-transparent no-border card-header">
                 <div className="card-header-title fsize-2 text-capitalize font-weight-normal">Summary Section</div>
@@ -368,7 +476,7 @@ export default function Dashboardarea() {
                                 <div className="widget-chart-flex" style={{marginBottom: 40}}>
                                     <div className="fsize-4">
                                     {/* <small className="opacity-5">$</small> */}
-                                    157,000
+                                    {allusers?.length}
                                     </div>
                                     <div className="ml-auto">
                                     <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
@@ -415,7 +523,7 @@ export default function Dashboardarea() {
                                 <div className="widget-chart-flex" style={{marginBottom: 40}}>
                                     <div className="fsize-4">
                                     {/* <small className="opacity-5">$</small> */}
-                                    50,078
+                                    {alltransactions?.length}
                                     </div>
                                     <div className="ml-auto">
                                     <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
@@ -503,27 +611,23 @@ export default function Dashboardarea() {
                 <div className="card-body">
                 <h5 className="card-title">Total Users & Transactions record</h5>
                 <div className="row">
-                <div className="col-md-5">
+                <div className="col-md-4">
                     <div className="position-relative form-group">
                     <label htmlFor="exampleCustomSelect" >View Total Users In a Country</label>
-                    <select type="select" id="exampleCustomSelect" name="customSelect" className="custom-select">
-                        <option value>Select Country</option>
-                        <option>Nigeria</option>
-                        <option>Algeria</option>
-                        <option>Ghana</option>
-                        <option>Egypt</option>
-                        <option>South Africa</option>
-                    </select>
+                    
+                    <CountryAutocomplete placeholder="Select a Country"
+                        suggestions={allcountriesstate} passChildData={handlereturnvalue}
+                    />
                     </div>
                 </div>
-                <div className="col-md-1">
+                <div className="col-md-2">
                 <label htmlFor="exampleCustomSelect" ></label>
                     <div className="fsize-4">
-                        <small className="opacity-5">$</small>
-                        5,456
+                        
+                        <span className="text-danger">{countryusers}</span>
                     </div>
                 </div>
-                <div className="col-md-5">
+                <div className="col-md-4">
                     <div className="position-relative form-group">
                     <label htmlFor="exampleCustomSelect" >View Total Transactions in a Country</label>
                     <select type="select" id="exampleCustomSelect" name="customSelect" className="custom-select">
@@ -536,7 +640,7 @@ export default function Dashboardarea() {
                     </select>
                     </div>
                 </div>
-                <div className="col-md-1">
+                <div className="col-md-2">
                 <label htmlFor="exampleCustomSelect" ></label>
                     <div className="fsize-4">
                         <small className="opacity-5">$</small>
@@ -632,3 +736,30 @@ export default function Dashboardarea() {
 
     )
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        alltransactions: state.alltransactions.alltransactions,
+        allusers: state.allusers.allusers,
+        allcountriesstate: state.allcountriesstate.allcountriesstate,
+        countryusers: state.countryusers.countryusers,
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+            fetchalltransactions: (show, setNotify, successactiontype, failureactiontype, setShow) => {
+                dispatch(GetAction(show, setNotify, successactiontype, failureactiontype, setShow));
+            },
+            fetchallusers: (show, setNotify, successactiontype, failureactiontype, setShow) => {
+                dispatch(GetAction(show, setNotify, successactiontype, failureactiontype, setShow));
+            },
+            fetchusersbycountry: (countryCode, setNotify, successactiontype, failureactiontype, setShow) => {
+                dispatch(GetSingleObjectAction(countryCode, setNotify, successactiontype, failureactiontype, setShow));
+            },
+            
+    }
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Dashboardarea);

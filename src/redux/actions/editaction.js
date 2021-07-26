@@ -9,14 +9,9 @@ import ActionTypes from "../actiontype/ActionTypes"
                 {
                     
                     let response = "";
-                    if(successactiontype === ActionTypes.EDIT_CHARGES_SUCCESS)
-                    {
-                        response = await mainAxios.put('/Charges/updateCharges/', stateobject);
-                    } else if(successactiontype === ActionTypes.EDIT_PROMO_SUCCESS) {
+                    if(successactiontype === ActionTypes.EDIT_PROMO_SUCCESS) {
                         response = await mainAxios.put('/Promo/UpdatePromo', stateobject);
-                    }  else if(successactiontype === ActionTypes.EDIT_RATE_SUCCESS) {
-                        response = await mainAxios.put('/Rates/updateRate', stateobject);
-                    } else if(successactiontype === ActionTypes.EDIT_BANK_SUCCESS) {
+                    }   else if(successactiontype === ActionTypes.EDIT_BANK_SUCCESS) {
                         response = await mainAxios.put('/JCIBank/UpdateBankAccount', stateobject);
                     } else if(successactiontype === ActionTypes.UPDATE_PASSWORD_SUCCESS) {
                         response = await mainAxios.put('/Users/changePassword/' + stateobject);

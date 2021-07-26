@@ -10,6 +10,7 @@ const allcustomertransactions = [
 
 const alltransactions = [
 ]
+const countryusers = {}
 
 const getAllReceivingCurrency = () => {
     const receieving = localStorage.getItem("allreceivingcurrencystate");
@@ -141,6 +142,19 @@ const alltransactionreducer = (state = existingAllTransactions, action) => {
             return state;
     }
 };
+
+// const totaltransactionreducer = (state = existingAllTransactions, action) => {
+//     switch (action.type) {
+//         case ActionTypes.FETCH_ALL_TRANSACTION_SUCCESS:
+//             const allTransactions = {
+//                 alltransactions: action.payload,
+//             };
+//             localStorage.setItem("alltransactions", JSON.stringify(allTransactions)); 
+//             return allTransactions;
+//         default:
+//             return state;
+//     }
+// };
 
 const customertransactionsreducer = (state = getCustomerTransactions, action) => {
     switch (action.type) {

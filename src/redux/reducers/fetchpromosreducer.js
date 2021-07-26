@@ -9,6 +9,8 @@ const allpurposestate = [
 const allusers = [
 ]
 
+const countryusers = {}
+
 const austracreport = [
 ]
 
@@ -101,6 +103,18 @@ const fetchallusersreducer = (state = existingUsers, action) => {
     }
 };
 
+const fetchcountryusersreducer = (state = countryusers, action) => {
+    switch (action.type) {
+        case ActionTypes.FETCH_USERS_BY_COUNTRY_SUCCESS:
+            const Fetchcountryusers = {
+                countryusers: action.payload,
+            };
+            return Fetchcountryusers;
+        default:
+            return state;
+    }
+};
+
 const fetchaustracreportreducer = (state = austracreport, action) => {
     switch (action.type) {
         case ActionTypes.FETCH_AUSTRAC_SUCCESS:
@@ -113,4 +127,4 @@ const fetchaustracreportreducer = (state = austracreport, action) => {
     }
 };
 
-export { fetchpromosreducer, fetchpurposesreducer, fetchallusersreducer, fetchaustracreportreducer };
+export { fetchpromosreducer, fetchpurposesreducer, fetchallusersreducer, fetchaustracreportreducer, fetchcountryusersreducer };

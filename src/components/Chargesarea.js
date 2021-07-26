@@ -5,11 +5,20 @@ import { GetAction } from '../redux/actions/getaction';
 import ActionTypes from "../redux/actiontype/ActionTypes"
 import DeleteChargeModal from './modals/DeleteChargeModal';
 import EditChargesModal from './modals/EditChargesModal';
-
+import $ from 'jquery';
+import DataTable from 'datatables.net';
+import ViewChargeModal from './modals/ViewChargeModal';
+ 
 const Chargesarea = (props) => {
     const { setNotify, show, handleShow, setShow, fetchcharges, allcharges, chargesLoading, setChargesLoading} = props;
     const [charges, setCharges] = useState({});
 
+    useEffect(()=>{
+        $(document).ready(function(){
+            $('#examtable').DataTable({responsive:!0})
+        })
+    },[])
+    
     useEffect(() => {
       fetchcharges(show, setNotify, ActionTypes.GET_CHARGES_SUCCESS, ActionTypes.GET_CHARGES_FAIL, setShow);
     }, []);
@@ -30,9 +39,14 @@ const Chargesarea = (props) => {
 
     const [showEdit, setShowEdit] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
+    const [showView, setShowView] = useState(false);
+    
 
     const handleShowEdit = () => {
         setShowEdit(!showEdit);
+    }
+    const handleShowView = () => {
+        setShowView(!showView);
     }
     const handleShowDelete = () => {
         setShowDelete(!showDelete);
@@ -51,6 +65,10 @@ const Chargesarea = (props) => {
         return 'Others';
     }
 
+    function handleView (item) {
+        setShowView(true);
+        setItem(item);
+    }
     function handleEdit (item) {
         setShowEdit(true);
         setItem(item);
@@ -80,8 +98,9 @@ const Chargesarea = (props) => {
                         <td>{item.providerFlatCharges}</td>
                         <td>{item.providerRateCharges}</td>
                         <td>{item.transactionCharges}</td>
-                        <td><button className="mb-2 mr-2 btn btn-warning" onClick={() => handleEdit(item)}>Edit</button></td>
-                        <td><button className="mb-2 mr-2 btn btn-danger" onClick={() => handleDelete(item)}>Delete</button></td>
+                        <td><button className="mb-2 mr-2 btn btn-danger" onClick={() => handleView(item)}>View</button></td>
+                        <td><button className="mb-2 mr-2 btn btn-danger" onClick={() => handleEdit(item)}>Edit</button></td>
+                        {/* <td><button className="mb-2 mr-2 btn btn-danger" onClick={() => handleDelete(item)}>Delete</button></td> */}
                     </tr>
                 </>
                 )
@@ -180,15 +199,16 @@ const Chargesarea = (props) => {
 
             <div className="main-card mb-3 card">
                 <div className="card-body">
-                    <table style={{width: '100%'}} id="example" className="table table-hover table-striped table-bordered">
+                    <table style={{width: '100%'}} id="examtable" className="table table-hover table-striped table-bordered">
                         <thead style={{textAlign: 'center'}}>
                             <tr>
                             <th>Payment Type</th>
                             <th>Provider Flat Charges</th>
                             <th>Provider Rate Charges</th>
                             <th>Transaction Charges</th>
+                            <th>View</th>
                             <th>Edit</th>
-                            <th>Delete</th>
+                            {/* <th>Delete</th> */}
                             </tr>
                         </thead>
                         <tbody style={{textAlign: 'center'}}>
@@ -203,16 +223,19 @@ const Chargesarea = (props) => {
                             <th>Provider Flat Charges</th>
                             <th>Provider Rate Charges</th>
                             <th>Transaction Charges</th>
+                            <th>View</th>
                             <th>Edit</th>
-                            <th>Delete</th>
+                            {/* <th>Delete</th> */}
                             </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
-        
+                            
+            
+            <ViewChargeModal item={item} show={showView} setShow={setShowView} handleShowView={handleShowView} />
             <EditChargesModal item={item} setNotify={setNotify} show={showEdit} handleEdit={handleEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} chargesLoading={chargesLoading} setChargesLoading={setChargesLoading}/>
-            <DeleteChargeModal item={item} setNotify={setNotify} show={showDelete} handleDelete={handleDelete} setShow={setShowDelete} handleShowDelete={handleShowDelete} chargesLoading={chargesLoading} setChargesLoading={setChargesLoading}/>
+            {/* <DeleteChargeModal item={item} setNotify={setNotify} show={showDelete} handleDelete={handleDelete} setShow={setShowDelete} handleShowDelete={handleShowDelete} chargesLoading={chargesLoading} setChargesLoading={setChargesLoading}/> */}
         </>
 
     )

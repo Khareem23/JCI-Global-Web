@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button'
 import { EditAction } from '../../redux/actions/editaction';
 
     const ViewUsersModal = (props) => {
-    const { editrate, setNotify, show, setShow, item, handleShowEdit } = props;
+    const { editrate, setNotify, show, setShow, item, handleShowView } = props;
     const [ratedetails, setRatedetails] = useState({});
    
     useEffect(() => {
@@ -15,7 +15,7 @@ import { EditAction } from '../../redux/actions/editaction';
     return (
             <Modal
             show={show}
-            onHide={handleShowEdit}
+            onHide={handleShowView}
             backdrop="static"
             keyboard={false}
             >
@@ -105,7 +105,7 @@ import { EditAction } from '../../redux/actions/editaction';
             </Modal.Body>
             <Modal.Footer>
             
-            <Button variant="danger" onClick={handleShowEdit} >Close</Button>
+            <Button variant="danger" onClick={handleShowView} >Close</Button>
             </Modal.Footer>
             </Modal>
             

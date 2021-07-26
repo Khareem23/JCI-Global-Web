@@ -1,7 +1,18 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { LogOutAuthAction, ShowLoading} from '../redux/actions/authaction';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
 
-export default function Sidemenu() {
+const Sidemenu = (props) => {
+    const { logoutuser, isLoading } = props;
+    const history = useHistory();
+    
+    const handleLogout = e => {
+        e.preventDefault();
+        logoutuser(history);
+    };
+
     return (
         <div className="scrollbar-sidebar">
             <div className="app-sidebar__inner">
@@ -110,7 +121,7 @@ export default function Sidemenu() {
                         </div>
                     </div>
                     <li style={{margin: 16}}>
-                        <Link to="/logout">
+                        <Link onClick={handleLogout}>
                             <i className="metismenu-icon pe-7s-back" />Log Out
                         </Link>
                     </li>
@@ -127,3 +138,23 @@ export default function Sidemenu() {
         </div>
     )
 }
+
+
+
+
+const mapStateToProps = (state) => {
+    return {
+        isLoading: state.loadingstate.isLoading,
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+        logoutuser: (history) => {
+            dispatch(ShowLoading(""));
+            dispatch(LogOutAuthAction(history));
+        },
+    }
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Sidemenu);

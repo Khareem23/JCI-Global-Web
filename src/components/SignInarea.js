@@ -11,8 +11,16 @@ const SignInarea = (props) => {
 
   const handleSubmit = e => {
       e.preventDefault();
-      loginuser(userdetails, history, setNotify);
+      setLoginLoading(true)
+      loginuser(userdetails, history, setNotify, setLoginLoading);
   };
+
+  const [loginloading, setLoginLoading] = useState(false)
+
+  useEffect(() => {
+    console.log(isLoading)
+  }, [isLoading])
+
 
   //to chaeck the login state of the user on loads
   useEffect(() => {
@@ -62,7 +70,7 @@ const SignInarea = (props) => {
                                 <button className="btn-wide btn-pill form-control btn-shadow btn-hover-shine btn btn-primary" 
                                 type="submit"
                                 style={{fontSize: 14, marginTop: 40}}
-                                disabled={isLoading}
+                                disabled={loginloading}
                                 onClick={handleSubmit}>
                                   Login
                                 </button>
@@ -97,9 +105,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      loginuser: (userdetails, history, setNotify) => {
-          dispatch(ShowLoading(userdetails));
-          dispatch(LoginAuthAction(userdetails, history, setNotify)
+      loginuser: (userdetails, history, setNotify, setLoginLoading) => {
+          // dispatch(ShowLoading(userdetails));
+          dispatch(LoginAuthAction(userdetails, history, setNotify, setLoginLoading)
           );
       },
   }

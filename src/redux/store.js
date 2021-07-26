@@ -9,7 +9,7 @@ import emailcheckreducer from "./reducers/emailcheckreducer";
 import phonecheckreducer from "./reducers/phonecheckreducer";
 import { signupreducer, userprofilereducer } from "./reducers/signupreducer";
 import { fetchuserrecieversreducer, fetchchargesreducer, downloadreceiptreducer, uploadconfrimationreducer, addpaymentreducer} from "./reducers/fetchchargesreducer";
-import { fetchpromosreducer, fetchpurposesreducer, fetchallusersreducer, fetchaustracreportreducer } from "./reducers/fetchpromosreducer";
+import { fetchpromosreducer, fetchpurposesreducer, fetchallusersreducer, fetchaustracreportreducer, fetchcountryusersreducer } from "./reducers/fetchpromosreducer";
 import fetchratesreducer from "./reducers/fetchratesreducer";
 import { fetchbanksreducer, fetchbusinessbanksreducer } from "./reducers/fetchbanksreducer";
 import { transactionreducer, conversionreducer, allreceivingcurrencyreducer, allsendingcurrencyreducer, customertransactionsreducer, alltransactionreducer } from "./reducers/transactionreducer"; 
@@ -43,7 +43,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
         userprofilestate: userprofilereducer,
         alltransactions: alltransactionreducer,
         allusers: fetchallusersreducer,
-        austracreport: fetchaustracreportreducer
+        austracreport: fetchaustracreportreducer,
+        countryusers: fetchcountryusersreducer,
     })
 
     const store = createStore(

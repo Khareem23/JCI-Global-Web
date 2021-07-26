@@ -95,13 +95,14 @@ import ActionTypes from "../actiontype/ActionTypes"
         }
     }
     
-    const LoginAuthAction = (loginstate, history, setNotify) => {
+    const LoginAuthAction = (loginstate, history, setNotify, setLoginLoading) => {
         
         return async (dispatch) => {
             
                 if(loginstate.username === undefined || loginstate.username === "" || loginstate.password === undefined || loginstate.password === "")
                 {
-                    dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
+                    // dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
+                    setLoginLoading(false);
                     setNotify({
                         isOpen: true,
                         message: "Kindly supply all required fields!",
@@ -120,7 +121,8 @@ import ActionTypes from "../actiontype/ActionTypes"
                         decoded.token = data;
                         decoded.status = response.data.status;
                         decoded.message = response.data.message;
-                        dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
+                        // dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
+                        setLoginLoading(false);
                         dispatch({type: ActionTypes.USER_LOGIN_SUCCESS, payload: decoded});                        
                         setNotify({
                             isOpen: true,
@@ -137,7 +139,8 @@ import ActionTypes from "../actiontype/ActionTypes"
                     }
                     else  
                     {
-                        dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
+                        // dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
+                        setLoginLoading(false);
                         dispatch({type: ActionTypes.USER_LOGIN_FAIL, payload: data.message });
                         setNotify({
                             isOpen: true,
@@ -145,19 +148,12 @@ import ActionTypes from "../actiontype/ActionTypes"
                             type: 'error',
                         });
                     }} catch(error) {
-                        // const errmsg = response;
-                        // dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
-                        // dispatch({type: ActionTypes.USER_LOGIN_FAIL, payload: errmsg });
-                        // setNotify({
-                        //     isOpen: true,
-                        //     message: errmsg,
-                        //     type: 'error',
-                        // });
+                        setLoginLoading(false);
                         if(error.response) {
                             let errorarray = error.response.data.errors;
                             let list = prepareError(errorarray);
                             const errmsg = list;
-                            dispatch({type: ActionTypes.LOADING_HIDE, payload: errmsg}); 
+                            // dispatch({type: ActionTypes.LOADING_HIDE, payload: errmsg}); 
                             // setIsLoading(false);
                             dispatch({type: ActionTypes.USER_LOGIN_FAIL, payload: errmsg });
                             setNotify({

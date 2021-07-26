@@ -1,17 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import { ShowLoading } from '../../redux/actions/authaction';
 import { connect } from 'react-redux';
 import ActionTypes from "../../redux/actiontype/ActionTypes"
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
-import { EditAction } from '../../redux/actions/editaction';
+import { CreateAction } from '../../redux/actions/createaction';
 
     const EditRateModal = (props) => {
-    const { editrate, isLoading, setNotify, show, setShow, item, handleShowEdit } = props;
+    const { editrate, setNotify, show, setShow, item, handleShowEdit, ratesLoading, setRatesLoading } = props;
     const [ratedetails, setRatedetails] = useState({});
     const handleSubmit = e => {
         e.preventDefault();        
-        editrate(ratedetails, setNotify, ActionTypes.EDIT_RATE_SUCCESS, ActionTypes.EDIT_RATE_FAIL, handleShowEdit, setShow);
+        setRatesLoading(true);
+        editrate(ratedetails, setNotify, ActionTypes.EDIT_RATE_SUCCESS, ActionTypes.EDIT_RATE_FAIL, setShow, setRatesLoading);
     };
 
     const processStatus = (type) => {
@@ -19,15 +19,30 @@ import { EditAction } from '../../redux/actions/editaction';
             return 'Active';
         else 
             return 'In-Active';
-        
     }
+
+    useEffect(() => {
+        if(Object.keys(item).length !== 0) {
+            let id = item.id;
+            let amount = item.amount;
+            let amount_NgaUSD = item.amount_NgaUSD;
+            let currencyDesc = item.currencyDesc;
+            let isActive = item.isActive;
+            let isUSDDisplay = item.isUSDDisplay;
+            let rateType = item.rateType;
+            let receiveCurrencyCode = item.receiveCurrencyCode;
+            let sendCurrencyCode = item.sendCurrencyCode;
+            setRatedetails({...ratedetails, ...{ id, amount, amount_NgaUSD, currencyDesc, isActive, isUSDDisplay, rateType, receiveCurrencyCode, sendCurrencyCode } });
+        }
+    }, [item])
     
 
-    const processRateType = (type) => {
-        if(type === 0)
-            return 'Live Rate';
-        else if(type === 1)
-            return 'Transaction Rate';
+    const processDisplay = (type) => {
+        
+        if(type)
+            return 'Yes';
+        else
+            return 'No';
     }
 
     useEffect(() => {
@@ -59,15 +74,15 @@ import { EditAction } from '../../redux/actions/editaction';
                                         setRatedetails({...ratedetails, ...{ rateType } }); 
                                     }}>
                                     <option> Select Rate Type </option>
-                                    <option selected="selected" value={item.rateType}>{processRateType(item.rateType)}</option>
-                                    <option value="0">Live Rate</option>
-                                    <option value="1">Transaction Rate</option>
+                                    <option selected="selected" value={item.rateType}>{item.rateType}</option>
+                                    <option value="LiveRate">LiveRate</option>
+                                    <option value="TransactionRate">TransactionRate</option>
                                 </select>
                             </div>
                             
                             <div className="col-md-6"> 
                                 <label htmlFor="currencyDesc">Currency Description</label>
-                                <input name="currencyDesc" id="currencyDesc" placeholder={item.currencyDesc} type="text" className="form-control" 
+                                <input name="currencyDesc" id="currencyDesc" placeholder={item.currencyDesc} defaultValue={item.currencyDesc} type="text" className="form-control" 
                                     onChange={(event) => {
                                     const currencyDesc = event.target.value;
                                     setRatedetails({...ratedetails, ...{ currencyDesc } }); 
@@ -82,7 +97,7 @@ import { EditAction } from '../../redux/actions/editaction';
                             <div className="col-md-6"> 
                                 <label htmlFor="sendCurrencyCode">Send Currency Code</label>
                                 
-                                <input name="sendCurrencyCode" id="sendCurrencyCode" placeholder={item.sendCurrencyCode} type="text" className="form-control" 
+                                <input name="sendCurrencyCode" id="sendCurrencyCode" defaultValue={item.sendCurrencyCode} placeholder={item.sendCurrencyCode} type="text" className="form-control" 
                                     onChange={(event) => {
                                     const sendCurrencyCode = event.target.value;
                                     const id = item.id;
@@ -92,7 +107,7 @@ import { EditAction } from '../../redux/actions/editaction';
                             
                             <div className="col-md-6"> 
                                 <label htmlFor="receiveCurrencyCode">Receive Currency Code</label>
-                                <input name="receiveCurrencyCode" id="receiveCurrencyCode" placeholder={item.receiveCurrencyCode} type="text" className="form-control" 
+                                <input name="receiveCurrencyCode" id="receiveCurrencyCode" defaultValue={item.receiveCurrencyCode} placeholder={item.receiveCurrencyCode} type="text" className="form-control" 
                                     onChange={(event) => {
                                     const receiveCurrencyCode = event.target.value;
                                     setRatedetails({...ratedetails, ...{ receiveCurrencyCode } }); 
@@ -116,7 +131,7 @@ import { EditAction } from '../../redux/actions/editaction';
                         <div className="form-row">
                             <div className="col-md-6"> 
                                 <label htmlFor="amount">Amount</label>
-                                <input name="amount" id="amount" placeholder={item.amount} type="number" className="form-control" 
+                                <input name="amount" id="amount" placeholder={item.amount} defaultValue={item.amount} type="number" className="form-control" 
                                     onChange={(event) => {
                                     const amount = event.target.value;
                                     setRatedetails({...ratedetails, ...{ amount } }); 
@@ -125,7 +140,7 @@ import { EditAction } from '../../redux/actions/editaction';
                             
                             <div className="col-md-6"> 
                                 <label htmlFor="amount_NgaUSD">Amount NGA USD</label>
-                                <input name="amount_NgaUSD" id="amount_NgaUSD" placeholder={item.amount_NgaUSD} type="number" className="form-control" 
+                                <input name="amount_NgaUSD" id="amount_NgaUSD" placeholder={item.amount_NgaUSD} defaultValue={item.amount_NgaUSD}  type="number" className="form-control" 
                                     onChange={(event) => {
                                     const amount_NgaUSD = event.target.value;
                                     setRatedetails({...ratedetails, ...{ amount_NgaUSD } }); 
@@ -164,9 +179,9 @@ import { EditAction } from '../../redux/actions/editaction';
                                         setRatedetails({...ratedetails, ...{ isUSDDisplay } }); 
                                     }}>
                                     <option> -- Select Display -- </option>
-                                    <option selected="selected" value={item.isUSDDisplay}>{item.isUSDDisplay}</option>
-                                    <option value="true">True</option>
-                                    <option value="false">False</option>
+                                    <option selected="selected" value={item.isUSDDisplay}>{processDisplay(item.isUSDDisplay)}</option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
                                 </select>
                             </div>
                         </div>
@@ -180,7 +195,7 @@ import { EditAction } from '../../redux/actions/editaction';
             <Button variant="secondary" onClick={handleShowEdit}>
                 Close
             </Button>
-            <Button variant="danger" disabled={isLoading} onClick={handleSubmit} >Update Rate</Button>
+            <Button variant="danger" disabled={ratesLoading} onClick={handleSubmit}>Update Rate</Button>
             </Modal.Footer>
             </Modal>
             
@@ -189,15 +204,14 @@ import { EditAction } from '../../redux/actions/editaction';
 
 const mapStateToProps = (state) => {
     return {
-        isLoading: state.loadingstate.isLoading,
+        // isLoading: state.loadingstate.isLoading,
     }
   }
   
   const mapDispatchToProps = (dispatch) => {
     return {
-            editrate: (ratedetails, setNotify, successactiontype, failureactiontype, setShow) => {
-                dispatch(ShowLoading(ratedetails));
-                dispatch(EditAction(ratedetails, setNotify, successactiontype, failureactiontype, setShow)
+            editrate: (ratedetails, setNotify, successactiontype, failureactiontype, setShow, setRatesLoading) => {
+                dispatch(CreateAction(ratedetails, setNotify, successactiontype, failureactiontype, setShow, setRatesLoading)
             );
         },
     }
