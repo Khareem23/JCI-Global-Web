@@ -14,8 +14,15 @@ import ActionTypes from "../actiontype/ActionTypes"
                     } else if(successactiontype === ActionTypes.ADD_EXISTING_BENEFICIARY_SUCCESS) {
                         response = await mainAxios.patch('/Transactions/addExistingBeneficiaryToTransaction/'+id+'/'+stateobject);
                     } else if(successactiontype === ActionTypes.UPLOAD_PAYMENTS_CONFIRMATION_SUCCESS) {
-                        response = await mainAxios.post('/Transactions/uploadPaymentConfirmation/'+ id, stateobject);
-                    } 
+                        console.log(stateobject.fileToUpload);
+                        let formData = new FormData();
+                        formData.append('fileToUpload', stateobject.fileToUpload);                       
+                        console.log(formData);
+                        response = await mainAxios.post('/Transactions/uploadPaymentConfirmation/'+ id, formData);
+                    } else if(successactiontype === ActionTypes.EDIT_BENEFICARY_SUCCESS)
+                    {
+                        response = await mainAxios.put('/Transactions/updateReceiver/' + id, stateobject);
+                    }
 
                     const { data } = response.data;
                     const message = response.data.message;
@@ -28,7 +35,6 @@ import ActionTypes from "../actiontype/ActionTypes"
                     
                     if(status === "success")
                     {
-                        // dispatch({type: ActionTypes.LOADING_HIDE, payload: message}); 
                         setIsLoading(false);
                         dispatch({type: successactiontype, payload: data});
                         setNotify({
@@ -39,7 +45,6 @@ import ActionTypes from "../actiontype/ActionTypes"
                         setShow(false);
                         
                     } else {                        
-                            // dispatch({type: ActionTypes.LOADING_HIDE, payload: message}); 
                             setIsLoading(false);
                             dispatch({type: failureactiontype, payload: message });
                             setNotify({
@@ -62,24 +67,42 @@ import ActionTypes from "../actiontype/ActionTypes"
                 }
                 
             } catch(error) {
-                let errorarray = error.response.data.errors;
-                let errmsg = "";
-                if(error.response.data.errors) {
-                    let list = prepareError(errorarray);
-                    errmsg = list;
-                } else if(error.response.data.message) {
-                    errmsg = error.response.data.message;
-                }
+                // let errorarray = error.response.data.errors;
+                // let errmsg = "";
+                // if(error.response.data.errors) {
+                //     let list = prepareError(errorarray);
+                //     errmsg = list;
+                // } else if(error.response.data.message) {
+                //     errmsg = error.response.data.message;
+                // }
                 
-                // dispatch({type: ActionTypes.LOADING_HIDE, payload: errmsg}); 
+                // setIsLoading(false);
+                // dispatch({type: failureactiontype, payload: errmsg });
+                // setNotify({
+                //     isOpen: true,
+                //     message: errmsg,
+                //     type: 'error',
+                // });
+                // setShow(false);
                 setIsLoading(false);
-                dispatch({type: failureactiontype, payload: errmsg });
-                setNotify({
-                    isOpen: true,
-                    message: errmsg,
-                    type: 'error',
-                });
-                setShow(false);
+                if(error.response) {
+                    let errmsg = "";
+                    if(error.response.data.data !== null) {
+                        let errorarray = error.response.data.errors;
+                        let list = prepareError(errorarray);
+                        errmsg = list;
+                    } else if(error.response.data.message) {
+                        errmsg = error.response.data.message;
+                    }
+                   
+                    dispatch({type: failureactiontype, payload: errmsg });
+                    setNotify({
+                        isOpen: true,
+                        message: errmsg,
+                        type: 'error',
+                    });
+                    setShow(false);                    
+                }
             }
         }
     }

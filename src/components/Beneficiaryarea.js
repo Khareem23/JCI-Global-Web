@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { GetAction } from '../redux/actions/getaction';
-import ActionTypes from "../redux/actiontype/ActionTypes"
+import ActionTypes from "../redux/actiontype/ActionTypes";
+import $ from 'jquery';
+import DataTable from 'datatables.net';
+import EditBeneficiaryModal from './modals/EditBeneficiaryModal';
 
 const Beneficiaryarea = (props) => {
 
-    const { isLoading, setNotify, show, handleShow, setShow, fetchbeneficiary, alluserreceivers } = props;
+    const { isLoading, setNotify, show, handleShow, setShow, fetchbeneficiary, alluserreceivers, beneficiaryLoading, setBeneficiaryLoading } = props;
     const [beneficiaries, setBeneficiaries] = useState({});
 
     useEffect(() => {
@@ -13,11 +16,37 @@ const Beneficiaryarea = (props) => {
     }, []);
 
     useEffect(() => {
+        if(!beneficiaryLoading) {
+            fetchbeneficiary(show, setNotify, ActionTypes.GET_USER_RECEIVERS_SUCCESS, ActionTypes.GET_USER_RECEIVERS_FAIL, setShow);
+        }
+    }, [beneficiaryLoading]);
+    
+
+    useEffect(()=>{
+        $(document).ready(function(){
+            $('#examtable').DataTable({responsive:!0})
+        })
+    },[])
+
+    useEffect(() => {
         if(alluserreceivers !== undefined)
         {
             setBeneficiaries(alluserreceivers);
         }
     }, [alluserreceivers]);
+
+    const [item, setItem] = useState({});
+    const [showEdit, setShowEdit] = useState(false);
+
+    const handleShowEdit = () => {
+        setShowEdit(!showEdit);
+    }
+
+    function handleEdit (item) {
+        setShowEdit(true);
+        setItem(item);
+    }
+
 
 
     const renderrow = (items) => {
@@ -33,6 +62,8 @@ const Beneficiaryarea = (props) => {
                         <td>{item.bankCity}</td>                        
                         <td>{item.bankState}</td>
                         <td>{item.country}</td>
+                        {/* <td>{item.country}</td> */}
+                        <td><button className="mb-2 mr-2 btn btn-danger" onClick={() => handleEdit(item)}>Edit</button></td>
                     </tr>
                 </>
                 )
@@ -87,7 +118,7 @@ const Beneficiaryarea = (props) => {
 
             <div className="main-card mb-3 card">
                 <div className="card-body">
-                    <table style={{width: '100%'}} id="example" className="table table-hover table-striped table-bordered">
+                    <table style={{width: '100%'}} id="examtable" className="table table-hover table-striped table-bordered">
                         <thead>
                             <tr>
                             <th>Bank Name</th>
@@ -97,6 +128,7 @@ const Beneficiaryarea = (props) => {
                             <th>Bank City</th>
                             <th>Bank State</th>
                             <th>Country</th>
+                            <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -113,11 +145,14 @@ const Beneficiaryarea = (props) => {
                             <th>Bank City</th>
                             <th>Bank State</th>
                             <th>Country</th>
+                            <th>Action</th>
                         </tr>
                     </tfoot>
                     </table>
                 </div>
             </div>
+
+            <EditBeneficiaryModal item={item} setNotify={setNotify} show={showEdit} handleEdit={handleEdit} setShow={setShowEdit} handleShowEdit={handleShowEdit} beneficiaryLoading={beneficiaryLoading} setBeneficiaryLoading={setBeneficiaryLoading}/>
         </>
     )
 }

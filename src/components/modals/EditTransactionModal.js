@@ -9,47 +9,10 @@ import { CreateAction } from '../../redux/actions/createaction';
     const EditTransactionModal = (props) => {
     const { edittransaction, setNotify, show, setShow, item, handleShowEdit, editTransactionLoading, setEditTransactionLoading} = props;
     const [userdetails, setUserdetails] = useState({});
-    
-    // {"customerId":10,
-// "fullName":"Adeyemi Ayefele",
-// "senderEmail":"yhemi06@gmail.com",
-// "id":1,
-// "transactionRefNumber":"5-2021-5403f1d8",
-// "transactionType":"BUY",
-// "sendingCountry":"AUS",
-// "receivingCountry":"NGA",
-// "amountToSend":150,
-// "amountToCharge":153,
-// "amountToReceive":45578,
-// "amountToReceive_NGN":0,
-// "amountToReceive_USD":0,
-// "payInMethod":"POLI",
-// "paymentPurpose":"Health",
-// "paymentDescription":"Payment of Hospital bills",
-// "dateSent":"2021-05-18T22:52:30",
-// "dateProcessed":"0001-01-01T00:00:00",
-// "transactionStatus":"OnHold",
-// "paymentConfirmationURL":null,
-// "isPaidIn":true,"bonus":0,"bonusType":"0","bonusCode":"",
-// "exchangeRate":285.78,
-// "statusDescription":"TM Rules : Account Updated less than 24 hrs Ago\nTM Rules : Violated Anti-Money Laundering policy\nTM Rules : Violated KYC policy\n",
-// "receiverId":1,"receiver":null,"payment":null}
-
-// {
-//     "id": 0,
-//     "customerID": 0,
-//     "payInMethod": 0,
-//     "paymentReferenceNo": "string",
-//     "isPaidIn": true,
-//     "transactionStatus": 0,
-//     "receiverId": 0,
-//     "dateProcessed": "2021-07-22T21:00:40.155Z"
-//   }
 
     const handleSubmit = e => {
         e.preventDefault();
         setEditTransactionLoading(true);
-        console.log(userdetails)
         edittransaction(userdetails, setNotify, ActionTypes.EDIT_TRANSACTION_SUCCESS, ActionTypes.EDIT_TRANSACTION_FAIL, setShow, setEditTransactionLoading);
     };
 
@@ -68,7 +31,6 @@ import { CreateAction } from '../../redux/actions/createaction';
 
     useEffect(() => {
         if(Object.keys(item).length !== 0) {
-            console.log(item)
             let id = item.id;
             let customerID = item.customerID;
             let payInMethod = item.payInMethod;
@@ -133,26 +95,7 @@ import { CreateAction } from '../../redux/actions/createaction';
                     </div>
                     
                     <div className="col-md-12 position-relative form-group">
-                        <div className="form-row">                            
-                        
-
-                        {/* <div className="col-md-6"> 
-                                <label htmlFor="transactionStatus">Is Paid In</label>
-                                <select type="select" 
-                                    id="isActive" 
-                                    name="isActive"
-                                    className="mb-2 form-control"
-                                    onChange={(event) => {
-                                        const isPaidIn = event.target.value;
-                                        setUserdetails({...userdetails, ...{ isPaidIn } }); 
-                                    }}>
-                                    <option> -- Select Method -- </option>
-                                    <option selected="selected" value={item.isPaidIn}>{item.isPaidIn}</option>
-                                    <option value="1">True</option>
-                                    <option value="0">False</option>
-                                </select>
-                            </div> */}
-
+                        <div className="form-row">
 
                             <div className="col-md-12"> 
                                 <label htmlFor="transactionStatus">Transaction Status</label>

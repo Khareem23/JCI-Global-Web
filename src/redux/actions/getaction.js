@@ -24,16 +24,16 @@ import ActionTypes from "../actiontype/ActionTypes"
                     } else if(successactiontype === ActionTypes.GET_USER_RECEIVERS_SUCCESS) {
                         response = await mainAxios.get('/Transactions/getUserReceivers', stateobject);
                     } else if(successactiontype === ActionTypes.DOWNLOAD_TRANSACTION_RECEIPT_SUCCESS) {
-                        response = await mainAxios.get('/Transactions/downloadTransactionReceipt/' + stateobject);
+                        response = await mainAxios.get('/Transactions/downloadTransactionReceipt/' + stateobject);                        
                     } else if(successactiontype === ActionTypes.FETCH_CUSTOMER_TRANSACTION_SUCCESS) {
                         response = await mainAxios.get('/Transactions/getCustomertransactions/');
                     } else if(successactiontype === ActionTypes.FETCH_ALL_TRANSACTION_SUCCESS) {
                         response = await mainAxios.get('/Transactions/getAllTransactions/');
                     } else if(successactiontype === ActionTypes.FETCH_ALL_USERS_SUCCESS) {
                         response = await mainAxios.get('/Users/getAllCustomers/');
+                    } else if(successactiontype === ActionTypes.GET_MONTHLY_USERS_SUCCESS) {
+                        response = await mainAxios.get('/Users/getTotalUsersMonthly');
                     } 
-
-                    console.log("get Action response" + response.data);
 
                     const { data } = response.data;
                     const message = response.data.message;
@@ -42,11 +42,11 @@ import ActionTypes from "../actiontype/ActionTypes"
                     {
                         dispatch({type: ActionTypes.LOADING_HIDE, payload: message}); 
                         dispatch({type: successactiontype, payload: data});
-                        setNotify({
-                            isOpen: true,
-                            message: message,
-                            type: status,
-                        });
+                        // setNotify({
+                        //     isOpen: true,
+                        //     message: message,
+                        //     type: status,
+                        // });
                         setShow(false);
                         
                     } else {                 

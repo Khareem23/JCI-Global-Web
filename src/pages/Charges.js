@@ -20,6 +20,7 @@ export default function Charges() {
     }
 
     const [chargesLoading, setChargesLoading] = useState(false);
+    
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
             <AppHeader notify={notify} setNotify={setNotify}/>

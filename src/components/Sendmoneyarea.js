@@ -24,7 +24,6 @@ const Sendmoneyarea = (props) => {
         setNotify, 
         show, 
         createbeneficiary,
-        handleShow, 
         setShow, 
         createconvert, 
         createtransact, 
@@ -56,6 +55,13 @@ const Sendmoneyarea = (props) => {
     const [recactive, setRecActive] = useState(false);
     const [isNigeria, setIsNigeria] = useState(false);
     const history = useHistory();
+    const [benAdded, setBenAdded] = useState(false);
+    const [uploaddetails, setUploadDetails] = useState(false);
+
+
+    const [stepone, setStepOne] = useState(true);
+    const [steptwo, setStepTwo] = useState(false);
+    const [stepthree, setStepThree] = useState(false);
     
     useEffect(() => {
         if(paymenttype) { 
@@ -82,7 +88,11 @@ const Sendmoneyarea = (props) => {
 
     
     const uploadConfirmation = () => {
-        // uploadconfrimationaction(type, transactionstate.id, setBeneficiaryLoading, setNotify, ActionTypes.ADD_PAYMENTS_TO_TRANSACTION_SUCCESS, ActionTypes.ADD_PAYMENTS_TO_TRANSACTION_FAIL, setShow);
+        uploadconfrimationaction(uploaddetails, transactionstate.id, setBeneficiaryLoading, setNotify, ActionTypes.UPLOAD_PAYMENTS_CONFIRMATION_SUCCESS, ActionTypes.UPLOAD_PAYMENTS_CONFIRMATION_FAIL, setShow);
+    }
+
+    const resetScreen = () => {
+        setScreen(0);
     }
 
     const proceedPayment = () => {
@@ -131,11 +141,7 @@ const Sendmoneyarea = (props) => {
         }
     }, [conversionstate]);
 
-    useEffect(() => {
-        if(transactionstate) {
-        }
-        
-    }, [transactionstate]);
+    
 
     const createTransaction = (props) => {
         let transactionParams = {};
@@ -195,14 +201,32 @@ const Sendmoneyarea = (props) => {
         setBeneficiarydetails({...beneficiarydetails, ...{ bankName } });
     }
 
-    
-
     const handleSubmit = e => {
-        e.preventDefault();
-        setIsLoading(true);
-        setSubmitted(true);
+        e.preventDefault(); setIsLoading(true); setSubmitted(true);
         createconvert(transferdetails, setNotify, ActionTypes.ADD_CONVERT_SUCCESS, ActionTypes.ADD_CONVERT_FAIL, setShow, setIsLoading);
     };
+
+    const proceedToTwo = () => {
+        if(transactionstate) {
+            setStepOne(false);
+            setStepTwo(true);
+        }        
+    }
+
+    const proceedToThree = () => {
+        setStepTwo(false);
+        setStepThree(true);
+    }
+
+    const backToOne = () => {        
+        setStepOne(true);
+        setStepTwo(false);
+    }
+
+    const backToTwo = () => {        
+        setStepThree(false);
+        setStepTwo(true);
+    }
 
     const postBeneficiaryDetails = e => {
         e.preventDefault();
@@ -210,6 +234,7 @@ const Sendmoneyarea = (props) => {
             {
                 if(transactionstate.id) {
                     setIsLoading(true);
+                    setBenAdded(true);
                     createbeneficiary(beneficiarydetails, transactionstate.id, setIsLoading, setNotify, ActionTypes.ADD_NEW_BENEFICIARY_SUCCESS, ActionTypes.ADD_NEW_BENEFICIARY_FAIL, setShow);
                 }
             } else{
@@ -218,12 +243,13 @@ const Sendmoneyarea = (props) => {
 
     const addExistingBeneficiary = () => {
         setBeneficiaryLoading(true);
+        setBenAdded(true);
         addExistBeneficiary(beneficiaryid.receiverID, transactionstate.id, setBeneficiaryLoading, setNotify, ActionTypes.ADD_EXISTING_BENEFICIARY_SUCCESS, ActionTypes.ADD_EXISTING_BENEFICIARY_FAIL, setShow)
     }
     
     const downloadReceipt = () => {
         setBeneficiaryLoading(true);
-        downloadreceiptaction(transactionstate.id, setNotify, ActionTypes.ADD_EXISTING_BENEFICIARY_SUCCESS, ActionTypes.ADD_EXISTING_BENEFICIARY_FAIL, setShow);
+        downloadreceiptaction(transactionstate.id, setNotify, ActionTypes.DOWNLOAD_TRANSACTION_RECEIPT_SUCCESS, ActionTypes.DOWNLOAD_TRANSACTION_RECEIPT_FAIL, setShow);
     }
 
 
@@ -247,29 +273,29 @@ const Sendmoneyarea = (props) => {
                 <div className="card-body">
                     <div id="smartwizard" className="sw-main sw-theme-default">
                     <ul className="forms-wizard nav nav-tabs step-anchor">
-                        <li className="nav-item done">
+                        <li className="nav-item active">
                         <a href="#step-1" className="nav-link">
                             <em>1</em><span>Conversion</span>
                         </a>
                         </li>
-                        <li className="nav-item active">
+                        <li className="nav-item active" >
                         <a href="#step-2" className="nav-link">
                             <em>2</em><span>Beneficiary Details</span>
                         </a>
                         </li>
-                        <li className="nav-item">
+                        <li className="nav-item active" >
                         <a href="#step-3" className="nav-link">
                             <em>3</em><span>Choose Payment</span>
                         </a>
                         </li>
                     </ul>
-                    <div className="form-wizard-content sw-container tab-content">
-                        <div id="step-1" className="tab-pane step-content" style={{display: 'block'}}>
-                        <div className="row">
+                    {/* <div className="form-wizard-content sw-container tab-content"> */}
+                         <div id="step-1" className="tab-pane step-content" hidden={!stepone}>
+                            <div className="row">
                                     <div className="col-md-12 col-lg-6 col-xl-6">
                                         <div className="card-shadow-primary card-border mb-3 card">
                                             <div className="dropdown-menu-header">
-                                            <div className="dropdown-menu-header-inner bg-primary">
+                                            <div className="dropdown-menu-header-inner bg-danger">
                                                 <div className="menu-header-image" style={{backgroundImage: 'url("assets/images/dropdown-header/city2.jpg")'}} />
                                                 <div className="menu-header-content">                                            
                                                 </div>
@@ -378,10 +404,8 @@ const Sendmoneyarea = (props) => {
                                             </div>
                                             </div>
                                             <div className="text-center d-block card-footer">
-                                            <button className="btn-shadow-danger btn btn-danger btn-lg" disabled={isLoading} onClick={handleSubmit}>Initialize Transaction</button>
-                                            {/* mr-2 border-0 btn-transition btn btn-outline-danger
-                                             <button className="border-0 btn-transition btn btn-outline-success">Send Message</button> */}
-                                                       
+                                            <button className="mb-2 mr-2 btn btn-danger btn-lg btn-block" disabled={isLoading} onClick={handleSubmit}>Initialize Transaction</button>
+                                           
                                             </div>
                                         </div>
                                     </div>
@@ -433,7 +457,6 @@ const Sendmoneyarea = (props) => {
                                             </ul>
                                             </div>
 
-                                            {/* transactionstate */}
 
                                             {(() => {
                                                 if(transactionstate)
@@ -444,8 +467,7 @@ const Sendmoneyarea = (props) => {
                                                         <div className="menu-header-content">
                                                             
                                                             <div>
-                                                            {/*<h5 className="menu-header-title">Settings</h5>
-                                                             <h6 className="menu-header-subtitle">Manage all of your options</h6> */}
+                                                            
                                                             </div>
                                                         </div>
                                                         </div>
@@ -521,41 +543,13 @@ const Sendmoneyarea = (props) => {
                                                             <div className="widget-content-outer">
                                                             <div className="widget-content-wrapper">
                                                             
-                                                                {/* <div className="widget-content-left">
-                                                                <div className="widget-heading">Amount To Receive </div>
-                                                                </div> */}
                                                                 <div className="widget-content-right">
-                                                                <button className="btn-shadow-danger btn btn-danger btn-lg">Add Beneficiary</button>
+                                                                <button className="btn-shadow-danger btn btn-danger btn-lg" onClick={proceedToTwo}>Add Beneficiary</button>
                                                                 </div>
                                                             </div>
                                                             </div>
                                                         </div>
                                                     </li>
-
-                                                    
-                                                    {/* <li className="list-group-item">
-                                                        <div className="widget-content p-0">
-                                                            <div className="widget-content-outer">
-                                                            <div className="widget-content-wrapper">
-                                                                <div className="widget-content-left">
-                                                                <div className="widget-heading">Charges</div>
-                                                                </div>
-                                                                <div className="widget-content-right">
-                                                                <div className="widget-numbers text-danger" style={{fontSize: 16}}>{transactionstate?.totalAmountToCharge}</div>
-                                                                </div>
-                                                            </div>
-                                                            </div>
-                                                        </div>
-                                                    </li> */}
-    
-                                                    
-    
-    
-    
-                                                    {/* <div className="d-block text-right card-footer">
-                                                        <button className="mr-2 btn btn-link btn-sm">Cancel</button>
-                                                        <button className="btn-shadow-primary btn btn-primary btn-lg">Submit</button>
-                                                    </div> */}
                                                 </div>
     
                                                 } else {
@@ -568,8 +562,18 @@ const Sendmoneyarea = (props) => {
                                     
                                     
                                     </div>
+                                    <div className="divider" />
+                            <div className="clearfix">
+                            {/* <button type="button" id="reset-btn" className="btn-shadow float-left btn btn-link">Reset</button> */}
+                            <button hidden={!transactionstate} type="button" id="next-btn" className="btn-shadow btn-wide float-right btn-pill btn-hover-shine btn btn-primary" onClick={proceedToTwo}>Next</button>
+                            {/* <button type="button" id="prev-btn" className="btn-shadow float-right btn-wide btn-pill mr-3 btn btn-outline-secondary">Previous</button> */}
+                            </div>
                         </div>
-                        <div id="step-2" className="tab-pane step-content" style={{display: 'none'}}>
+                        
+
+                    
+                        <div id="step-2" className="tab-pane step-content" hidden={!steptwo}> {/* style={{display: 'none'}} */}
+                        
                         <div id="accordion" className="accordion-wrapper mb-3">
                             <div className="card">
                             <div id="headingOne" className="card-header">
@@ -583,7 +587,7 @@ const Sendmoneyarea = (props) => {
                                     <div className="col-md-12 position-relative form-group ">
                                         <div className="form-row">
                                             <div className="position-relative form-group col-md-12">
-                                            <div className="card-title">Add Existing Beneficiary</div>                                                
+                                            <div className="card-title">Existing Beneficiary List</div>                                                
                                                 <div className="form-row">
                                                 <select type="select" 
                                                         id="namePrefix" 
@@ -597,7 +601,7 @@ const Sendmoneyarea = (props) => {
                                                     <option value="0"> Select Beneficiary </option>
                                                     {alluserreceivers?.map((currency, index) => (
                                                         <option key={currency.customerId} value={currency.customerId}>
-                                                            {currency.accountName}
+                                                            {currency.accountNumber}
                                                         </option>
                                                     ))}
                                                     <option value="0">Add New Beneficiary </option>
@@ -606,10 +610,11 @@ const Sendmoneyarea = (props) => {
 
                                             </div>
                                             
-                                        </div><div className="card-title">Add NEW Beneficiary</div>
+                                        </div>
                                     </div>
-                                    {/* display: none; */}
+                                    
                                     <div hidden={recactive} className="col-md-12 position-relative form-group ">
+                                        <div className="card-title">Add NEW Beneficiary</div>
                                         <div className="form-row">                                            
                                             <div className="col-md-4"> 
                                                 <label htmlFor="exampleGender">Bank Name</label>
@@ -617,20 +622,14 @@ const Sendmoneyarea = (props) => {
                                                     suggestions={allbanks} passChildData={handlereturnbanks}
                                                 />
                                             </div>
-                                            {/* {(() => {
-                                                if(!isNigeria)
-                                                {
-                                                    return  */}
+                                           
                                                     <div className="col-md-8"> 
                                                             <label htmlFor="exampleGender">Corresponding Bank Country</label>
                                                             <CountryAutocomplete disabled={isNigeria} placeholder="Type and Select a Country"
                                                                 suggestions={allcountriesstate} passChildData={handlereturncountry}
                                                             />
                                                         </div>
-                                                {/* } else {
-                                                    
-                                                }
-                                            })()} */}
+                                                
                                                                                     
                                         </div>
                                     </div>
@@ -648,10 +647,6 @@ const Sendmoneyarea = (props) => {
                                                 />
                                             </div>
 
-                                            {/* {(() => {
-                                                if(!isNigeria)
-                                                {
-                                                    return  */}
                                                     <div className="position-relative form-group col-md-4">
                                                             <label htmlFor="exampleAmount">Corresponding Bank Name</label>
                                                             <input disabled={isNigeria} name="amount" id="exampleAmount" placeholder="Corresponding Bank Name" type="text" className="form-control" 
@@ -661,16 +656,7 @@ const Sendmoneyarea = (props) => {
                                                                 }}
                                                             />
                                                         </div>
-                                            {/*     } else {
-                                                    
-                                            //     }
-                                            // })()}
-
-
-                                            {(() => {
-                                                if(!isNigeria)
-                                                {
-                                                    return */}
+                                            
                                                     <div className="position-relative form-group col-md-4">
                                                             <label htmlFor="exampleAmount">Corresponding Acct Number/IBAN</label>
                                                             <input disabled={isNigeria} name="amount" id="exampleAmount" placeholder="Account Number/IBAN" type="text" className="form-control" 
@@ -680,10 +666,7 @@ const Sendmoneyarea = (props) => {
                                                                 }}
                                                             />
                                                         </div>
-                                                {/* } else {
-                                                                                        
-                                                }
-                                            })()} */}
+                                               
                                             
                                         </div>
                                     </div>
@@ -776,8 +759,23 @@ const Sendmoneyarea = (props) => {
                             </div>
                             </div>
                         </div>
+
+
+
+                            <div className="divider" />
+                            <div className="clearfix">
+                            {/* <button type="button" id="reset-btn" className="btn-shadow float-left btn btn-link">Reset</button> */}
+                            <button type="button" hidden={!benAdded} id="next-btn" className="btn-shadow btn-wide float-right btn-pill btn-hover-shine btn btn-primary" onClick={proceedToThree}>Next</button>
+                            <button type="button" id="prev-btn" className="btn-shadow float-right btn-wide btn-pill mr-3 btn btn-outline-secondary" onClick={backToOne}>Previous</button>
+                            </div>                        
                         </div>
-                        <div id="step-3" className="tab-pane step-content" style={{display: 'none'}}>
+
+                        
+
+
+
+                        <div id="step-3" className="tab-pane step-content" hidden={!stepthree}>{/* style={{display: 'none'}} */}
+                            
                             <div className="no-results">
 
                                 {(() => {
@@ -946,15 +944,7 @@ const Sendmoneyarea = (props) => {
                                         <div className="form-row">                                            
                                             <div className="col-md-6"> 
                                                 <label htmlFor="exampleGender">Select Banks</label>
-                                                {/* <select type="select" 
-                                                    id="gender" 
-                                                    name="gender"
-                                                    className="mb-2 form-control"
-                                                    >
-                                                    <option value="">-- All Bank List --</option>
-                                                    <option value="Male">First Bank</option>
-                                                    <option value="Female">Sterling Bank</option>
-                                                </select> */}
+                                               
                                                 <BankAutocomplete placeholder="Type and Select a Bank"
                                                     suggestions={allbanks} passChildData={handlereturnbanks}
                                                 />
@@ -962,7 +952,7 @@ const Sendmoneyarea = (props) => {
                                             <div className="col-md-6" style={{marginTop: 1}}> 
                                                 <div className="position-relative form-group">
                                                 <label htmlFor="exampleText" >Transaction Description</label>
-                                                <textarea defaultValue={transactionstate.paymentDescription}  name="text" id="exampleText" className="form-control"  />
+                                                <input type="text" name="fileToUpload" defaultValue={transactionstate.paymentDescription} className="form-control" />
                                                 </div>
                                             </div>                                          
                                         </div>
@@ -981,23 +971,30 @@ const Sendmoneyarea = (props) => {
                                 <div className="widget-content p-0 w-100">
                                 <div className="widget-content-outer">
                                     <div className="widget-content-wrapper" style={{marginBottom: 55}}>
-                                        <div className="widget-content-left fsize-1 col-md-6">
-                                            <h5 className="text-muted opacity-10" >Transaction Reference Number</h5>
-                                            <h5 className="text-danger opacity-10">{transactionstate.transactionRefNumber}</h5>
+                                        
+                                        <div className="widget-content-left card-shadow-danger border mb-3 card card-body border-danger col-md-6">
+                                            <h5 className="card-title">Transaction Reference Number</h5>
+                                            {transactionstate.transactionRefNumber}
                                         </div>
 
-                                        <div className="ml-auto">
+                                        <div className="widget-content-right card-shadow-danger border mb-3 card card-body border-danger col-md-6">
+                                            <h5 className="card-title">Payment Method</h5>
+                                            Domestic Wire Transfer
+                                        </div>
+
+
+                                        {/* <div className="ml-auto">
                                             <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
                                                 <h5 className="text-muted opacity-10" style={{marginLeft: 8}}>Payment Method</h5>
                                                 <span className="text-danger pl-2">
                                                     <span className="" style={{marginTop: 15, marginRight: 16}}> Domestic Wire Transfer   </span>
                                                     </span>
                                             </div>
-                                        </div>                                    
+                                        </div>                                     */}
                                     </div>
 
                                     <div className="widget-content-right w-100">
-                                        <h5 className="text-muted opacity-10" style={{marginLeft: 16}}><strong> IJC GLobal Account - Beneficiary Details </strong></h5>
+                                        <h5 className="text-muted opacity-10 card-title" style={{marginLeft: 16}}>IJC GLobal Account - Beneficiary Details</h5>
                                         <div className="progress-bar-xs progress" style={{marginLeft: 16, marginRight: 16}}>
                                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                                         </div>
@@ -1009,22 +1006,27 @@ const Sendmoneyarea = (props) => {
                                         <div className="form-row">
                                         <div className="position-relative form-group col-md-3">
                                                 <label htmlFor="exampleAmount">Account Holder's Name</label>
-                                                <h5 className="text-muted opacity-10"><strong> {transactionstate.fullName} </strong></h5>
+                                                <h5 className="text-muted opacity-10 card-title"> {transactionstate.fullName} </h5>
                                             </div>
 
-                                            <div className="position-relative form-group col-md-3">
-                                                <label htmlFor="exampleAmount">Location</label>
-                                                <h5 className="text-muted opacity-10"><strong> {transactionstate.receivingCountry} </strong></h5>
+                                            <div className="position-relative form-group col-md-2">
+                                                <label htmlFor="exampleAmount">Receiving Country</label>
+                                                <h5 className="text-muted opacity-10 card-title"> {transactionstate.receivingCountry}</h5>
                                             </div>
 
-                                            <div className="position-relative form-group col-md-3">
-                                                <label htmlFor="exampleAmount">Account Number</label>
-                                                <h5 className="text-muted opacity-10"><strong> 0045338922 </strong></h5>
+                                            <div className="position-relative form-group col-md-2">
+                                                <label htmlFor="exampleAmount">Amount To Send</label>
+                                                <h5 className="text-muted opacity-10 card-title"> {transactionstate.amountToSend}</h5>
+                                            </div>
+
+                                            <div className="position-relative form-group col-md-2">
+                                                <label htmlFor="exampleAmount">Amount To Receive</label>
+                                                <h5 className="text-muted opacity-10 card-title"> {transactionstate.amountToReceive}</h5>
                                             </div>
 
                                             <div className="position-relative form-group col-md-3">
                                                 <label htmlFor="exampleAmount">Payment Date</label>
-                                                <h5 className="text-muted opacity-10"><strong> {transactionstate.dateSent.substring(0,10)} </strong> </h5>
+                                                <h5 className="text-muted opacity-10 card-title">{transactionstate.dateSent.substring(0,10)}  </h5>
                                             </div>
                                         </div>
                                     </div>
@@ -1032,7 +1034,7 @@ const Sendmoneyarea = (props) => {
                                     <div className="ml-auto">
                                         <div className="widget-title ml-auto font-size-lg font-weight-normal text-muted">
                                             <span className="text-success pl-2">
-                                                <button className="btn-wide btn btn-danger" onClick={downloadReceipt} style={{marginTop: 15, marginRight: 16}}>  Download Payment Info  </button>
+                                                <button className="btn-wide btn btn-danger btn-icon btn-icon-right" onClick={downloadReceipt} style={{marginTop: 15, marginRight: 16}}>Download Payment Info <i className="pe-7s-cloud-download btn-icon-wrapper"> </i> </button>
                                                 </span>
                                         </div>
                                     </div>
@@ -1045,25 +1047,40 @@ const Sendmoneyarea = (props) => {
                             </div>
                         </div>
 
-                        <button className="mb-2 mr-2 btn-pill btn btn-danger btn-lg btn-block" style={{marginRight: -36}}>Upload Payment Confirmation</button>
+                        
+                        
                         <div className="col-md-12 position-relative form-group">
-                            <div className="form-row">                                            
-                                <div className="position-relative form-group col-md-8">
-                                    <span> *** Policy Content Here *** </span>
+                            <div className="form-row">          
+                                <div className="position-relative form-group col-md-4">
+                                    <span> 
+                                        <input type="file" name="fileToUpload" className="mb-2 mr-2 btn-pill btn btn-danger btn-lg btn-block"
+                                            onChange={(event) => {
+                                                const fileToUpload = event.target.files[0];
+                                                setUploadDetails({...uploaddetails, ...{ fileToUpload } }); 
+                                            }}
+                                        />
+                                    </span>
+                                </div>                                  
+                                <div className="position-relative form-group col-md-4">
+                                    <span> 
+                                    <button className="mb-2 mr-2 btn-pill btn btn-danger btn-lg btn-block btn-icon btn-icon-right" style={{marginRight: -3}} onClick={uploadConfirmation}>Upload Payment Confirmation <i className="pe-7s-cloud-upload btn-icon-wrapper"> </i></button>
+                                    {/* <button className="btn-wide mb-2 mr-2 btn-icon btn-icon-right btn-shadow btn-pill btn btn-outline-danger">Normal<i className="pe-7s-volume btn-icon-wrapper"> </i></button> */}
+
+                                    </span>
                                 </div>  
                                 <div className="position-relative form-group col-md-4">
-                                    <button className="mb-2 mr-2 btn-square btn btn-danger btn-block">Finish</button>
+                                    <button className="mb-2 mr-2 btn-pill btn btn-danger btn-lg btn-block" >Finish</button>
                                 </div>                                           
                             </div>
                         </div>
 
-                        <div className="" style={{marginTop: 35}}>
-                                    <div className="form-row">
-                                                <span className="text-success pl-2">
-                                                    <button className="btn-wide btn btn-danger" style={{marginLeft: 12}}>   Previous   </button>
-                                                </span>
+                                    <div className="" style={{marginTop: 35}}>
+                                                <div className="form-row">
+                                                            <span className="text-success pl-2">
+                                                                <button className="btn-wide btn btn-danger" style={{marginLeft: 12}} onClick={resetScreen}>   Previous   </button>
+                                                            </span>
+                                                </div>
                                     </div>
-                        </div>
                                                 </div>
                                     } else if(screen === 4) {
                                         return  <div className="widget-content-outer">
@@ -1075,16 +1092,7 @@ const Sendmoneyarea = (props) => {
                                             <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
                                             </div>
                                             </div>
-                                        </div>
-                                    
-                                        {/* //  <div className="widget-content-right w-100">
-                                        //     <div className="progress-bar-xs progress" style={{marginLeft: 16, marginRight: 16}}>
-                                        //     <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>
-                                        //     </div>
-                                        //     </div>
-                                        // </div> 
-     */}
-    
+                                        </div>    
                                         </div>
     
                                        <div className="col-md-12 position-relative form-group">
@@ -1160,19 +1168,19 @@ const Sendmoneyarea = (props) => {
                                 
                                 
                             </div>
+                                
+                            <div className="divider" />
+                            <div className="clearfix">
+                            {/* <button type="button" id="reset-btn" className="btn-shadow float-left btn btn-link">Reset</button> */}
+                            {/* <button type="button" id="next-btn" className="btn-shadow btn-wide float-right btn-pill btn-hover-shine btn btn-primary" onClick={proceedToThree}>Next</button> */}
+                            <button type="button" id="prev-btn" className="btn-shadow float-right btn-wide btn-pill mr-3 btn btn-outline-secondary" onClick={backToTwo}>Previous</button>
+                            </div>
+                        
                         </div>
-                    </div>
-                    </div>
 
+                       {/*  </div>
 
-                    <div className="divider" />
-                    <div className="clearfix">
-                    <button type="button" id="reset-btn" className="btn-shadow float-left btn btn-link">Reset</button>
-
-
-
-                    <button type="button" id="next-btn" className="btn-shadow btn-wide float-right btn-pill btn-hover-shine btn btn-primary">Next</button>
-                    <button type="button" id="prev-btn" className="btn-shadow float-right btn-wide btn-pill mr-3 btn btn-outline-secondary">Previous</button>
+                    </div> */}
                     </div>
                 </div>
                 </div>
@@ -1244,8 +1252,8 @@ const mapDispatchToProps = (dispatch) => {
         downloadreceiptaction: (id, setNotify, successactiontype, failureactiontype, setShow) => {
             dispatch(GetAction(id, setNotify, successactiontype, failureactiontype, setShow))
         },
-        uploadconfrimationaction: (fileupload, id, setNotify, successactiontype, failureactiontype, setShow) => {
-            dispatch(PatchAction(fileupload, id, setNotify, successactiontype, failureactiontype, setShow))
+        uploadconfrimationaction: (fileupload, id, setBeneficiaryLoading, setNotify, successactiontype, failureactiontype, setShow) => {
+            dispatch(PatchAction(fileupload, id, setBeneficiaryLoading, setNotify, successactiontype, failureactiontype, setShow))
         },
         
         

@@ -19,7 +19,6 @@ const Austracreportarea = (props) => {
         if(austracreport !== undefined)
         {
             // conssetAustrac(austracdetails);
-            console.log(austracreport);
         }
     }, [austracreport]);
 
@@ -31,9 +30,6 @@ const Austracreportarea = (props) => {
                     <div className="page-title-heading">
                     <div>
                         <div className="page-title-head center-elem">
-                        {/* <span className="d-inline-block pr-2">
-                            <i className="lnr-apartment icon-gradient bg-mean-fruit" />
-                        </span> */}
                         <span className="d-inline-block">Austrac Reports</span>
                         </div>
                         <div className="page-title-subheading opacity-10">
@@ -134,14 +130,6 @@ const Austracreportarea = (props) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
-                            </tr> */}
                             
                         </tbody>
                         <tfoot>

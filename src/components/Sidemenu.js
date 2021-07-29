@@ -21,7 +21,7 @@ const Sidemenu = (props) => {
                         <img src="assets/images/logo-inverse.jpeg" alt="" width={225} height={100} />
                         <div className="widget-chart-content" /></div></div>
 
-                    <li className="app-sidebar__heading">Modules</li>
+                    <li className="app-sidebar__heading text-danger">Modules</li>
                     <li style={{margin: 16}}>
                         <Link to="/dashboard">
                             <i className="metismenu-icon pe-7s-home" />Dashboard

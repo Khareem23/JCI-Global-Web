@@ -17,6 +17,7 @@ export default function Beneficiary() {
     const handleShow = () => {
         setShow(!show);
     }
+    const [beneficiaryLoading, setBeneficiaryLoading] = useState(false);
 
     return (
         <div className="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
@@ -25,7 +26,7 @@ export default function Beneficiary() {
                 <AppSidebar/>
                 <div className="app-main__outer">
                     <div className="app-main__inner"> 
-                        <Beneficiaryarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow}/>
+                        <Beneficiaryarea show={show} notify={notify} setNotify={setNotify} handleShow={handleShow} setShow={setShow} beneficiaryLoading={beneficiaryLoading} setBeneficiaryLoading={setBeneficiaryLoading}/>
                         <Footer/>
                     </div>
                 </div>        

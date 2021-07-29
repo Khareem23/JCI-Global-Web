@@ -19,6 +19,7 @@ const Ratesarea = (props) => {
             $('#examtable').DataTable({responsive:!0})
         })
     },[])
+    
     useEffect(() => {
         fetchrates(show, setNotify, ActionTypes.GET_RATE_SUCCESS, ActionTypes.GET_RATE_FAIL, setShow);
     }, []);
@@ -27,7 +28,6 @@ const Ratesarea = (props) => {
     useEffect(() => {
         
         if(!ratesLoading) {
-            console.log(ratesLoading);
             fetchrates(show, setNotify, ActionTypes.GET_RATE_SUCCESS, ActionTypes.GET_RATE_FAIL, setShow);
         }
     }, [ratesLoading]);
@@ -72,7 +72,6 @@ const Ratesarea = (props) => {
     }
 
     const processRateType = (type) => {
-        console.log(type)
         if(type === 0)
             return 'Live Rate';
         else if(type === 1)

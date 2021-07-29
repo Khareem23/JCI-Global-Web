@@ -37,10 +37,8 @@ import ActionTypes from "../actiontype/ActionTypes"
                     } else if(successactiontype === ActionTypes.EDIT_CHARGES_SUCCESS)
                     {
                         response = await mainAxios.put('/Charges/updateCharges/', stateobject);
-                    }
+                    } 
                     
-                    //console.log(JSON.stringify(response));
-
                     const { data } = response.data;
                     const message = response.data.message;
                     const status = response.data.status;

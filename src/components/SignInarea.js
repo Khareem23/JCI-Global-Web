@@ -18,7 +18,6 @@ const SignInarea = (props) => {
   const [loginloading, setLoginLoading] = useState(false)
 
   useEffect(() => {
-    console.log(isLoading)
   }, [isLoading])
 
 

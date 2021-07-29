@@ -210,21 +210,6 @@ const Transactionsarea = (props) => {
                             <div className="col-md-12 position-relative form-group">
                             <div className="form-row">
                                 
-                               
-                                {/* <div className="col-md-3"> 
-                                    <label htmlFor="exampleGender">Currency List</label>
-                                    <select type="select" 
-                                        id="gender" 
-                                        name="gender"
-                                        className="mb-2 form-control"
-                                        >
-                                        <option value="">Select Currency</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select>
-                                </div> */}
-                                
-                               
                                 <div className="col-md-4"> 
                                     <label htmlFor="exampleGender">Transaction Type</label>
                                     <select type="select" 

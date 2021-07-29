@@ -23,7 +23,7 @@ const CustSidemenu = (props) => {
                         </div>
                     </div>
                     <li style={{margin: 32, marginLeft: 32}}>
-                        <li className="app-sidebar__heading">Modules</li>
+                        <li className="app-sidebar__heading text-danger">Modules</li>
                     </li>
                     <div className="progress-bar-xs progress sidemenu" style={{marginLeft: -23, marginRight: -23}}>
                         <div className="progress-bar bg-danger" role="progressbar" aria-valuenow={71} aria-valuemin={0} aria-valuemax={100} style={{width: '100%'}}>

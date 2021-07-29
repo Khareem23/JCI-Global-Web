@@ -9,6 +9,9 @@ const allpurposestate = [
 const allusers = [
 ]
 
+const monthlyusers = [
+]
+
 const countryusers = {}
 
 const austracreport = [
@@ -41,6 +44,21 @@ const getAllUserState = () => {
         }
     } catch (error) {
         return allusers;
+    }
+};
+
+const getMonthlyUsersState = () => {
+    const monthusers = localStorage.getItem("monthlyusers");
+    try {
+        if(monthusers != null)
+        {
+            const authobj = JSON.parse(monthusers)
+            return authobj;
+        } else {
+            return monthlyusers;
+        }
+    } catch (error) {
+        return monthlyusers;
     }
 };
 
@@ -103,6 +121,19 @@ const fetchallusersreducer = (state = existingUsers, action) => {
     }
 };
 
+const fetchusersmonthlyreducer = (state = getMonthlyUsersState, action) => {
+    switch (action.type) {
+        case ActionTypes.GET_MONTHLY_USERS_SUCCESS:
+            const Fetchmoutusers = {
+                monthlyusers: action.payload,
+            };
+            localStorage.setItem("monthlyusers", JSON.stringify(Fetchmoutusers)); 
+            return Fetchmoutusers;
+        default:
+            return state;
+    }
+};
+
 const fetchcountryusersreducer = (state = countryusers, action) => {
     switch (action.type) {
         case ActionTypes.FETCH_USERS_BY_COUNTRY_SUCCESS:
@@ -127,4 +158,4 @@ const fetchaustracreportreducer = (state = austracreport, action) => {
     }
 };
 
-export { fetchpromosreducer, fetchpurposesreducer, fetchallusersreducer, fetchaustracreportreducer, fetchcountryusersreducer };
+export { fetchpromosreducer, fetchpurposesreducer, fetchallusersreducer, fetchaustracreportreducer, fetchcountryusersreducer, fetchusersmonthlyreducer };

@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { GetAction } from '../redux/actions/getaction';
-import ActionTypes from "../redux/actiontype/ActionTypes"
+import ActionTypes from "../redux/actiontype/ActionTypes";
+import $ from 'jquery';
+import DataTable from 'datatables.net';
+import ViewTransactionModal from './modals/ViewTransactionModal';
 
 const Transactionhistoryarea = (props) => {
 
     const { setNotify, show, setShow, fetchhistory, allcustomertransactions } = props;
     const [transactions, setTransactions] = useState({});
+    const [item, setItem] = useState({});
+    const [showView, setShowView] = useState(false);
 
     useEffect(() => {
         fetchhistory(show, setNotify, ActionTypes.FETCH_CUSTOMER_TRANSACTION_SUCCESS, ActionTypes.FETCH_CUSTOMER_TRANSACTION_FAIL, setShow);
@@ -18,6 +23,21 @@ const Transactionhistoryarea = (props) => {
             setTransactions(allcustomertransactions);
         }
     }, [allcustomertransactions]);
+
+    useEffect(()=>{
+        $(document).ready(function(){
+            $('#examtable').DataTable({responsive:!0})
+        })
+    },[])
+
+    function viewUser (item) {
+        setShowView(true);
+        setItem(item);
+    }
+
+    const handleShowView = () => {
+        setShowView(!showView);
+    }
 
 
     const renderrow = (items) => {
@@ -33,6 +53,7 @@ const Transactionhistoryarea = (props) => {
                         <td>{item.amountToReceive}</td>
                         <td>{item.dateSent}</td>
                         <td>{item.exchangeRate}</td>
+                        <td> <button className="btn-wide btn btn-danger" onClick={() => { viewUser(item)}}>View</button> </td>
                     </tr>
                 </>
                 )
@@ -56,7 +77,7 @@ const Transactionhistoryarea = (props) => {
 
             <div className="main-card mb-3 card">
                 <div className="card-body">
-                    <table style={{width: '100%'}} id="example" className="table table-hover table-striped table-bordered">
+                    <table style={{width: '100%'}} id="examtable" className="table table-hover table-striped table-bordered">
                         <thead>
                             <tr>
                             <th>Reference Number</th>
@@ -66,7 +87,7 @@ const Transactionhistoryarea = (props) => {
                             <th>Amount Received</th>
                             <th>Date</th>
                             <th>Rate</th>
-
+                            <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,11 +104,13 @@ const Transactionhistoryarea = (props) => {
                             <th>Amount Received</th>
                             <th>Date</th>
                             <th>Rate</th>
+                            <th>Action</th>
                         </tr>
                     </tfoot>
                     </table>
                 </div>
             </div>
+            <ViewTransactionModal item={item} show={showView} setShow={setShowView} handleShowView={handleShowView} />
         </>
     )
 }

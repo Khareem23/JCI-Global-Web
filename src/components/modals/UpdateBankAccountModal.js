@@ -29,21 +29,24 @@ import { FetchStatesByCountryCode } from '../../redux/actions/authaction';
     }
 
     useEffect(() => {
-        let firstobject = userprofilestate[0];
+        if(userprofilestate) {
+            let firstobject = userprofilestate[0];
 
-        if(firstobject.customerBankAccount) {
+            if(firstobject.customerBankAccount) {
 
-            setBankDetails(firstobject.customerBankAccount);
+                setBankDetails(firstobject.customerBankAccount);
 
-            let accBankName = firstobject.customerBankAccount.accBankName;
-            let accCountry = firstobject.customerBankAccount.accCountry;
-            let accNumber = firstobject.customerBankAccount.accNumber;
-            let accSwiftCode = firstobject.customerBankAccount.accSwiftCode;
-            let accountName = firstobject.customerBankAccount.accountName;
-            let id = firstobject.customerBankAccount.id;
-            let customerId = firstobject.customerBankAccount.customerId;
-            setAcctDetails({...acctdetails, ...{ id, customerId, accBankName, accCountry, accNumber, accSwiftCode, accountName } });
+                let accBankName = firstobject.customerBankAccount.accBankName;
+                let accCountry = firstobject.customerBankAccount.accCountry;
+                let accNumber = firstobject.customerBankAccount.accNumber;
+                let accSwiftCode = firstobject.customerBankAccount.accSwiftCode;
+                let accountName = firstobject.customerBankAccount.accountName;
+                let id = firstobject.customerBankAccount.id;
+                let customerId = firstobject.customerBankAccount.customerId;
+                setAcctDetails({...acctdetails, ...{ id, customerId, accBankName, accCountry, accNumber, accSwiftCode, accountName } });
+            }
         }
+        
         
        
     }, [])

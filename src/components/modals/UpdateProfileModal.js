@@ -34,21 +34,23 @@ import StatesAutocomplete from '../StatesAutocomplete';
     }
 
     useEffect(() => {
-        let firstobject = userprofilestate[0];
-        setUserProfile(firstobject);
-
-        let id = authstate.nameid;
-        let email = firstobject.email;
-        let postalCode = firstobject.postalCode;
-        let firstName = firstobject.firstName;
-        let lastName = firstobject.lastName;
-        let city = firstobject.city;
-        let phoneNumber = firstobject.phoneNumber;
-        let country = firstobject.country;
-        let address = firstobject.address;
-        let state = firstobject.state;
+        if(userprofilestate) {
+            let firstobject = userprofilestate[0];
+            setUserProfile(firstobject);
+    
+            let id = authstate.nameid;
+            let email = firstobject.email;
+            let postalCode = firstobject.postalCode;
+            let firstName = firstobject.firstName;
+            let lastName = firstobject.lastName;
+            let city = firstobject.city;
+            let phoneNumber = firstobject.phoneNumber;
+            let country = firstobject.country;
+            let address = firstobject.address;
+            let state = firstobject.state;
+            setProfileDetails({...profiledetails, ...{ id, email, postalCode, city, lastName, firstName, phoneNumber, country, address, state } });
+        }
         
-        setProfileDetails({...profiledetails, ...{ id, email, postalCode, city, lastName, firstName, phoneNumber, country, address, state } });
        
     }, [])
 
