@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Authfooter() {
     return (
@@ -23,6 +24,11 @@ export default function Authfooter() {
                             {/* <h4 className="nav-link"> */}
                             <strong>Legal</strong>
                             {/* </h4> */}
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/login" className="nav-link">
+                            <span>Login</span>
+                            </Link>
                         </li>
                         <li className="nav-item">
                                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}

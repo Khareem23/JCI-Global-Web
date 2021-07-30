@@ -8,6 +8,7 @@ import { usePasswordValidation } from "../utils/passwordValidation";
 import CountryAutocomplete from '../components/CountryAutocomplete';
 import StatesAutocomplete from '../components/StatesAutocomplete';
 import Notification from '../components/Notification';
+import { Link } from 'react-router-dom';
 
 
 const Register = (props) => {
@@ -21,8 +22,13 @@ const Register = (props) => {
     const [err2, setErr2] = useState();
     const [showerr, setShowErr] = useState(false);
     const [errmsg, setErrmsg] = useState();
-    // const [errmsg2, setErrmsg2] = useState();
-    const today = new Date();
+    const [emailerrortext, setEmailErrortext] = useState();
+    const [phoneerrortext, setPhoneErrorText] = useState();
+    const [accountype, setAccountype] = useState(false);
+    const [response, setResponse] = useState('');
+    
+
+    
 
     const [error, setError] = useState({
         hasError: false,
@@ -31,6 +37,11 @@ const Register = (props) => {
 
     useEffect(() => {
         fetchallcountry(setError);
+        var x = document.getElementById("exampleEmail").value;
+
+        if (x.length === 0){
+            setEmailValid(true);
+        }
     }, [])
 
     const [password, setPassword] = useState({
@@ -56,10 +67,29 @@ const Register = (props) => {
         type: '',
     })
 
+    useEffect(() => {
+        if(!isEmailValid) {
+            setEmailErrortext('Email already exist!')
+        } else {
+            setEmailErrortext('');
+        }
+    }, [isEmailValid])
+
+    useEffect(() => {
+        if(!isPhoneValid) {
+            setPhoneErrorText('Phone number already exist!')
+        } else {
+            setPhoneErrorText('');
+        }
+    }, [isPhoneValid])
+
+    useEffect(() => {
+        
+        
+    }, [response])
+
 
     const handlereturnvalue = (cout) => {
-        // const _statecode = cout.substring(cout.length - 3, cout.length);
-        // fetchallcountrystates(setError, _statecode)
         const countryOfNationality = cout.substring(0, cout.length - 5);
         setUserdetails({...userdetails, ...{ countryOfNationality } });
     }
@@ -68,8 +98,7 @@ const Register = (props) => {
         const _statecode = cout.substring(cout.length - 3, cout.length);
         fetchallcountrystates(setError, _statecode)
         const countryofResidence = cout.substring(0, cout.length - 5);
-        const country = cout.substring(0, cout.length - 5);
-        setUserdetails({...userdetails, ...{ countryofResidence, country } });
+        setUserdetails({...userdetails, ...{ countryofResidence } });
     }
 
     const handlereturnvalueforstates = (state) => {
@@ -96,7 +125,7 @@ const Register = (props) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        registeruser(userdetails, history, setError, setNotify);
+        registeruser(userdetails, history, setError, setNotify, setResponse);
     };
     
     const setFirst = (event) => {
@@ -130,7 +159,6 @@ const Register = (props) => {
         }
     };
 
-
     return (
             <div className="app-container app-theme-white body-tabs-shadow">
                 <div className="app-container">
@@ -144,7 +172,7 @@ const Register = (props) => {
                                         <Authnavigation/>
 
                                         <h4>
-                                        <div>Create Account</div>
+                                        <div className="text-danger">Create Account</div>
                                         
                                         </h4>
 
@@ -188,7 +216,7 @@ const Register = (props) => {
                                                                     <div className="card">
                                                                         <div id="headingOne" className="card-header">
                                                                             <button type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" className="text-left m-0 p-0 btn btn-link btn-block">
-                                                                            <span className="form-heading" >Account Information<p>Enter your account details below</p></span>
+                                                                            <span className="form-heading text-danger">Account Information<p>Enter your account details below</p></span>
                                                                             </button>
                                                                         </div>
                                                                         <div data-parent="#accordion" id="collapseOne" aria-labelledby="headingOne" className="collapse show" >
@@ -221,22 +249,27 @@ const Register = (props) => {
                                                                                 <div className="col-md-6">
                                                                                     <div className="position-relative form-group">
                                                                                     <label htmlFor="exampleEmail" ><span className="text-danger">*</span> Email</label>
-                                                                                    <input name="email" id="exampleEmail" className="form-control" placeholder="Email" type="email" required 
+                                                                                    <input type="email" autoComplete="off" name="email" id="exampleEmail" className="form-control" placeholder="Email" required 
+
                                                                                         style={{
                                                                                             backgroundColor: (isEmailValid && emailValid) ? '' : 'red',
                                                                                           }}
+                                                                                         
+                                                                                        
+
                                                                                          onChange={(event) => {
                                                                                             const email = event.target.value;
                                                                                             setUserdetails({...userdetails, ...{ email }});
                                                                                             checkemail(email);
                                                                                         }}
                                                                                     />
+                                                                                    <span className='text-danger'>{emailerrortext}</span>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div className="col-md-6"> 
                                                                                     <label htmlfor="examplePhone">Phone Number</label>
                                                                                     <div className="position-relative form-group">
-                                                                                        <input name="phone" id="examplePhone" placeholder="Phone Number" type="tel" className="form-control col-md-12"
+                                                                                        <input name="phone" id="examplePhone" placeholder="Phone Number" type="number" className="form-control col-md-12"
                                                                                             style={{
                                                                                                 backgroundColor: (isPhoneValid ) ? '' : 'red',
                                                                                             }}
@@ -246,6 +279,7 @@ const Register = (props) => {
                                                                                                 checkphone(phoneNumber);
                                                                                             }}
                                                                                         />
+                                                                                        <span className='text-danger'>{phoneerrortext}</span>
                                                                                     </div>
                                                                                 </div>
                                                                                 
@@ -315,7 +349,7 @@ const Register = (props) => {
                                                                 <div className="card">
                                                                 <div id="headingOne" className="card-header">
                                                                     <button type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" className="text-left m-0 p-0 btn btn-link btn-block">
-                                                                    <span className="form-heading">Business Information<p>Enter your business and address details below</p></span>
+                                                                    <span className="form-heading text-danger">Business Information<p>Enter your business and address details below</p></span>
                                                                     </button>
                                                                 </div>
                                                                 <div data-parent="#accordion" id="collapseOne" aria-labelledby="headingOne" className="collapse show">
@@ -325,17 +359,20 @@ const Register = (props) => {
                                                                         <div className="col-md-6"> 
                                                                             <div className="position-relative form-group">
                                                                                 <label htmlFor="exampleUserType" >Account Type</label>
-                                                                                <select  id="exampleUserType" className="mb-2 form-control"
-                                                                                onClick={(event) => {
-                                                                                    const accountType = event.target.value;
-                                                                                    const userRole = event.target.value;
-                                                                                    setUserdetails({...userdetails, ...{ accountType, userRole } });
-                                                                                }}
-                                                                                onChange={(event) => {
-                                                                                    const accountType = event.target.value;
-                                                                                    const userRole = event.target.value;
-                                                                                    setUserdetails({...userdetails, ...{ accountType, userRole } });
-                                                                                }}>
+                                                                                <select id="exampleUserType" className="mb-2 form-control"
+                                                                                        onClick={(event) => {
+                                                                                            const accountType = event.target.value;
+                                                                                            const userRole = event.target.value;
+                                                                                            setUserdetails({...userdetails, ...{ userRole, accountType } });
+                                                                                            setUserdetails({...userdetails, ...{ accountType , userRole } });
+                                                                                        }}
+                                                                                        onChange={(event) => {
+                                                                                            const accountType = event.target.value;
+                                                                                            const userRole = event.target.value;
+                                                                                            setUserdetails({...userdetails, ...{ userRole, accountType } });
+                                                                                            setUserdetails({...userdetails, ...{ accountType , userRole } });
+                                                                                        }}>
+                                                                                            
                                                                                     <option>-- Select Type --</option>
                                                                                     <option value="0">Individual Account</option>
                                                                                     <option value="1">Business Account</option>
@@ -344,8 +381,8 @@ const Register = (props) => {
                                                                         </div>
                                                                         <div className="col-md-6">
                                                                             <div className="position-relative form-group">
-                                                                            <label htmlFor="accessPin" >Access PIN</label>
-                                                                            <input name="text" id="accessPin" placeholder="Access Pin" type="text" className="form-control"
+                                                                            <label htmlFor="accessPin">Access PIN</label>
+                                                                            <input name="text" id="accessPin" placeholder="Access Pin" type="password" className="form-control"
                                                                             onChange={(event) => {
                                                                                 const pin = event.target.value;
                                                                                 setUserdetails({...userdetails, ...{ pin } }); 
@@ -452,7 +489,7 @@ const Register = (props) => {
                                                                     <div className="form-row" style={{marginTop: 30}}>
                                                                         <div className="col-md-6"> 
                                                                             <div className="position-relative form-group">
-                                                                                <label htmlFor="businessName" >Business Name</label>
+                                                                                <label htmlFor="businessName" >Business Name (Optional)</label>
                                                                                 <input name="text" id="businessName" placeholder="Business Name" type="text" className="form-control"
                                                                                 onChange={(event) => {
                                                                                     const businessName = event.target.value;
@@ -462,9 +499,10 @@ const Register = (props) => {
                                                                         </div>
                                                                         <div className="col-md-6">
                                                                             <div className="position-relative form-group">
-                                                                            <label htmlFor="accessBRN" >Business Registration Number</label>
-                                                                                <input name="text" id="accessBRN" placeholder="Business Registration Number" type="text" className="form-control"
+                                                                            <label htmlFor="accessBRN" >Business Registration Number (Optional)</label>
+                                                                                <input disabled={accountype} name="text" id="accessBRN" placeholder="Business Registration Number" type="text" className="form-control"
                                                                                 onChange={(event) => {
+                                                                                    console.log(accountype)
                                                                                     const businessRegNumber = event.target.value;
                                                                                     setUserdetails({...userdetails, ...{ businessRegNumber } }); 
                                                                                 }} />
@@ -480,19 +518,25 @@ const Register = (props) => {
                                                                 <div className="swal2-success-fix" style={{backgroundColor: 'rgb(255, 255, 255)'}} />
                                                                 <div className="swal2-success-circular-line-right" style={{backgroundColor: 'rgb(255, 255, 255)'}} />
                                                                 </div>
-                                                                <div className="results-subtitle mt-4" style={{marginBottom: 12}}>Finished!</div>
+                                                                {/* <div className="results-subtitle mt-4" style={{marginBottom: 12}}>Finished!</div> */}
                                                                 <div className="results-title">You arrived at the last step!</div>
                                                                 <div className="mt-3 mb-3" />
                                                                 <div className="text-center">
                                                                     <button 
-                                                                        className="btn-shadow btn-wide btn btn-success btn-lg"
+                                                                        className="btn-shadow btn-wide btn btn-danger btn-lg"
                                                                         type="submit"
                                                                         disabled={isLoading}
                                                                         onClick={handleSubmit}
                                                                     >
-                                                                    Submit
+                                                                    Register
                                                                     </button>
                                                                 </div>
+
+                                                                <div className="text-center" style={{marginTop: 16}}>
+                                                                    <div className="results-title text-success">{response.message}</div>
+                                                                    <Link to="/login" className="mb-2 mr-2 btn-shadow btn btn-danger btn-lg btn-wide" style={{marginTop: 16}}>Redirect To Login</Link>
+                                                                </div>
+                                                                
                                                             </div>
                                                             </div>
                                                         </div>
@@ -542,9 +586,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        registeruser: (userdetails, history, setError, setNotify) => {
+        registeruser: (userdetails, history, setError, setNotify, setResponse) => {
             dispatch(ShowLoading(userdetails));
-            dispatch(UserRegisterAuthAction(userdetails, history, setError, setNotify));
+            dispatch(UserRegisterAuthAction(userdetails, history, setError, setNotify, setResponse));
         },
         fetchallcountry: (setError) => {
             dispatch(FetchAllCountry(setError));

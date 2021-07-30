@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Authnavigation() {
     return (
@@ -13,9 +14,10 @@ export default function Authnavigation() {
                     <div className="page-title-actions">
                     
                     <div className="d-inline-block dropdown">
-                        <button className="mb-2 mr-2 btn-pill btn btn-link">FAQ</button>
-                        <button className="mb-2 mr-2 btn-pill btn btn-link">Testimonial</button>
-                        <button className="mb-2 mr-2 btn-pill btn btn-link">Contact Us</button>
+                        <Link to="/login" className="mb-2 mr-2 btn-pill btn btn-link text-danger">Login</Link>
+                        <button className="mb-2 mr-2 btn-pill btn btn-link text-danger">FAQ</button>
+                        <button className="mb-2 mr-2 btn-pill btn btn-link text-danger">Testimonial</button>
+                        <button className="mb-2 mr-2 btn-pill btn btn-link text-danger">Contact Us</button>
                         </div>
                     </div>    
                 </div>

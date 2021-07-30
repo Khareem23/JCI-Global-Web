@@ -348,7 +348,7 @@ const Sendmoneyarea = (props) => {
                                                                 <label htmlFor="exampleGender"><strong>Receiving From</strong></label>
                                                                 <CustomCountryAutocomplete className="mb-2 form-control" placeholder="Type and Select a Country"
                                                                     suggestions={ allreceivingcurrencystate } passChildData={handlereceivingfrom}
-                                                                />
+                                                                /> 
                                                             </div>
                                                         </div>
                                                     </div>

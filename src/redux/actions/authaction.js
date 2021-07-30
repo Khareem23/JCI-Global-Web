@@ -21,14 +21,13 @@ import ActionTypes from "../actiontype/ActionTypes"
         }
     }
 
-    const UserRegisterAuthAction = (userstate, history, setError, setNotify) => {
+    const UserRegisterAuthAction = (userstate, history, setError, setNotify, setResponse) => {
         return async (dispatch) => {
             try {
                 if(userstate.email !== undefined && userstate.firstName !== undefined && userstate.phoneNumber !== undefined && userstate.lastName !== undefined 
-                    && userstate.password !== undefined && userstate.pin !== undefined && userstate.country !== undefined && userstate.state !== undefined 
+                    && userstate.password !== undefined && userstate.pin !== undefined && userstate.countryOfNationality !== undefined && userstate.countryofResidence !== undefined && userstate.state !== undefined 
                     && userstate.city !== undefined && userstate.postalCode !== undefined && userstate.address !== undefined && userstate.gender !== undefined
-                    && userstate.dateOfBirth !== undefined && userstate.businessName !== undefined && userstate.businessRegNumber !== undefined 
-                    && userstate.accountType !== undefined && userstate.userRole !== undefined)
+                    && userstate.dateOfBirth !== undefined && userstate.accountType !== undefined && userstate.userRole !== undefined)
                 {
                     const response = await mainAxios.post('/Users/register', userstate);
                     const { data } = response.data.data;
@@ -39,10 +38,10 @@ import ActionTypes from "../actiontype/ActionTypes"
                             message: response.data.message,
                             type: 'success',
                         });
-
                         dispatch({type: ActionTypes.LOADING_HIDE, payload: userstate}); 
                         dispatch({type: ActionTypes.USER_REGISTRATION_SUCCESS, payload: data});
-                        history.push("/dashboard");
+                        setResponse(response)
+                        
                     } else {
                             setNotify({
                                 isOpen: true,
@@ -51,18 +50,9 @@ import ActionTypes from "../actiontype/ActionTypes"
                             });
                             dispatch({type: ActionTypes.LOADING_HIDE, payload: userstate}); 
                             dispatch({type: ActionTypes.USER_REGISTRATION_FAIL, payload: data.message });
-                            // setError({
-                            //     hasError: true,
-                            //     message: data.message,
-                            // })
-
                     }
                 } else {
                     dispatch({type: ActionTypes.LOADING_HIDE, payload: userstate}); 
-                    // setError({
-                    //     hasError: true,
-                    //     message: "Kindly fill all empty spaces",
-                    // })
                     setNotify({
                         isOpen: true,
                         message: 'Kindly fill all empty spaces',
@@ -81,14 +71,13 @@ import ActionTypes from "../actiontype/ActionTypes"
                 }
 
                 dispatch({type: ActionTypes.LOADING_HIDE, payload: userstate}); 
-                //const errmsg = error.message +  "  Error occurred while registering..."
                 dispatch({
                     type: ActionTypes.USER_REGISTRATION_FAIL, 
                     payload: errmsg,
                 });
                 setNotify({
                     isOpen: true,
-                    message: 'Kindly fill all empty spaces',
+                    message: errmsg,
                     type: 'error',
                 });
             }
@@ -121,7 +110,7 @@ import ActionTypes from "../actiontype/ActionTypes"
                         decoded.token = data;
                         decoded.status = response.data.status;
                         decoded.message = response.data.message;
-                        // dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
+                        console.log(decoded);
                         setLoginLoading(false);
                         dispatch({type: ActionTypes.USER_LOGIN_SUCCESS, payload: decoded});                        
                         setNotify({
@@ -139,7 +128,6 @@ import ActionTypes from "../actiontype/ActionTypes"
                     }
                     else  
                     {
-                        // dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
                         setLoginLoading(false);
                         dispatch({type: ActionTypes.USER_LOGIN_FAIL, payload: data.message });
                         setNotify({
@@ -150,20 +138,23 @@ import ActionTypes from "../actiontype/ActionTypes"
                     }} catch(error) {
                         setLoginLoading(false);
                         if(error.response) {
-                            let errorarray = error.response.data.errors;
-                            let list = prepareError(errorarray);
-                            const errmsg = list;
-                            // dispatch({type: ActionTypes.LOADING_HIDE, payload: errmsg}); 
-                            // setIsLoading(false);
+                            let errmsg = "";
+                            if(error.response.data.data !== null) {
+                                let errorarray = error.response.data.errors;
+                                let list = prepareError(errorarray);
+                                errmsg = list;
+                            } else if(error.response.data.message) {
+                                errmsg = error.response.data.message;
+                            }
+                        
+                            // dispatch({type: failu, payload: errmsg });
                             dispatch({type: ActionTypes.USER_LOGIN_FAIL, payload: errmsg });
                             setNotify({
                                 isOpen: true,
                                 message: errmsg,
                                 type: 'error',
-                            });
+                            });                  
                         }
-                        
-                        // setShow(false);
                     }
 
                 }

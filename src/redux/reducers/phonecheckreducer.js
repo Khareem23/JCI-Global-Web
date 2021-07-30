@@ -1,7 +1,7 @@
 import ActionTypes from "../actiontype/ActionTypes"
 
 const phonecheckstate = {
-    isValid: 0,
+    isValid: true,
 };
 
 const phonecheckreducer = (state = phonecheckstate, action) => {

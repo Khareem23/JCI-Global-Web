@@ -1,7 +1,7 @@
 import ActionTypes from "../actiontype/ActionTypes"
 
 const emailcheckstate = {
-    isValid: 0,
+    isValid: true,
 };
 
 const emailcheckreducer = (state = emailcheckstate, action) => {

@@ -19,6 +19,7 @@ import NewBeneficiary from './pages/NewBeneficiary';
 import MyAccount from './pages/MyAccount';
 import BankAccount from './pages/BankAccount';
 import Paymentpage from './components/Paymentpage';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   return (
@@ -28,8 +29,12 @@ function App() {
             <Register/>
           </Route>
 
-          <Route exact path='/'>
+          <Route exact path='/login'>
             <Login/>
+          </Route>
+
+          <Route exact path='/'>
+            <LandingPage/>
           </Route>
 
           <Route exact path='/dashboard'>

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router';
-import { LoginAuthAction, ShowLoading } from '../redux/actions/authaction';
+import { LoginAuthAction } from '../redux/actions/authaction';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -14,6 +14,12 @@ const SignInarea = (props) => {
       setLoginLoading(true)
       loginuser(userdetails, history, setNotify, setLoginLoading);
   };
+
+  function refreshPage() {
+    setTimeout(()=>{
+        window.location.reload(false);
+    }, 50);
+}
 
   const [loginloading, setLoginLoading] = useState(false)
 
@@ -45,7 +51,7 @@ const SignInarea = (props) => {
                       <div className="form-row">
                         <div className="col-md-12">
                           <div className="position-relative form-group">
-                            <label htmlFor="exampleEmail" ><span className="text-danger">*</span> Email</label>
+                            <label htmlFor="exampleEmail">Email</label>
                             <input name="email" id="exampleEmail" placeholder="Email here..." type="email" className="form-control" 
                              onChange={(event) => {
                               const username = event.target.value;
@@ -56,7 +62,7 @@ const SignInarea = (props) => {
                         
                         <div className="col-md-12">
                           <div className="position-relative form-group">
-                            <label htmlFor="examplePassword" ><span className="text-danger">*</span> Password</label>
+                            <label htmlFor="examplePassword">Password</label>
                             <input name="password" id="examplePassword" placeholder="Password here..." type="password" className="form-control" 
                              onChange={(event) => {
                               const password = event.target.value;
@@ -66,7 +72,7 @@ const SignInarea = (props) => {
                         </div>
                         <div className="col-md-12">
                           <div className="position-relative form-group">
-                                <button className="btn-wide btn-pill form-control btn-shadow btn-hover-shine btn btn-primary" 
+                                <button className="btn-wide btn-pill form-control btn-shadow btn-hover-shine btn btn-danger" 
                                 type="submit"
                                 style={{fontSize: 14, marginTop: 40}}
                                 disabled={loginloading}
@@ -85,7 +91,7 @@ const SignInarea = (props) => {
                       <div className="mt-4 d-flex align-items-center">
                         <h5 className="mb-0">New User?</h5>
                         <h5 className="ml-auto">
-                            <Link to="/register#step-1" className="text-danger btn-wide">Sign Up</Link>
+                            <Link to="/register#step-1" className="text-danger btn-wide" onClick={refreshPage}>Sign Up</Link>
                         </h5>
                       </div>
                     </form>

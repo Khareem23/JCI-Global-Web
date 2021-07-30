@@ -296,7 +296,7 @@ const Dashboardarea = (props) => {
                             <div className="widget-numbers">
                             <div className="widget-chart-flex">
                                 <div className="fsize-4">
-                                <span>Transaction Min Limit</span>
+                                <span className="card-title">Transaction Min Limit</span>
                                 </div>
                             </div>
                             </div>
@@ -328,7 +328,7 @@ const Dashboardarea = (props) => {
                                     <div className="widget-numbers">
                                     <div className="widget-chart-flex">
                                         <div className="fsize-4">
-                                        <span>Referral Minimum Amount & Bonus</span>
+                                        <span className="card-title">Referral Minimum Amount & Bonus</span>
                                         </div>
                                     </div>
                                     </div>

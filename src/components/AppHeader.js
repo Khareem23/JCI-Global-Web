@@ -299,18 +299,27 @@ const AppHeader = (props) => {
                             <div className="scroll-area-xs" style={{height: 350}}>
                             <div className="scrollbar-container ps">
                                 <ul className="nav flex-column">
-                                <li className="nav-item-header nav-item">Activity</li>
-                                <li className="nav-item">
-                                    <Link to="/transactionhistory" className="nav-link"><span style={{color: '#d92550', fontWeight: 'bold'}}>My Transactions</span>
-                                    <div className="ml-auto badge badge-pill badge-info">{allcustomertransactions?.length}</div>
-                                    </Link>
-                                </li>
-                                <li className="nav-item">
-                                <Link to="/beneficiaries" className="nav-link"> <span style={{color: '#d92550', fontWeight: 'bold'}}>My Beneficiaries</span>
-                                    <div className="ml-auto badge badge-pill badge-info">{alluserreceivers?.length}</div>
-                                    </Link>
-                                </li>
-                                                               
+                                
+                                {(() => {
+                                    if(authstate.role === "Customer")
+                                    {
+                                        <>
+                                        <li className="nav-item-header nav-item">Activity</li>
+                                        <li className="nav-item">
+                                        <Link to="/transactionhistory" className="nav-link"><span style={{color: '#d92550', fontWeight: 'bold'}}>My Transactions</span>
+                                        <div className="ml-auto badge badge-pill badge-info">{allcustomertransactions?.length}</div>
+                                        </Link>
+                                        </li>
+                                        <li className="nav-item">
+                                        <Link to="/beneficiaries" className="nav-link"> <span style={{color: '#d92550', fontWeight: 'bold'}}>My Beneficiaries</span>
+                                            <div className="ml-auto badge badge-pill badge-info">{alluserreceivers?.length}</div>
+                                            </Link>
+                                        </li>
+                                        </>
+                                             
+                                    }
+                                })()}
+                                                     
                                 <li className="nav-item-header nav-item">My Account
                                 </li>
                                 <li className="nav-item">
