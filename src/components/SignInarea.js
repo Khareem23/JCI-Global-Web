@@ -42,10 +42,10 @@ const SignInarea = (props) => {
     return (
         <div className="mx-auto app-login-box col-sm-12 col-md-10 col-lg-5" style={{marginTop: -60}}>
                   <div className="app-logo" />
-                  <h4>
+                  <div>
                     <h2>Welcome back.</h2>
-                    <span>Sign in <span className="text-danger">to access</span> your account</span>
-                  </h4>
+                    <h4><span>Sign in <span className="text-danger">to access</span> your account</span></h4>
+                  </div>
                   <div>
                     <form >
                       <div className="form-row">

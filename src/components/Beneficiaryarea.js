@@ -8,7 +8,7 @@ import EditBeneficiaryModal from './modals/EditBeneficiaryModal';
 
 const Beneficiaryarea = (props) => {
 
-    const { isLoading, setNotify, show, handleShow, setShow, fetchbeneficiary, alluserreceivers, beneficiaryLoading, setBeneficiaryLoading } = props;
+    const { setNotify, show, setShow, fetchbeneficiary, alluserreceivers, beneficiaryLoading, setBeneficiaryLoading } = props;
     const [beneficiaries, setBeneficiaries] = useState({});
 
     useEffect(() => {

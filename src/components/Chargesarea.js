@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { ShowLoading } from '../redux/actions/authaction';
 import { GetAction } from '../redux/actions/getaction';
 import ActionTypes from "../redux/actiontype/ActionTypes"
-import DeleteChargeModal from './modals/DeleteChargeModal';
 import EditChargesModal from './modals/EditChargesModal';
 import $ from 'jquery';
 import DataTable from 'datatables.net';
@@ -21,6 +20,7 @@ const Chargesarea = (props) => {
     
     useEffect(() => {
       fetchcharges(show, setNotify, ActionTypes.GET_CHARGES_SUCCESS, ActionTypes.GET_CHARGES_FAIL, setShow);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     //this is to check for changes in chargesLoading variable
@@ -28,6 +28,7 @@ const Chargesarea = (props) => {
         if(!chargesLoading) {
             fetchcharges(show, setNotify, ActionTypes.GET_CHARGES_SUCCESS, ActionTypes.GET_CHARGES_FAIL, setShow);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [chargesLoading]);
 
     useEffect(() => {
@@ -38,7 +39,7 @@ const Chargesarea = (props) => {
     }, [allcharges]);
 
     const [showEdit, setShowEdit] = useState(false);
-    const [showDelete, setShowDelete] = useState(false);
+    // const [showDelete, setShowDelete] = useState(false);
     const [showView, setShowView] = useState(false);
     
 
@@ -48,9 +49,9 @@ const Chargesarea = (props) => {
     const handleShowView = () => {
         setShowView(!showView);
     }
-    const handleShowDelete = () => {
-        setShowDelete(!showDelete);
-    }
+    // const handleShowDelete = () => {
+    //     setShowDelete(!showDelete);
+    // }
 
     const [item, setItem] = useState({});
 
@@ -74,10 +75,10 @@ const Chargesarea = (props) => {
         setItem(item);
     }
 
-    function handleDelete (item) {
-        setShowDelete(true);
-        setItem(item);
-    }
+    // function handleDelete (item) {
+    //     setShowDelete(true);
+    //     setItem(item);
+    // }
 
     function refreshPage() {
         // fetchsingleaccount(bcode, setNotify, ActionTypes.GET_BUSINESS_BANK_SUCCESS, ActionTypes.GET_BUSINESS_BANK_FAIL, setShow);

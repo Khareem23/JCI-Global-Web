@@ -6,7 +6,6 @@ import { GetSingleObjectAction } from '../redux/actions/getsoaction';
 import ActionTypes from "../redux/actiontype/ActionTypes"
 import CountryAutocomplete from './CountryAutocomplete';
 import DeleteAccountModal from './modals/DeleteAccountModal';
-import EditAccountModal from './modals/EditAccountModal';
 import $ from 'jquery';
 import DataTable from 'datatables.net';
 
@@ -14,7 +13,6 @@ import DataTable from 'datatables.net';
 const Bankaccountsarea = (props) => {
     const { isLoading, setNotify, show, handleShow, setShow, fetchaccounts, fetchsingleaccount, allbanks, fetchallcountry,allcountriesstate, addaccountLoading, setAddAccountLoading } = props;
     const [banks, setBanks] = useState({});
-    const [bcode, setBcode] = useState({});
 
     useEffect(() => {
         fetchallcountry(setNotify);

@@ -8,7 +8,7 @@ import Chart from "react-apexcharts";
 
 
 const Dashboardarea = (props) => {
-    const { setNotify, show, setShow, fetchalltransactions,fetchallusers, allusers, alltransactions, fetchusersbycountry, allcountriesstate, countryusers,fetchmonthlyusers,monthlyusers, dashboardLoading, setDashboardLoading} = props;
+    const { setNotify, show, setShow, fetchalltransactions,fetchallusers, allusers, alltransactions, fetchusersbycountry, allcountriesstate, countryusers,fetchmonthlyusers,monthlyusers} = props;
     let heightValue = [];
     const [koro, setKoro] = useState({
     options: {

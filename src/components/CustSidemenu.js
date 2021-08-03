@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 
 const CustSidemenu = (props) => {
-    const { logoutuser, isLoading, } = props;
+    const { logoutuser } = props;
     const history = useHistory();
     
     const handleLogout = e => {
