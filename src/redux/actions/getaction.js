@@ -22,6 +22,7 @@ import ActionTypes from "../actiontype/ActionTypes"
                     } else if(successactiontype === ActionTypes.GET_ALL_SENDING_CURRENCY_SUCCESS) {
                         response = await mainAxios.get('/Rates/getAllSendingCurrency', stateobject);
                     } else if(successactiontype === ActionTypes.GET_USER_RECEIVERS_SUCCESS) {
+                        console.log(JSON.stringify(mainAxios.defaults.headers.common));
                         response = await mainAxios.get('/Transactions/getUserReceivers', stateobject);
                     } else if(successactiontype === ActionTypes.DOWNLOAD_TRANSACTION_RECEIPT_SUCCESS) {
                         response = await mainAxios.get('/Transactions/downloadTransactionReceipt/' + stateobject);                        

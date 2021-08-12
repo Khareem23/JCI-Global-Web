@@ -17,6 +17,7 @@ import ActionTypes from "../actiontype/ActionTypes"
                     } else if(successactiontype === ActionTypes.ADD_BANK_SUCCESS) {
                         response = await mainAxios.post('/JCIBank/createBankAccount', stateobject);
                     } else if(successactiontype === ActionTypes.ADD_CONVERT_SUCCESS) {
+                        console.log(mainAxios.head)
                         response = await mainAxios.post('/Transactions/convertSendingToReceiving', stateobject);
                     } else if(successactiontype === ActionTypes.ADD_TRANSACTION_SUCCESS) {
                         response = await mainAxios.post('/Transactions/createTransaction', stateobject);

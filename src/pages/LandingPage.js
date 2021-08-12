@@ -2,6 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { connect } from 'react-redux';
 
+function refreshPage() {
+    setTimeout(()=>{
+        window.location.reload(false);
+    }, 5);
+}
+
+
+
 
 const LandingPage = (props) => {
     const { 
@@ -9,8 +17,14 @@ const LandingPage = (props) => {
     } = props;
     const history = useHistory();
 
+    // useEffect(() => {
+    //     refreshPage();
+    // }, []);
+
     useEffect(() => {
+        refreshPage();
         if(authstate) {
+            console.log(authstate.token);
             if(authstate.role === "Customer")
             {
                 history.push("/sendmoney#step-1");
@@ -29,6 +43,8 @@ const LandingPage = (props) => {
         </div>
     )
 }
+
+
 
 const mapStateToProps = (state) => {
     return {

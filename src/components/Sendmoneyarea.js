@@ -57,7 +57,7 @@ const Sendmoneyarea = (props) => {
     const history = useHistory();
     const [benAdded, setBenAdded] = useState(false);
     const [uploaddetails, setUploadDetails] = useState(false);
-
+    const [dummy, reload] = useState(false);
 
     const [stepone, setStepOne] = useState(true);
     const [steptwo, setStepTwo] = useState(false);
@@ -159,6 +159,8 @@ const Sendmoneyarea = (props) => {
         createtransact(transactionParams, setNotify, ActionTypes.ADD_TRANSACTION_SUCCESS, ActionTypes.ADD_TRANSACTION_FAIL, setShow, setIstransactionLoading);
         setSubmitted(false);
     }
+
+   
 
     //fetch all countries
     useEffect(() => {
@@ -289,8 +291,10 @@ const Sendmoneyarea = (props) => {
                         </a>
                         </li>
                     </ul>
+                    
                     {/* <div className="form-wizard-content sw-container tab-content"> */}
-                         <div id="step-1" className="tab-pane step-content" hidden={!stepone}>
+                         <div className="tab-pane step-content" hidden={!stepone}>
+                         
                             <div className="row">
                                     <div className="col-md-12 col-lg-6 col-xl-6">
                                         <div className="card-shadow-primary card-border mb-3 card">
@@ -312,7 +316,7 @@ const Sendmoneyarea = (props) => {
                                                                     <label htmlFor="exampleAmount"><strong>Amount</strong></label>
                                                                     <input name="amount" id="exampleAmount" placeholder="Amount you are sending" type="number" min="0" className="form-control" 
                                                                         onChange={(event) => {
-                                                                            let amount = event.target.value;
+                                                                                               let amount = event.target.value;
                                                                             let amountToSend = Number(amount)
                                                                             setTransferDetails({...transferdetails, ...{ amountToSend } }); 
                                                                         }}
@@ -570,9 +574,8 @@ const Sendmoneyarea = (props) => {
                             </div>
                         </div>
                         
-
                     
-                        <div id="step-2" className="tab-pane step-content" hidden={!steptwo}> {/* style={{display: 'none'}} */}
+                        <div className="tab-pane step-content" hidden={!steptwo}> {/* style={{display: 'none'}} */}
                         
                         <div id="accordion" className="accordion-wrapper mb-3">
                             <div className="card">
@@ -771,10 +774,7 @@ const Sendmoneyarea = (props) => {
                         </div>
 
                         
-
-
-
-                        <div id="step-3" className="tab-pane step-content" hidden={!stepthree}>{/* style={{display: 'none'}} */}
+                        <div className="tab-pane step-content" hidden={!stepthree}>{/* style={{display: 'none'}} */}
                             
                             <div className="no-results">
 
@@ -1233,7 +1233,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(GetAction(show, setNotify, successaction, failaction, setShow));
         },
         createconvert: (convertiondetails, setNotify, successactiontype, failureactiontype, setShow, setIsLoading) => {
-            // dispatch(ShowLoading(convertiondetails));
+            // dicreateconvertspatch(ShowLoading(convertiondetails));
             dispatch(CreateAction(convertiondetails, setNotify, successactiontype, failureactiontype, setShow, setIsLoading))
         },
         createtransact: (transactiondetails, setNotify, successactiontype, failureactiontype, setShow, setIsLoading) => {

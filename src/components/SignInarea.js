@@ -111,7 +111,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       loginuser: (userdetails, history, setNotify, setLoginLoading) => {
-          // dispatch(ShowLoading(userdetails));
           dispatch(LoginAuthAction(userdetails, history, setNotify, setLoginLoading)
           );
       },

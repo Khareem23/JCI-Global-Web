@@ -90,7 +90,6 @@ import ActionTypes from "../actiontype/ActionTypes"
             
                 if(loginstate.username === undefined || loginstate.username === "" || loginstate.password === undefined || loginstate.password === "")
                 {
-                    // dispatch({type: ActionTypes.LOADING_HIDE, payload: loginstate}); 
                     setLoginLoading(false);
                     setNotify({
                         isOpen: true,
@@ -110,7 +109,6 @@ import ActionTypes from "../actiontype/ActionTypes"
                         decoded.token = data;
                         decoded.status = response.data.status;
                         decoded.message = response.data.message;
-                        console.log(decoded);
                         setLoginLoading(false);
                         dispatch({type: ActionTypes.USER_LOGIN_SUCCESS, payload: decoded});                        
                         setNotify({
@@ -118,13 +116,14 @@ import ActionTypes from "../actiontype/ActionTypes"
                             message: response.data.message,
                             type: 'success',
                         });
-                        if(decoded.role === "Customer")
-                        {
-                            history.push("/sendmoney#step-1");                            
-                        } else if(decoded.role === "Admin")
-                        {
-                            history.push("/dashboard"); 
-                        }
+                        history.push("/"); 
+                        // if(decoded.role === "Customer")
+                        // {
+                        //     history.push("/sendmoney#step-1");                            
+                        // } else if(decoded.role === "Admin")
+                        // {
+                        //     history.push("/dashboard"); 
+                        // }
                     }
                     else  
                     {
