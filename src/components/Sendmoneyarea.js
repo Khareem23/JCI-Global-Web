@@ -294,7 +294,6 @@ const Sendmoneyarea = (props) => {
                     
                     {/* <div className="form-wizard-content sw-container tab-content"> */}
                          <div className="tab-pane step-content" hidden={!stepone}>
-                         
                             <div className="row">
                                     <div className="col-md-12 col-lg-6 col-xl-6">
                                         <div className="card-shadow-primary card-border mb-3 card">
@@ -316,7 +315,7 @@ const Sendmoneyarea = (props) => {
                                                                     <label htmlFor="exampleAmount"><strong>Amount</strong></label>
                                                                     <input name="amount" id="exampleAmount" placeholder="Amount you are sending" type="number" min="0" className="form-control" 
                                                                         onChange={(event) => {
-                                                                                               let amount = event.target.value;
+                                                                            let amount = event.target.value;
                                                                             let amountToSend = Number(amount)
                                                                             setTransferDetails({...transferdetails, ...{ amountToSend } }); 
                                                                         }}
